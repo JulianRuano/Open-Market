@@ -32,7 +32,7 @@ public class CategoryAccessImplSockets  implements ICategoryAccess {
      public CategoryAccessImplSockets() {
         mySocket = new OpenMarketSocket();
     }
-    //private Connection conn;
+
 
     @Override
     public boolean save(Category newCategory) throws Exception  {
@@ -365,11 +365,11 @@ public class CategoryAccessImplSockets  implements ICategoryAccess {
     * @param jsonCustomer objeto cliente en formato json
     */
     private Category jsonToCategory(String jsonCustomer) {
-
         Gson gson = new Gson();
         Category category = gson.fromJson(jsonCustomer, Category.class);
         return category;
     }
+    
     private List<Category>  jsonToListCategory(String jsonCustomer) throws JsonProcessingException {
 
         ObjectMapper objectMapper = new ObjectMapper();

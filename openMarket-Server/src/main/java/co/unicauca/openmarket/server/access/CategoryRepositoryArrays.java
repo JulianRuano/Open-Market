@@ -15,7 +15,9 @@ import java.util.stream.Collectors;
  * @author brayan majin, julian ruano
  */
 public final class CategoryRepositoryArrays implements ICategoryRepository{
-        private static List<Category> category;
+    
+    private static List<Category> category;
+    
     public CategoryRepositoryArrays() {
         if (category == null){
             category = new ArrayList();

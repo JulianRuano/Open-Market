@@ -40,26 +40,35 @@ public class Factory {
         switch (type) {
             case "default":
                 result = new ProductAccessImplSockets();
-                break;
-                
+                break;               
         }
-
         return result;
-
     }
     
-        public ICategoryAccess getCatRepository(String type) {
+    public ICategoryAccess getCatRepository(String type) {
 
         ICategoryAccess result = null;
 
         switch (type) {
             case "default":
                 result = new CategoryAccessImplSockets();
-                break;
-                
+                break;               
         }
-
         return result;
-
     }
+    
+    
+    public IShoppingCartAccess getShoppingRepository(String type) {
+
+        IShoppingCartAccess result = null;
+
+        switch (type) {
+            case "default":
+                result = new ShoppingCartAccessImplSockets();
+                break;               
+        }
+        return result;
+    }
+    
+    
 }

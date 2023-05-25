@@ -27,7 +27,7 @@ public class OpeMarketServer {
         int port = teclado.nextInt();
         ServerSocketMultiThread myServer = new ServerSocketMultiThread(port);
         OpenMarketHandler myHandler = new OpenMarketHandler();
-       myHandler.setService(new CategoryService(new CategoryRepositoryArrays()));
+        myHandler.setService(new CategoryService(new CategoryRepositoryArrays()));
         myHandler.setServiceProduct(new ProductService(new ProductRepositoryArrays()));
         myServer.setServerHandler(myHandler);
         myServer.startServer();

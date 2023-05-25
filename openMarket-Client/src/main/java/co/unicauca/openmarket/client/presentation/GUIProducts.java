@@ -2,6 +2,7 @@ package co.unicauca.openmarket.client.presentation;
 
 
 
+import co.unicauca.openmarket.client.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.infra.Messages;
 import static co.unicauca.openmarket.client.infra.Messages.successMessage;
@@ -19,15 +20,17 @@ import javax.swing.JOptionPane;
 public class GUIProducts extends javax.swing.JFrame {
 
     private ProductService productService;
+    private ShoppingCar shoppingCart;
     private boolean addOption;
     private OMInvoker ominvoker;
 
     /**
      * Creates new form GUIProducts
      */
-    public GUIProducts(ProductService productService) {
+    public GUIProducts(ProductService productService, ShoppingCar shoppingCart) {
         initComponents();
         this.productService = productService;
+        this.shoppingCart = shoppingCart;
         ominvoker = new OMInvoker();
         stateInitial();
 
@@ -52,6 +55,7 @@ public class GUIProducts extends javax.swing.JFrame {
         btnEliminar = new javax.swing.JButton();
         btnFind = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
+        btnComprar = new javax.swing.JButton();
         pnlCenter = new javax.swing.JPanel();
         lblId = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -140,6 +144,14 @@ public class GUIProducts extends javax.swing.JFrame {
         });
         pnlSouth.add(btnCerrar);
 
+        btnComprar.setText("Comprar");
+        btnComprar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComprarActionPerformed(evt);
+            }
+        });
+        pnlSouth.add(btnComprar);
+
         getContentPane().add(pnlSouth, java.awt.BorderLayout.SOUTH);
 
         pnlCenter.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -180,7 +192,7 @@ public class GUIProducts extends javax.swing.JFrame {
                     .addComponent(txtName)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
                     .addComponent(txtCategory))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(220, Short.MAX_VALUE))
         );
         pnlCenterLayout.setVerticalGroup(
             pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,7 +216,7 @@ public class GUIProducts extends javax.swing.JFrame {
                 .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtCategory, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         lblId.getAccessibleContext().setAccessibleName("");
@@ -303,6 +315,23 @@ public class GUIProducts extends javax.swing.JFrame {
             this.btnRehacer.setVisible(false);
         this.btnDeshacer.setVisible(true);
     }//GEN-LAST:event_btnRehacerActionPerformed
+
+    private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
+        try{
+            String id = txtId.getText().trim();
+            if (id.equals("")) {
+                 Messages.showMessageDialog("Debe ingresar el id del producto", "Atención");
+                 txtId.requestFocus();
+                 return;
+            }
+            Long productId = Long.parseLong(id);    
+            GUIPaymet intance = new GUIPaymet(productId,shoppingCart);
+            intance.setVisible(true);          
+         
+        }catch(Exception ex){
+            successMessage(ex.getMessage(), "Atención");   
+        }       
+    }//GEN-LAST:event_btnComprarActionPerformed
     private void stateEdit() {
         btnNuevo.setVisible(false);
         btnEditar.setVisible(false);
@@ -337,6 +366,7 @@ public class GUIProducts extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnComprar;
     private javax.swing.JButton btnDeshacer;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
@@ -387,6 +417,8 @@ public class GUIProducts extends javax.swing.JFrame {
             String name = txtName.getText().trim();
             String description = txtDescription.getText().trim();
             Long categoryId=Long.parseLong(this.txtCategory.getText());
+            
+            
             Product OProduct = new Product(id, name, description, 0,categoryId);
             OMAddProductCommand comm = new OMAddProductCommand(OProduct, productService);
             ominvoker.addCommand(comm);

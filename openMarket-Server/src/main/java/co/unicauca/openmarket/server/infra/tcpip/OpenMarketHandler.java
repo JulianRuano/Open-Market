@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package co.unicauca.openmarket.server.infra.tcpip;
+import co.unicauca.openmarket.commons.application.Invoice;
+import co.unicauca.openmarket.commons.application.PaymentDetails;
 import co.unicauca.openmarket.commons.domain.Category;
 import co.unicauca.openmarket.commons.domain.Product;
 import co.unicauca.openmarket.commons.infra.Protocol;
@@ -11,6 +13,7 @@ import co.unicauca.openmarket.domain.services.CategoryService;
 import co.unicauca.strategyserver.infra.ServerHandler;
 import co.unicauca.openmarket.commons.infra.JsonError;
 import co.unicauca.openmarket.domain.services.ProductService;
+import co.unicauca.openmarket.server.application.PurchaseGenerator;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +107,12 @@ public class OpenMarketHandler extends ServerHandler {
                 }
                 break;
              }
+            case"shoppingCart"->{
+                if (protocolRequest.getAction().equals("buy")) {
+                    // Petecion de compra
+                    response = processBuyProduct(protocolRequest);
+                }
+            }
         }
         return response;
     }
@@ -209,11 +218,56 @@ public class OpenMarketHandler extends ServerHandler {
         return respuesta;
     }
     
+    
+    
+    private String processBuyProduct(Protocol protocolRequest) {
+        // Petecion de compra
+        Long id = Long.parseLong(protocolRequest.getParameters().get(0).getValue()) ;       
+        String nameOnCard = protocolRequest.getParameters().get(1).getValue();
+        String cardNumber =protocolRequest.getParameters().get(2).getValue();
+        String CVC =protocolRequest.getParameters().get(3).getValue();
+        String month =protocolRequest.getParameters().get(4).getValue();
+        String year =protocolRequest.getParameters().get(5).getValue();
+        
+        // Contruiomos los objectos
+        Product producto = serviceProduc.findById(id);
+        PaymentDetails paymentDetails = new PaymentDetails(nameOnCard, cardNumber, CVC, month, year);
+        PurchaseGenerator purchaseGenerator = new PurchaseGenerator();
+        
+        if (!purchaseGenerator.validator(paymentDetails)) {
+            String errorJson = generateCardNotFoundErrorJson();
+            return errorJson;
+        } else {
+            // Implementar logica       
+            String reference = purchaseGenerator.generateCode();
+            Invoice invoice = new Invoice(reference, producto.getName());      
+            return objectToJSON(invoice);
+        }
+    }
+    
+    
     /**
-     * Genera un ErrorJson de cliente no encontrado
+     * Genera un ErrorJson 
      *
      * @return error en formato json
      */
+    
+    
+    private String generateCardNotFoundErrorJson(){
+        List<JsonError> errors = new ArrayList<>();
+        JsonError error = new JsonError();
+        error.setCode("000");
+        error.setError("Failed_Card");
+        error.setMessage("Ha ocurrido un error con la tarjeta");
+        errors.add(error);
+
+        Gson gson = new Gson();
+        String errorsJson = gson.toJson(errors);
+
+        return errorsJson;
+    }
+    
+    
     private String generateNotFoundErrorJson() {
         List<JsonError> errors = new ArrayList<>();
         JsonError error = new JsonError();
