@@ -1,9 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package co.unicauca.openmarket.presentacion;
+
+import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.client.infra.Messages;
+import static co.unicauca.openmarket.client.infra.Messages.successMessage;
+import co.unicauca.openmarket.client.presentation.commands.OMAddProductCommand;
+import co.unicauca.openmarket.client.presentation.commands.OMDeleteProductCommand;
+import co.unicauca.openmarket.client.presentation.commands.OMEditProductCommand;
+import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
+import co.unicauca.openmarket.commons.domain.Product;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,10 +20,48 @@ public class crudProducto extends javax.swing.JPanel {
     /**
      * Creates new form crudProducto
      */
-    public crudProducto() {
+    private ProductService productService;
+    private boolean addOption;
+    private OMInvoker ominvoker;
+    public crudProducto(ProductService productService) {
         initComponents();
+        this.productService=productService;
+        ominvoker = new OMInvoker();
+        stateInitial();
     }
 
+    
+    private void stateEdit() {
+        btnNuevo.setVisible(false);
+        btnEditar.setVisible(false);
+        btnEliminar.setVisible(true);
+        btnCancelar.setVisible(true);
+        btnGuardar.setVisible(true);
+        btnBuscar.setVisible(false);
+       txtCodigoProducto.setEnabled(true);
+        txtNombre.setEnabled(true);
+        txtDescripcion.setEnabled(true);
+        txtDescripcion.setEnabled(true);
+        cbxCodigoCategoria.setEnabled(true);   
+    }
+
+    private void stateInitial() {
+        btnNuevo.setVisible(true);
+        btnEditar.setVisible(true);
+        btnEliminar.setVisible(false);
+        btnCancelar.setVisible(false);
+        btnGuardar.setVisible(false);
+        btnBuscar.setVisible(true);
+        txtCodigoProducto.setEnabled(false);
+        txtNombre.setEnabled(false);
+        txtDescripcion.setEnabled(false);
+        txtDescripcion.setEnabled(false);
+        cbxCodigoCategoria.setEnabled(false);
+        btnDeshacer.setVisible(ominvoker.hasMoreCommands());
+        btnRehacer.setVisible(ominvoker.hasMoreCommandsRedo());
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,6 +101,8 @@ public class crudProducto extends javax.swing.JPanel {
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        btnDeshacer = new javax.swing.JButton();
+        btnRehacer = new javax.swing.JButton();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -209,14 +255,53 @@ public class crudProducto extends javax.swing.JPanel {
         add(pnlCrudpProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 977, 530));
 
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnDeshacer.setText("Deshacer");
+        btnDeshacer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeshacerActionPerformed(evt);
+            }
+        });
+
+        btnRehacer.setText("Rehacer");
+        btnRehacer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRehacerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlSeccionBotonesLayout = new javax.swing.GroupLayout(pnlSeccionBotones);
         pnlSeccionBotones.setLayout(pnlSeccionBotonesLayout);
@@ -227,13 +312,17 @@ public class crudProducto extends javax.swing.JPanel {
                 .addComponent(btnNuevo)
                 .addGap(26, 26, 26)
                 .addComponent(btnEditar)
-                .addGap(43, 43, 43)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGuardar)
-                .addGap(41, 41, 41)
+                .addGap(28, 28, 28)
+                .addComponent(btnDeshacer)
+                .addGap(30, 30, 30)
+                .addComponent(btnRehacer)
+                .addGap(33, 33, 33)
                 .addComponent(btnCancelar)
-                .addGap(36, 36, 36)
+                .addGap(41, 41, 41)
                 .addComponent(btnEliminar)
-                .addContainerGap(513, Short.MAX_VALUE))
+                .addContainerGap(370, Short.MAX_VALUE))
         );
         pnlSeccionBotonesLayout.setVerticalGroup(
             pnlSeccionBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,23 +333,100 @@ public class crudProducto extends javax.swing.JPanel {
                     .addComponent(btnEditar)
                     .addComponent(btnGuardar)
                     .addComponent(btnCancelar)
-                    .addComponent(btnEliminar))
+                    .addComponent(btnEliminar)
+                    .addComponent(btnDeshacer)
+                    .addComponent(btnRehacer))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
         add(pnlSeccionBotones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 530, 977, 60));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        stateNew();
+        txtNombre.requestFocus();
+        addOption = true;
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        stateInitial();
+        cleanControls();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+         if (txtNombre.getText().trim().equals("")) {
+            Messages.showMessageDialog("Debe ingresar el nombre del producto", "Atención");
+            txtNombre.requestFocus();
+            return;
+        }
+        if (addOption) {
+            //Agregar
+            addProduct();
+
+        } else {
+            //Editar
+            editProduct();
+        } 
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        addOption = false;
+        stateEdit();
+        txtCodigoProducto.requestFocus();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+         try{
+           String id = txtCodigoProducto.getText().trim();
+        if (id.equals("")) {
+            Messages.showMessageDialog("Debe buscar el producto a eliminar", "Atención");
+            txtCodigoProducto.requestFocus();
+            return;
+        }
+        Long productId = Long.parseLong(id);
+        OMDeleteProductCommand comm = new OMDeleteProductCommand(productId, productService);
+        ominvoker.addCommand(comm);
+        ominvoker.execute();  
+        
+        if (Messages.showConfirmDialog("Está seguro que desea eliminar este producto?", "Confirmación") == JOptionPane.YES_NO_OPTION) {
+            if(comm.result()) {
+                Messages.showMessageDialog("Producto eliminado con éxito", "Atención");
+                stateInitial();
+                cleanControls();
+            }
+        } 
+        }catch(Exception ex){
+            successMessage(ex.getMessage(), "Atención");   
+        }
+            
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacerActionPerformed
+          ominvoker.unexecute();
+        if(!ominvoker.hasMoreCommands())
+            this.btnDeshacer.setVisible(false);
+        this.btnRehacer.setVisible(true);
+    }//GEN-LAST:event_btnDeshacerActionPerformed
+
+    private void btnRehacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacerActionPerformed
+        ominvoker.reExecuted();
+        if(!ominvoker.hasMoreCommandsRedo())
+            this.btnRehacer.setVisible(false);
+        this.btnDeshacer.setVisible(true);
+    }//GEN-LAST:event_btnRehacerActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnDeshacer;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnExaminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnRehacer;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbxCodigoCategoria;
     private javax.swing.JLabel jLabel3;
@@ -284,4 +450,85 @@ public class crudProducto extends javax.swing.JPanel {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
+    
+    private void stateNew() {
+        btnNuevo.setVisible(false);
+        btnEditar.setVisible(false);
+        btnEliminar.setVisible(false);
+        btnCancelar.setVisible(true);
+        btnGuardar.setVisible(true);
+        btnBuscar.setVisible(false);
+        txtCodigoProducto.setEnabled(true);
+        txtNombre.setEnabled(true);
+        txtDescripcion.setEnabled(true);
+        txtPrecio.setVisible(true);
+        cbxCodigoCategoria.setEnabled(true);
+        btnDeshacer.setVisible(ominvoker.hasMoreCommands());
+        btnRehacer.setVisible(ominvoker.hasMoreCommandsRedo());
+    }
+
+    private void cleanControls() {
+        txtCodigoProducto.setText("");
+        txtNombre.setText("");
+        txtDescripcion.setText("");
+        txtPrecio.setText("");
+        txtDireccion.setText("");
+        cbxCodigoCategoria.setToolTipText("");   
+    }
+    private void addProduct() {
+        try{
+            Long id=Long.parseLong(this.txtCodigoProducto.getText());
+            String name = txtNombre.getText().trim();
+            String description = txtDescripcion.getText().trim();
+            Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
+            
+            
+            Product OProduct = new Product(id, name, description, 0,categoryId);
+            OMAddProductCommand comm = new OMAddProductCommand(OProduct, productService);
+            ominvoker.addCommand(comm);
+            ominvoker.execute();
+            if (comm.result()) {
+                Messages.showMessageDialog("Se grabó con éxito", "Atención");
+                cleanControls();
+                stateInitial();
+            } else {
+                Messages.showMessageDialog("Error al grabar, lo siento mucho", "Atención");
+            }
+        }catch(Exception ex){
+             successMessage(ex.getMessage(), "Atención");
+        }
+           
+    }
+    private void editProduct() {
+        String id = txtCodigoProducto.getText().trim();
+        if (id.equals("")) {
+            Messages.showMessageDialog("Debe buscar el producto a editar", "Atención");
+            txtCodigoProducto.requestFocus();
+            return;
+        }
+        Long productId = Long.parseLong(id);
+        String name=txtNombre.getText();
+        String description=this.txtDescripcion.getText();
+        Double precio=Double.parseDouble(this.txtPrecio.getText());
+        Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
+        
+        Product OProduct = new Product(productId, name, description, 0, categoryId);      
+        OMEditProductCommand comm = new OMEditProductCommand(OProduct, productService);
+        ominvoker.addCommand(comm);
+        ominvoker.execute();
+        
+        try{
+             if (comm.result()) {
+                Messages.showMessageDialog("Se editó con éxito", "Atención");
+                cleanControls();
+                stateInitial();
+            } else {
+                Messages.showMessageDialog("Error al editar, lo siento mucho", "Atención");
+            }
+        }catch(Exception ex){
+            successMessage(ex.getMessage(), "Atención");
+        }
+            
+    }
+
 }
