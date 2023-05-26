@@ -480,10 +480,12 @@ public class crudProducto extends javax.swing.JPanel {
             Long id=Long.parseLong(this.txtCodigoProducto.getText());
             String name = txtNombre.getText().trim();
             String description = txtDescripcion.getText().trim();
+            double price=Double.parseDouble(this.txtPrecio.getText());
+            String address=this.txtDireccion.getText();
             Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
             
             
-            Product OProduct = new Product(id, name, description, 0,categoryId);
+            Product OProduct = new Product(id, name, description,price,,categoryId);
             OMAddProductCommand comm = new OMAddProductCommand(OProduct, productService);
             ominvoker.addCommand(comm);
             ominvoker.execute();

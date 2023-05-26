@@ -15,6 +15,7 @@ import co.unicauca.openmarket.commons.infra.JsonError;
 import co.unicauca.openmarket.domain.services.ProductService;
 import co.unicauca.openmarket.server.application.PurchaseGenerator;
 import com.google.gson.Gson;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -199,19 +200,25 @@ public class OpenMarketHandler extends ServerHandler {
         producto.setProductId(Long.parseLong(protocolRequest.getParameters().get(0).getValue()));
         producto.setName(protocolRequest.getParameters().get(1).getValue());
         producto.setDescription(protocolRequest.getParameters().get(2).getValue());
-        producto.setCategoryId(Long.parseLong(protocolRequest.getParameters().get(3).getValue()));
+        producto.setPrice(Double.parseDouble(protocolRequest.getParameters().get(3).getValue()));
+        producto.setAddress(protocolRequest.getParameters().get(4).getValue());
+        producto.setCategoryId(Long.parseLong(protocolRequest.getParameters().get(5).getValue()));
+        producto.setImage(protocolRequest.getParameters().get(6).getValue().getBytes(StandardCharsets.UTF_8));
         
         boolean response = this.getServiceProduc().save(producto);
         String respuesta=String.valueOf(response);
         return respuesta;
     }
     private String processEditProduct(Protocol protocolRequest){
-       // Editar la imformacion del producto
-        Product producto=new Product();
-        producto.setProductId( Long.parseLong(protocolRequest.getParameters().get(0).getValue()));
-        producto.setName( protocolRequest.getParameters().get(1).getValue());
+       Product producto=new Product();
+        // Reconstruir La categoria a partir de lo que viene en los parámetros
+        producto.setProductId(Long.parseLong(protocolRequest.getParameters().get(0).getValue()));
+        producto.setName(protocolRequest.getParameters().get(1).getValue());
         producto.setDescription(protocolRequest.getParameters().get(2).getValue());
-        producto.setCategoryId(Long.parseLong(protocolRequest.getParameters().get(3).getValue()));
+        producto.setPrice(Double.parseDouble(protocolRequest.getParameters().get(3).getValue()));
+        producto.setAddress(protocolRequest.getParameters().get(4).getValue());
+        producto.setCategoryId(Long.parseLong(protocolRequest.getParameters().get(5).getValue()));
+        producto.setImage(protocolRequest.getParameters().get(6).getValue().getBytes(StandardCharsets.UTF_8));
        
         boolean response = serviceProduc.edit(producto);
         String respuesta=String.valueOf(response);

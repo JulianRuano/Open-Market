@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -284,16 +285,19 @@ public class ProductAccessImplSockets implements IProductAccess {
      * @return devulve algo como:
      * {"resource":"product,"action":"post","parameters":[{"name":"id","value":"1"},{"name":"name","value":"lacteos"},...}]}
      */
-    private String doSaveProductRequestJson(Product newProduct) {
+    private String doSaveProductRequestJson(Product product) {
         Protocol protocol = new Protocol();
         
         protocol.setResource("product");
         protocol.setAction("post");
         
-        protocol.addParameter("productId",newProduct.getProductId().toString());
-        protocol.addParameter("name",newProduct.getName());
-        protocol.addParameter("description", newProduct.getDescription());
-        protocol.addParameter("CategoryId", newProduct.getCategoryId().toString());
+        protocol.addParameter("productId",product.getProductId().toString());
+        protocol.addParameter("name",product.getName());
+        protocol.addParameter("description", product.getDescription());
+        protocol.addParameter("price", Double.toString(product.getPrice()));
+        protocol.addParameter("address", product.getAddress());
+        protocol.addParameter("CategoryId", product.getCategoryId().toString());
+        protocol.addParameter("image", Arrays.toString(product.getImage()));
 
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
@@ -360,14 +364,18 @@ public class ProductAccessImplSockets implements IProductAccess {
      * @return solicitud de consulta del producto para editatr en formato Json, algo como:
      * {"resource":"product","action":"edit","parameters":[{"productId":"id","value":"1"}]}
      */
-    private String doEditproductRequestJson(Product producto) {
+    private String doEditproductRequestJson(Product product) {
         Protocol protocol =new Protocol();
         protocol.setResource("product");
         protocol.setAction("edit");
-        protocol.addParameter("productId", producto.getProductId().toString());
-        protocol.addParameter("name", producto.getName());
-        protocol.addParameter("description", producto.getDescription());
-        protocol.addParameter("categorId", producto.getCategoryId().toString());
+        
+        protocol.addParameter("productId",product.getProductId().toString());
+        protocol.addParameter("name",product.getName());
+        protocol.addParameter("description", product.getDescription());
+        protocol.addParameter("price", Double.toString(product.getPrice()));
+        protocol.addParameter("address", product.getAddress());
+        protocol.addParameter("CategoryId", product.getCategoryId().toString());
+        protocol.addParameter("image", Arrays.toString(product.getImage()));
         
         Gson gson=new Gson();
         String requestJson = gson.toJson(protocol);
