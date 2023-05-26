@@ -53,6 +53,7 @@ public class GUIProductsFind extends javax.swing.JDialog implements Observador {
             model.addRow(rowData);
         }
     }
+    
     private void fillTableId(Product producto){
       initializeTable();
         DefaultTableModel model = (DefaultTableModel) tblProducts.getModel();
