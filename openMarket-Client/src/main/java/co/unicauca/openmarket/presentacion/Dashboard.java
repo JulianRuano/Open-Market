@@ -5,7 +5,7 @@
  */
 package co.unicauca.openmarket.presentacion;
 
-import co.unicauca.openmarket.client.application.ShoppingCar;
+import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
@@ -24,7 +24,7 @@ public class Dashboard extends javax.swing.JFrame {
      private ProductService productService;
      private CategoryService categoryService;
     private ShoppingCar shoppingCart;
-    
+    long id;
     
     public Dashboard(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart) {
         initComponents();
@@ -226,7 +226,7 @@ public class Dashboard extends javax.swing.JFrame {
 
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
-        ShowJPanel(new Tienda() );
+        ShowJPanel(new Tienda(productService,shoppingCart) );
     }//GEN-LAST:event_btnComprarActionPerformed
 
     private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed

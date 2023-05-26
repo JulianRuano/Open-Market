@@ -144,6 +144,11 @@ public class crudProducto extends javax.swing.JPanel {
         cbxCodigoCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnListar.setText("Listar Todo");
 
@@ -415,6 +420,10 @@ public class crudProducto extends javax.swing.JPanel {
         this.btnDeshacer.setVisible(true);
     }//GEN-LAST:event_btnRehacerActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+      
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -483,9 +492,9 @@ public class crudProducto extends javax.swing.JPanel {
             double price=Double.parseDouble(this.txtPrecio.getText());
             String address=this.txtDireccion.getText();
             Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
+          
             
-            
-            Product OProduct = new Product(id, name, description,price,,categoryId);
+            Product OProduct = new Product(id, name, description,price,categoryId,null);
             OMAddProductCommand comm = new OMAddProductCommand(OProduct, productService);
             ominvoker.addCommand(comm);
             ominvoker.execute();

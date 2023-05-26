@@ -5,6 +5,9 @@
  */
 package co.unicauca.openmarket.presentacion;
 
+import co.unicauca.openmarket.client.domain.application.ShoppingCar;
+import co.unicauca.openmarket.client.domain.service.ProductService;
+
 /**
  *
  * @author brayan
@@ -14,8 +17,15 @@ public class Tienda extends javax.swing.JPanel {
     /**
      * Creates new form Tienda
      */
-    public Tienda() {
-        initComponents();
+    private ProductService productService;
+    private ShoppingCar shoppingCart;
+    private GUIPaymet compra;
+    long id;
+    public Tienda(ProductService productService,ShoppingCar shoppingCart) {
+        this.productService=productService;
+       //this.shoppingCart=shoppingCart;
+      this.compra=new GUIPaymet(id,shoppingCart);
+       initComponents();
     }
 
     /**
@@ -49,8 +59,18 @@ public class Tienda extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblProductos);
 
         btnComprar.setText("Comprar");
+        btnComprar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComprarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlTiendaLayout = new javax.swing.GroupLayout(pnlTienda);
         pnlTienda.setLayout(pnlTiendaLayout);
@@ -98,6 +118,17 @@ public class Tienda extends javax.swing.JPanel {
             .addComponent(pnlTienda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
+        Long idProducto=Long.parseLong(this.txtComprar.getText());
+        //GUIPaymet compra=new GUIPaymet(idProducto,shoppingCart); 
+        
+        compra.setVisible(true);
+    }//GEN-LAST:event_btnComprarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

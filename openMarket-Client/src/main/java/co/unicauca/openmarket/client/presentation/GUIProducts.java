@@ -2,7 +2,7 @@ package co.unicauca.openmarket.client.presentation;
 
 
 
-import co.unicauca.openmarket.client.application.ShoppingCar;
+import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.infra.Messages;
 import static co.unicauca.openmarket.client.infra.Messages.successMessage;
