@@ -9,13 +9,29 @@ import co.unicauca.openmarket.client.presentation.commands.OMDeleteProductComman
 import co.unicauca.openmarket.client.presentation.commands.OMEditProductCommand;
 import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
 import co.unicauca.openmarket.commons.domain.Product;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.List;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author brayan
  */
 public class crudProducto extends javax.swing.JPanel {
+    
+    DefaultTableModel mModeloTabla = new DefaultTableModel();
+    String Ruta = "";
 
     /**
      * Creates new form crudProducto
@@ -26,7 +42,15 @@ public class crudProducto extends javax.swing.JPanel {
     public crudProducto(ProductService productService) {
         initComponents();
         this.productService=productService;
-        ominvoker = new OMInvoker();
+        ominvoker = new OMInvoker();  
+        mModeloTabla.addColumn("ID");
+        mModeloTabla.addColumn("Nombre");
+        mModeloTabla.addColumn("Descripcion");
+        mModeloTabla.addColumn("Precio");
+        mModeloTabla.addColumn("Direccion");
+        mModeloTabla.addColumn("ID categoria");
+        mModeloTabla.addColumn("Imagen");
+        tblProductos.setModel(mModeloTabla);
         stateInitial();
     }
 
@@ -60,6 +84,42 @@ public class crudProducto extends javax.swing.JPanel {
         btnDeshacer.setVisible(ominvoker.hasMoreCommands());
         btnRehacer.setVisible(ominvoker.hasMoreCommandsRedo());
     }
+    
+    private void fillTable(List<Product> listProducts) {
+        DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
+
+        Object rowData[] = new Object[7];//No columnas
+        for (int i = 0; i < listProducts.size(); i++) {
+            rowData[0] = listProducts.get(i).getProductId();
+            rowData[1] = listProducts.get(i).getName();
+            rowData[2] = listProducts.get(i).getDescription();
+            rowData[3] = listProducts.get(i).getPrice();
+            rowData[4] = listProducts.get(i).getAddress();
+            rowData[5] = listProducts.get(i).getCategoryId();
+            
+            try {
+                byte[] imagen = listProducts.get(i).getImage();
+                BufferedImage bufferedImage = null;
+                InputStream inputStream = new ByteArrayInputStream(imagen);
+                bufferedImage = ImageIO.read(inputStream);
+                ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(60, 60, 0));
+                rowData[6] = new JLabel(mIcono);
+                } catch (Exception e) {
+                    rowData[6] = new JLabel("No imagen");
+                }
+            
+            model.addRow(rowData);
+        }
+        
+        tblProductos.setRowHeight(60);
+        tblProductos.getColumnModel().getColumn(0).setPreferredWidth(60);
+        tblProductos.getColumnModel().getColumn(1).setPreferredWidth(60);
+        tblProductos.getColumnModel().getColumn(2).setPreferredWidth(60);
+    }
+    
+    
+    
+    
     
     
     /**
@@ -146,8 +206,18 @@ public class crudProducto extends javax.swing.JPanel {
         btnBuscar.setText("Buscar");
 
         btnListar.setText("Listar Todo");
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarActionPerformed(evt);
+            }
+        });
 
         btnExaminar.setText("Examinar");
+        btnExaminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExaminarActionPerformed(evt);
+            }
+        });
 
         lblExaminar.setText("jLabel1");
         lblExaminar.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -177,7 +247,7 @@ public class crudProducto extends javax.swing.JPanel {
                         .addComponent(lblExaminar, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnExaminar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
                         .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,6 +485,27 @@ public class crudProducto extends javax.swing.JPanel {
         this.btnDeshacer.setVisible(true);
     }//GEN-LAST:event_btnRehacerActionPerformed
 
+    private void btnExaminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        fileChooser.setFileFilter(extensionFilter);
+
+        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            Ruta = fileChooser.getSelectedFile().getAbsolutePath();
+            Image mImagen = new ImageIcon(Ruta).getImage();
+            ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblExaminar.getWidth(), lblExaminar.getHeight(), 0));
+            lblExaminar.setIcon(mIcono);
+        }
+    }//GEN-LAST:event_btnExaminarActionPerformed
+
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+        try{
+            fillTable( productService.findAllProducts());
+        }catch(Exception ex){
+            successMessage(ex.getMessage(), "Atención"); 
+        }
+    }//GEN-LAST:event_btnListarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -477,15 +568,15 @@ public class crudProducto extends javax.swing.JPanel {
     }
     private void addProduct() {
         try{
-            Long id=Long.parseLong(this.txtCodigoProducto.getText());
+            Long productId=Long.parseLong(this.txtCodigoProducto.getText());
             String name = txtNombre.getText().trim();
             String description = txtDescripcion.getText().trim();
             double price=Double.parseDouble(this.txtPrecio.getText());
             String address=this.txtDireccion.getText();
-            Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
+            //Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
+            byte [] image = getImagen(Ruta);
             
-            
-            Product OProduct = new Product(id, name, description,price,,categoryId);
+            Product OProduct = new Product(productId, name, description, price, name, 4l, image);
             OMAddProductCommand comm = new OMAddProductCommand(OProduct, productService);
             ominvoker.addCommand(comm);
             ominvoker.execute();
@@ -511,10 +602,11 @@ public class crudProducto extends javax.swing.JPanel {
         Long productId = Long.parseLong(id);
         String name=txtNombre.getText();
         String description=this.txtDescripcion.getText();
-        Double precio=Double.parseDouble(this.txtPrecio.getText());
+        double price =Double.parseDouble(this.txtPrecio.getText());
         Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
+        byte [] image = null;
         
-        Product OProduct = new Product(productId, name, description, 0, categoryId);      
+        Product OProduct = new Product(productId, name, description, price, name, categoryId, image);      
         OMEditProductCommand comm = new OMEditProductCommand(OProduct, productService);
         ominvoker.addCommand(comm);
         ominvoker.execute();
@@ -532,5 +624,26 @@ public class crudProducto extends javax.swing.JPanel {
         }
             
     }
+    
+    private void Limpiar() {
+        for (int i = 0; i < tblProductos.getRowCount(); i++) {
+            mModeloTabla.removeRow(i);
+            i -= 1;
+        }
+    }
+    
+    private byte[] getImagen(String Ruta) {
+        File imagen = new File(Ruta);
+        try {
+            byte[] icono = new byte[(int) imagen.length()];
+            InputStream input = new FileInputStream(imagen);
+            input.read(icono);
+            return icono;
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+    
+    
 
 }
