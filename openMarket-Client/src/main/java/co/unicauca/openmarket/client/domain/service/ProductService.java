@@ -34,15 +34,17 @@ public class ProductService extends Observado {
     }
     
 
-    public boolean saveProduct(Long id,String name, String description,Long categoryId)throws Exception {
+    public boolean saveProduct(Long productId, String name, String description, double price,String address ,Long categoryId,byte [] image)throws Exception {
         
         Product newProduct = new Product();
-        newProduct.setProductId(id);
+        newProduct.setProductId(productId);
         newProduct.setName(name);
         newProduct.setDescription(description);
+        newProduct.setPrice(price);
+        newProduct.setAddress(address);
         newProduct.setCategoryId(categoryId);
-        
-        
+        newProduct.setImage(image);
+            
         //Validate product
         if (newProduct.getName().isBlank() ) {
             return false;
@@ -60,8 +62,8 @@ public class ProductService extends Observado {
         return products;
     }
     
-    public Product findProductById(Long id)throws Exception{
-        return repository.findById(id);
+    public Product findProductById(Long productId)throws Exception{
+        return repository.findById(productId);
     }
     public List<Product> findProductsByName(String name)throws Exception {
         List<Product> products = new ArrayList<>();
@@ -75,25 +77,28 @@ public class ProductService extends Observado {
 
         return products;
     }
-    public boolean deleteProduct(Long id)throws Exception {
-        boolean result=repository.delete(id);
+    public boolean deleteProduct(Long productId)throws Exception {
+        boolean result=repository.delete(productId);
         this.notificar();
-        return result;
-       
+        return result;      
     }
 
-    public boolean editProduct(Long productId,String name, String description,Long categoryId) throws Exception{
+    public boolean editProduct(Long productId, String name, String description, double price,String address ,Long categoryId,byte [] image) throws Exception{
           
-        Product producto=new Product();
-        producto.setProductId(productId);
-        producto.setName(name);
-        producto.setDescription(description);
-        producto.setCategoryId(categoryId);
+        Product product = new Product();
+        product.setProductId(productId);
+        product.setName(name);
+        product.setDescription(description);
+        product.setPrice(price);
+        product.setAddress(address);
+        product.setCategoryId(categoryId);
+        product.setImage(image);
+        
         //Validate product
-        if (producto.getProductId() == null ||producto.getName().isBlank()) {
+        if (product.getProductId() == null ||product.getName().isBlank()) {
             return false;
         }
-        boolean result= repository.edit(producto);
+        boolean result= repository.edit(product);
         this.notificar();
         return result;
 
