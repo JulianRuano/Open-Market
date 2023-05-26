@@ -20,12 +20,15 @@ public class Tienda extends javax.swing.JPanel {
     private ProductService productService;
     private ShoppingCar shoppingCart;
     private GUIPaymet compra;
-    long id;
+   Long id;
     public Tienda(ProductService productService,ShoppingCar shoppingCart) {
         this.productService=productService;
-       //this.shoppingCart=shoppingCart;
-      this.compra=new GUIPaymet(id,shoppingCart);
+       //his.shoppingCart=shoppingCart;
+       
+      
+        
        initComponents();
+       this.compra=new GUIPaymet(id,shoppingCart);
     }
 
     /**
@@ -124,8 +127,8 @@ public class Tienda extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
-        Long idProducto=Long.parseLong(this.txtComprar.getText());
-        //GUIPaymet compra=new GUIPaymet(idProducto,shoppingCart); 
+        //Long idProducto=Long.parseLong(this.txtComprar.getText());
+       // GUIPaymet compra=new GUIPaymet(idProducto,shoppingCart); 
         
         compra.setVisible(true);
     }//GEN-LAST:event_btnComprarActionPerformed
