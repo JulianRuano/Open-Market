@@ -178,7 +178,7 @@ public class GUICategory extends javax.swing.JFrame {
         pnlSouthLayout.setHorizontalGroup(
             pnlSouthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSouthLayout.createSequentialGroup()
-                .addGap(81, 81, 81)
+                .addGap(89, 89, 89)
                 .addComponent(btnNuevo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnEditar)

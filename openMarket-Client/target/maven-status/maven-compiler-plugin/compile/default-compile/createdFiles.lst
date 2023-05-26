@@ -12,7 +12,6 @@ co\unicauca\openmarket\client\infra\OpenMarketSocket.class
 co\unicauca\openmarket\client\presentation\GUICategory$6.class
 co\unicauca\openmarket\client\presentation\GUICategory$2.class
 co\unicauca\openmarket\client\presentation\GUIProductsFind$4.class
-co\unicauca\openmarket\client\domain\Category.class
 co\unicauca\openmarket\client\access\IProductAccess.class
 co\unicauca\openmarket\client\presentation\commands\OMAddProductCommand.class
 co\unicauca\openmarket\client\presentation\GUICategory$5.class
@@ -45,7 +44,6 @@ co\unicauca\openmarket\client\presentation\GUIProducts$4.class
 co\unicauca\openmarket\client\presentation\commands\OMEditCategoryCommand.class
 co\unicauca\openmarket\client\domain\Location.class
 co\unicauca\openmarket\client\access\CategoryAccessImplSockets$1.class
-co\unicauca\openmarket\client\domain\Product.class
 co\unicauca\openmarket\client\presentation\GUIProductsFind$2.class
 co\unicauca\openmarket\client\presentation\GUIProducts$7.class
 co\unicauca\openmarket\client\presentation\commands\OMInvoker.class
