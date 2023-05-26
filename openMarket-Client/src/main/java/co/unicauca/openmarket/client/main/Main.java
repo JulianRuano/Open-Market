@@ -16,6 +16,7 @@ import co.unicauca.openmarket.client.presentation.GUICategoriesFind;
 import co.unicauca.openmarket.client.presentation.GUICategory;
 import co.unicauca.openmarket.client.presentation.GUIProducts;
 import co.unicauca.openmarket.client.presentation.GUIProductsFind;
+import co.unicauca.openmarket.presentacion.Dashboard;
 
 /**
  *
@@ -36,7 +37,7 @@ public class Main {
         ShoppingCar shoppingCart = new ShoppingCar(repository3);
         
         
-
+/*
         GUICategory instance1=new GUICategory(categoryService);
         instance1.setVisible(true);
         instance1.setSize(595, 380);
@@ -53,7 +54,9 @@ public class Main {
         GUICategoriesFind instance4 = new GUICategoriesFind (null,false,categoryService);
         instance4.setVisible(true);
         categoryService.addObservador(instance4);
-        
+       */
+       Dashboard instance1=new  Dashboard(productService,categoryService,shoppingCart);
+       instance1.setVisible(true);
     }
     
 }
