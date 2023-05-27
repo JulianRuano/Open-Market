@@ -21,14 +21,12 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -69,6 +67,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         mModeloTabla.addColumn("Precio");
         mModeloTabla.addColumn("Direccion");
         mModeloTabla.addColumn("ID categoria");
+        mModeloTabla.addColumn("Stock");
         mModeloTabla.addColumn("Imagen");
         tblProductos.setModel(mModeloTabla);
         List<Category> categories = this.categoryService.findAllCategories();
@@ -144,7 +143,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         tblProductos.setDefaultRenderer(Object.class, new RenderImagen());
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
 
-        Object rowData[] = new Object[7];//No columnas
+        Object rowData[] = new Object[8];//No columnas
         for (int i = 0; i < listProducts.size(); i++) {
             rowData[0] = listProducts.get(i).getProductId();
             rowData[1] = listProducts.get(i).getName();
@@ -640,7 +639,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         }
         this.btnDeshacer.setVisible(true);
     }//GEN-LAST:event_btnRehacerActionPerformed
-
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {

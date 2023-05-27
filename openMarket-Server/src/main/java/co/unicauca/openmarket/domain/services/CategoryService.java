@@ -37,14 +37,14 @@ public class CategoryService {
         return repo.save(newCategory);
     }
     
-    public synchronized boolean edit(Long id, Category category){
+    public synchronized boolean edit(int id, Category category){
         return repo.edit(id, category);
     }
     
-    public synchronized boolean delete(Long id){
+    public synchronized boolean delete(int id){
         return repo.delete(id);
     }
-    public synchronized Category findById(Long id){
+    public synchronized Category findById(int id){
         return repo.findById(id);
     };
     public synchronized List<Category> findAll(){

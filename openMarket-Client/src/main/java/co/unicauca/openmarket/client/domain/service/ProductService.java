@@ -34,7 +34,7 @@ public class ProductService extends Observado {
     }
     
 
-    public boolean saveProduct(Long productId, String name, String description, double price,String address ,Long categoryId,byte [] image)throws Exception {
+    public boolean saveProduct(int productId, String name, String description, double price,String address ,int categoryId, int stock,byte [] image)throws Exception {
         
         Product newProduct = new Product();
         newProduct.setProductId(productId);
@@ -43,6 +43,7 @@ public class ProductService extends Observado {
         newProduct.setPrice(price);
         newProduct.setAddress(address);
         newProduct.setCategoryId(categoryId);
+        newProduct.setStock(stock);
         newProduct.setImage(image);
             
         //Validate product
@@ -62,7 +63,7 @@ public class ProductService extends Observado {
         return products;
     }
     
-    public Product findProductById(Long productId)throws Exception{
+    public Product findProductById(int productId)throws Exception{
         return repository.findById(productId);
     }
     public List<Product> findProductsByName(String name)throws Exception {
@@ -71,19 +72,19 @@ public class ProductService extends Observado {
 
         return products;
     }
-    public List<Product> findProductsByCategory(Long categoryId) throws Exception{
+    public List<Product> findProductsByCategory(int categoryId) throws Exception{
         List<Product> products = new ArrayList<>();
         products = repository.findByCategory(categoryId);
 
         return products;
     }
-    public boolean deleteProduct(Long productId)throws Exception {
+    public boolean deleteProduct(int productId)throws Exception {
         boolean result=repository.delete(productId);
         this.notificar();
         return result;      
     }
 
-    public boolean editProduct(Long productId, String name, String description, double price,String address ,Long categoryId,byte [] image) throws Exception{
+    public boolean editProduct(int productId, String name, String description, double price,String address ,int categoryId, int stock,byte [] image) throws Exception{
           
         Product product = new Product();
         product.setProductId(productId);
@@ -92,10 +93,11 @@ public class ProductService extends Observado {
         product.setPrice(price);
         product.setAddress(address);
         product.setCategoryId(categoryId);
+        product.setStock(stock);
         product.setImage(image);
         
         //Validate product
-        if (product.getProductId() == null ||product.getName().isBlank()) {
+        if (product.getName().isBlank()) {
             return false;
         }
         boolean result= repository.edit(product);

@@ -15,12 +15,12 @@ public interface IProductRepository {
     
     boolean edit(Product newProduct);
     
-    boolean delete(Long id);
+    boolean delete(int id);
 
-    Product findById(Long id);
+    Product findById(int id);
     
    List<Product> findByName(String pname);
-    List<Product> findByCategory(Long categoryName);
+    List<Product> findByCategory(int categoryName);
     List<Product> findAll();
     
 

@@ -12,12 +12,12 @@ import java.util.logging.Logger;
  */
 public class OMDeleteCategoryCommand extends OMCommand {
    
-    private Long idCategory;
+    private int idCategory;
     private Category cC;
     private CategoryService cS;
     boolean result=false;
     
-    public OMDeleteCategoryCommand(Long idCategory, CategoryService cS){
+    public OMDeleteCategoryCommand(int idCategory, CategoryService cS){
         this.idCategory = idCategory;
         this.cS = cS;
     }
