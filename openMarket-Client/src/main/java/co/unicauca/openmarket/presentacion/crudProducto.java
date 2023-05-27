@@ -50,6 +50,7 @@ public class crudProducto extends javax.swing.JPanel {
         mModeloTabla.addColumn("Precio");
         mModeloTabla.addColumn("Direccion");
         mModeloTabla.addColumn("ID categoria");
+        mModeloTabla.addColumn("Stock");
         mModeloTabla.addColumn("Imagen");
         tblProductos.setModel(mModeloTabla);
         stateInitial();
@@ -98,6 +99,7 @@ public class crudProducto extends javax.swing.JPanel {
             rowData[3] = listProducts.get(i).getPrice();
             rowData[4] = listProducts.get(i).getAddress();
             rowData[5] = listProducts.get(i).getCategoryId();
+            rowData[6] = listProducts.get(i).getStock();
             
             try {
                 byte[] imagen = listProducts.get(i).getImage();
@@ -105,10 +107,11 @@ public class crudProducto extends javax.swing.JPanel {
                 InputStream inputStream = new ByteArrayInputStream(imagen);
                 bufferedImage = ImageIO.read(inputStream);
                 ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(80, 80, 0));
-                rowData[6] = new JLabel(mIcono);
+                rowData[7] = new JLabel(mIcono);
                 } catch (Exception e) {
-                    rowData[6] = new JLabel("No imagen");
+                    rowData[7] = new JLabel("No imagen");
                 }
+            
             
             model.addRow(rowData);
         }
@@ -500,7 +503,6 @@ public class crudProducto extends javax.swing.JPanel {
         this.btnDeshacer.setVisible(true);
     }//GEN-LAST:event_btnRehacerActionPerformed
 
-
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
       
     }//GEN-LAST:event_btnBuscarActionPerformed
@@ -591,20 +593,18 @@ public class crudProducto extends javax.swing.JPanel {
     }
     private void addProduct() {
         try{
-            Long productId=Long.parseLong(this.txtCodigoProducto.getText());
+            Long productId = 0l;
             String name = txtNombre.getText().trim();
             String description = txtDescripcion.getText().trim();
-            double price=Double.parseDouble(this.txtPrecio.getText());
-            String address=this.txtDireccion.getText();
-            Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
-          
-            
-          
-            //Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
+            double price =Double.parseDouble(this.txtPrecio.getText());
+            String address =this.txtDireccion.getText();
+            //Long   categoryId =Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
+            Long   categoryId = 1l;
+            int stock = 0;
             byte [] image = getImagen(Ruta);
             
             
-            Product OProduct = new Product(productId, name, description, price, name, 4l, image);
+            Product OProduct = new Product(productId, name, description, price, address, categoryId,stock, image);
             OMAddProductCommand comm = new OMAddProductCommand(OProduct, productService);
             ominvoker.addCommand(comm);
             ominvoker.execute();
@@ -631,10 +631,12 @@ public class crudProducto extends javax.swing.JPanel {
         String name=txtNombre.getText();
         String description=this.txtDescripcion.getText();
         double price =Double.parseDouble(this.txtPrecio.getText());
-        Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
+        String address =this.txtDireccion.getText();
+        Long   categoryId= 1l;
+        int stock = 0;
         byte [] image = null;
         
-        Product OProduct = new Product(productId, name, description, price, name, categoryId, image);      
+        Product OProduct = new Product(productId, name, description, price, address, categoryId,stock, image);      
         OMEditProductCommand comm = new OMEditProductCommand(OProduct, productService);
         ominvoker.addCommand(comm);
         ominvoker.execute();

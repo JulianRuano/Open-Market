@@ -204,8 +204,9 @@ public class OpenMarketHandler extends ServerHandler {
         producto.setPrice(Double.parseDouble(protocolRequest.getParameters().get(3).getValue()));
         producto.setAddress(protocolRequest.getParameters().get(4).getValue());
         producto.setCategoryId(Long.parseLong(protocolRequest.getParameters().get(5).getValue()));
+        producto.setStock(Integer.parseInt(protocolRequest.getParameters().get(6).getValue()));
         
-        byte[] decodedImage = Base64.getDecoder().decode(protocolRequest.getParameters().get(6).getValue());             
+        byte[] decodedImage = Base64.getDecoder().decode(protocolRequest.getParameters().get(7).getValue());             
         producto.setImage(decodedImage);
 
         boolean response = this.getServiceProduc().save(producto);
@@ -221,7 +222,8 @@ public class OpenMarketHandler extends ServerHandler {
         producto.setPrice(Double.parseDouble(protocolRequest.getParameters().get(3).getValue()));
         producto.setAddress(protocolRequest.getParameters().get(4).getValue());
         producto.setCategoryId(Long.parseLong(protocolRequest.getParameters().get(5).getValue()));
-        producto.setImage(protocolRequest.getParameters().get(6).getValue().getBytes(StandardCharsets.UTF_8));
+        producto.setStock(Integer.parseInt(protocolRequest.getParameters().get(6).getValue()));
+        producto.setImage(protocolRequest.getParameters().get(7).getValue().getBytes(StandardCharsets.UTF_8));
        
         boolean response = serviceProduc.edit(producto);
         String respuesta=String.valueOf(response);

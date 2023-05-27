@@ -27,7 +27,7 @@ public class OMEditProductCommand extends OMCommand {
     public void make() {
         try {
             backupProducto = pS.findProductById(pP.getProductId());
-            result = pS.editProduct(pP.getProductId(), pP.getName(), pP.getDescription(), pP.getPrice(), pP.getAddress(),pP.getCategoryId(), pP.getImage());
+            result = pS.editProduct(pP.getProductId(), pP.getName(), pP.getDescription(), pP.getPrice(), pP.getAddress(),pP.getCategoryId(),pP.getStock(), pP.getImage());
         } catch (Exception ex) {
             Logger.getLogger(OMEditProductCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -36,7 +36,7 @@ public class OMEditProductCommand extends OMCommand {
     @Override
     public void unmake() {
         try {
-            result = pS.editProduct(pP.getProductId(), pP.getName(), pP.getDescription(), pP.getPrice(), pP.getAddress(),pP.getCategoryId(), pP.getImage());
+            result = pS.editProduct(pP.getProductId(), pP.getName(), pP.getDescription(), pP.getPrice(), pP.getAddress(),pP.getCategoryId(),pP.getStock(), pP.getImage());
         } catch (Exception ex) {
             Logger.getLogger(OMEditProductCommand.class.getName()).log(Level.SEVERE, null, ex);
         }

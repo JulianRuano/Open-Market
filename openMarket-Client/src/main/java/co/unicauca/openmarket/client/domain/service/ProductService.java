@@ -34,7 +34,7 @@ public class ProductService extends Observado {
     }
     
 
-    public boolean saveProduct(Long productId, String name, String description, double price,String address ,Long categoryId,byte [] image)throws Exception {
+    public boolean saveProduct(Long productId, String name, String description, double price,String address ,Long categoryId, int stock,byte [] image)throws Exception {
         
         Product newProduct = new Product();
         newProduct.setProductId(productId);
@@ -43,6 +43,7 @@ public class ProductService extends Observado {
         newProduct.setPrice(price);
         newProduct.setAddress(address);
         newProduct.setCategoryId(categoryId);
+        newProduct.setStock(stock);
         newProduct.setImage(image);
             
         //Validate product
@@ -83,7 +84,7 @@ public class ProductService extends Observado {
         return result;      
     }
 
-    public boolean editProduct(Long productId, String name, String description, double price,String address ,Long categoryId,byte [] image) throws Exception{
+    public boolean editProduct(Long productId, String name, String description, double price,String address ,Long categoryId, int stock,byte [] image) throws Exception{
           
         Product product = new Product();
         product.setProductId(productId);
@@ -92,6 +93,7 @@ public class ProductService extends Observado {
         product.setPrice(price);
         product.setAddress(address);
         product.setCategoryId(categoryId);
+        product.setStock(stock);
         product.setImage(image);
         
         //Validate product

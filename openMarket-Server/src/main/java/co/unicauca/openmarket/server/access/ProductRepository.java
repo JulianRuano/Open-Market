@@ -57,17 +57,17 @@ public final class ProductRepository implements IProductRepository {
             }
             this.connect();
 
-            String sql = "INSERT INTO product (ProductId,name,description,price,address,image,categoryId) "
+            String sql = "INSERT INTO product (name,description,price,address,categoryId,stock,image) "
                     + "VALUES ( ?, ?, ?, ? , ?, ?, ?)";
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setLong(1, newProduct.getProductId());
-                pstmt.setString(2, newProduct.getName());
-                pstmt.setString(3, newProduct.getDescription());
-                pstmt.setDouble(4, newProduct.getPrice());
-                pstmt.setString(5, newProduct.getAddress());
-                pstmt.setBytes(6, newProduct.getImage());
-                pstmt.setLong(7, newProduct.getCategoryId());
+                pstmt.setString(1, newProduct.getName());
+                pstmt.setString(2, newProduct.getDescription());
+                pstmt.setDouble(3, newProduct.getPrice());
+                pstmt.setString(4, newProduct.getAddress());
+                pstmt.setLong(5, newProduct.getCategoryId());
+                pstmt.setLong(6, newProduct.getStock());
+                pstmt.setBytes(7, newProduct.getImage());
                 pstmt.executeUpdate();
                 pstmt.close();
                 this.disconnect();
@@ -93,12 +93,13 @@ public final class ProductRepository implements IProductRepository {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
                 Product newProduct = new Product();
-                newProduct.setProductId(res.getLong("ProductId"));
+                newProduct.setProductId(res.getLong("productId"));
                 newProduct.setName(res.getString("name"));
                 newProduct.setDescription(res.getString("description"));
                 newProduct.setPrice(res.getDouble("price"));
                 newProduct.setAddress(res.getString("address"));
                 newProduct.setCategoryId(res.getLong("categoryId"));
+                newProduct.setStock(res.getInt("stock"));
                 newProduct.setImage(res.getBytes("image"));
                 products.add(newProduct);
             }
@@ -115,10 +116,10 @@ public final class ProductRepository implements IProductRepository {
     
 
     @Override
-    public boolean edit(Product product) {
+    public boolean edit(Product newProduct) {
         try {
             //Validate product
-            if (product.getProductId()<= 0 || product == null) {
+            if (newProduct.getProductId()<= 0 || newProduct == null) {
                 return false;
             }
             this.connect();
@@ -127,15 +128,17 @@ public final class ProductRepository implements IProductRepository {
                     + "SET name=?, description=?, price=?, address=?, categoryId=?, image=?  "
                     + "WHERE productId = ?";
 
-            PreparedStatement pstmt = conn.prepareStatement(sql);        
-            pstmt.setString(1, product.getName());
-            pstmt.setString(2, product.getDescription());
-            pstmt.setDouble(3, product.getPrice());
-            pstmt.setString(4, product.getAddress());
-            pstmt.setBytes(5, product.getImage());
-            pstmt.setLong(6, product.getCategoryId());
-            pstmt.executeUpdate();
-            pstmt.close();
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setLong(1, newProduct.getProductId());
+                pstmt.setString(2, newProduct.getName());
+                pstmt.setString(3, newProduct.getDescription());
+                pstmt.setDouble(4, newProduct.getPrice());
+                pstmt.setString(5, newProduct.getAddress());
+                pstmt.setLong(6, newProduct.getCategoryId());
+                pstmt.setLong(7, newProduct.getStock());
+                pstmt.setBytes(8, newProduct.getImage());
+                pstmt.executeUpdate();
+            }
             this.disconnect();
             return true;
         } catch (SQLException ex) {
@@ -183,12 +186,13 @@ public final class ProductRepository implements IProductRepository {
 
             if (res.next()) {
                 Product newProduct = new Product();
-                newProduct.setProductId(res.getLong("ProductId"));
+                newProduct.setProductId(res.getLong("productId"));
                 newProduct.setName(res.getString("name"));
                 newProduct.setDescription(res.getString("description"));
                 newProduct.setPrice(res.getDouble("price"));
                 newProduct.setAddress(res.getString("address"));
                 newProduct.setCategoryId(res.getLong("categoryId"));
+                newProduct.setStock(res.getInt("stock"));
                 newProduct.setImage(res.getBytes("image"));
                 pstmt.close();
                 this.disconnect();             
@@ -217,12 +221,13 @@ public final class ProductRepository implements IProductRepository {
             ResultSet res = pstmt.executeQuery();
             while (res.next()) {
                 Product newProduct = new Product();
-                newProduct.setProductId(res.getLong("ProductId"));
+                newProduct.setProductId(res.getLong("productId"));
                 newProduct.setName(res.getString("name"));
                 newProduct.setDescription(res.getString("description"));
                 newProduct.setPrice(res.getDouble("price"));
                 newProduct.setAddress(res.getString("address"));
                 newProduct.setCategoryId(res.getLong("categoryId"));
+                newProduct.setStock(res.getInt("stock"));
                 newProduct.setImage(res.getBytes("image"));
                 pstmt.close();
                 products.add(newProduct);
@@ -232,7 +237,6 @@ public final class ProductRepository implements IProductRepository {
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return products;
     }
 
@@ -261,12 +265,13 @@ public final class ProductRepository implements IProductRepository {
 
                 while (res.next()) {
                     Product newProduct = new Product();
-                    newProduct.setProductId(res.getLong("ProductId"));
+                    newProduct.setProductId(res.getLong("productId"));
                     newProduct.setName(res.getString("name"));
                     newProduct.setDescription(res.getString("description"));
                     newProduct.setPrice(res.getDouble("price"));
                     newProduct.setAddress(res.getString("address"));
                     newProduct.setCategoryId(res.getLong("categoryId"));
+                    newProduct.setStock(res.getInt("stock"));
                     newProduct.setImage(res.getBytes("image"));
                     products.add(newProduct);
                 }   

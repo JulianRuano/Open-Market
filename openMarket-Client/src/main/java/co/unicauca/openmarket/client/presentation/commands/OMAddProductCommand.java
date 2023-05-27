@@ -23,7 +23,7 @@ public class OMAddProductCommand extends OMCommand{
     @Override
     public void make() {
         try {
-            result = pS.saveProduct(pP.getProductId(), pP.getName(), pP.getDescription(),pP.getPrice(),pP.getAddress(),pP.getCategoryId(),pP.getImage());
+            result = pS.saveProduct(pP.getProductId(), pP.getName(), pP.getDescription(),pP.getPrice(),pP.getAddress(),pP.getCategoryId(),pP.getStock(),pP.getImage());
         } catch (Exception ex) {
             Logger.getLogger(OMAddProductCommand.class.getName()).log(Level.SEVERE, null, ex);
         }

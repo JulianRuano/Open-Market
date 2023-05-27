@@ -5,20 +5,23 @@ public class Product {
     private Long productId;
     private String name;    
     private String description; 
-    private String address;
     private double price;
+    private String address;   
     private Long categoryId;
+    private int stock;
     private byte [] image;
     
     
-    public Product(Long productId, String name, String description, double price,String address ,Long categoryId,byte [] image) {
+    public Product(Long productId, String name, String description, double price,String address ,Long categoryId, int stock,byte [] image) {
         this.productId = productId;
         this.name = name;
         this.description = description;
         this.price = price;
         this.address = address;
-        this.image = image;     
         this.categoryId=categoryId;
+        this.stock = stock;
+        this.image = image;     
+        
     }
     public Product(){
         
@@ -79,5 +82,14 @@ public class Product {
     public void setCategoryId(Long categoryId) {
         this.categoryId = categoryId;
     }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+    
 
 }
