@@ -42,10 +42,10 @@ public class crudProducto extends javax.swing.JPanel implements Observador{
     private boolean addOption;
     private OMInvoker ominvoker;
     
-    public crudProducto(ProductService productService) {
+    public crudProducto(ProductService productService,OMInvoker ominvoker) {
         initComponents();
         this.productService=productService;
-        ominvoker = new OMInvoker();  
+        this.ominvoker =ominvoker;  
         mModeloTabla.addColumn("ID");
         mModeloTabla.addColumn("Nombre");
         mModeloTabla.addColumn("Descripcion");
