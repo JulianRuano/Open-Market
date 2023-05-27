@@ -223,7 +223,10 @@ public class Dashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
-        ShowJPanel(new crudProducto( productService) );
+      //  ShowJPanel(new crudProducto( productService) );
+        crudProducto instance2=new crudProducto(this.productService);
+        ShowJPanel(instance2);
+        productService.addObservador(instance2);
     }//GEN-LAST:event_btnProductoActionPerformed
 
 

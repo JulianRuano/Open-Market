@@ -8,6 +8,7 @@ import co.unicauca.openmarket.client.presentation.commands.OMAddProductCommand;
 import co.unicauca.openmarket.client.presentation.commands.OMDeleteProductCommand;
 import co.unicauca.openmarket.client.presentation.commands.OMEditProductCommand;
 import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
+import co.unicauca.openmarket.commons.domain.Category;
 import co.unicauca.openmarket.commons.domain.Product;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -23,12 +24,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import reloj.frameworkobsobs.Observador;
 
 /**
  *
  * @author brayan
  */
-public class crudProducto extends javax.swing.JPanel {
+public class crudProducto extends javax.swing.JPanel implements Observador{
     
     DefaultTableModel mModeloTabla = new DefaultTableModel();
     String Ruta = "";
@@ -54,7 +56,14 @@ public class crudProducto extends javax.swing.JPanel {
         tblProductos.setModel(mModeloTabla);
         stateInitial();
     }
-
+     private void initializeTable() {
+        tblProductos.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Id", "Name", "Description","Price","Direccion","IdCategoria","Image"
+                }
+        ));
+    }
     
     private void stateEdit() {
         btnNuevo.setVisible(false);
@@ -120,7 +129,38 @@ public class crudProducto extends javax.swing.JPanel {
     }
     
     
-    
+    private void fillTableId(Product product) {
+        tblProductos.setDefaultRenderer(Object.class, new RenderImagen());
+        DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
+
+        Object rowData[] = new Object[7];//No columnas
+        
+            rowData[0] = product.getProductId();
+            rowData[1] = product.getName();
+            rowData[2] = product.getDescription();
+            rowData[3] = product.getPrice();
+            rowData[4] = product.getAddress();
+            rowData[5] = product.getCategoryId();
+            
+            try {
+                byte[] imagen =product.getImage();
+                BufferedImage bufferedImage = null;
+                InputStream inputStream = new ByteArrayInputStream(imagen);
+                bufferedImage = ImageIO.read(inputStream);
+                ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(80, 80, 0));
+                rowData[6] = new JLabel(mIcono);
+                } catch (Exception e) {
+                    rowData[6] = new JLabel("No imagen");
+                }
+            
+            model.addRow(rowData);
+        
+        
+        tblProductos.setRowHeight(80);
+        tblProductos.getColumnModel().getColumn(0).setPreferredWidth(80);
+        tblProductos.getColumnModel().getColumn(1).setPreferredWidth(80);
+        tblProductos.getColumnModel().getColumn(2).setPreferredWidth(80);
+    }
     
     
     
@@ -502,7 +542,31 @@ public class crudProducto extends javax.swing.JPanel {
 
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-      
+       try{
+           
+                 Limpiar();
+               if(this.rdIdProducto.isSelected()==true){
+               
+                  fillTableId(productService.findProductById(Long.parseLong(this.txtBuscarProducto.getText())) );
+                }else if(this.rdIdCategoria.isSelected()==true){
+                     fillTable(productService.findProductsByCategory(Long.parseLong(this.txtBuscarProducto.getText())));
+                 }
+                else{
+                   fillTable (productService.findProductsByName(this.txtBuscarProducto.getText())); 
+             }
+          }catch(NullPointerException ex){
+                JOptionPane.showMessageDialog(null,
+                "Envia la informacion correspondiente",
+                "Error tipo de dato",
+                JOptionPane.ERROR_MESSAGE);
+          }catch(Exception e){
+              successMessage(e.getMessage(), "Atención"); 
+              JOptionPane.showMessageDialog(null,
+                "Seleccione por el dato que quiere buscar",
+                "Error al introducir el dato",
+                JOptionPane.ERROR_MESSAGE);
+              
+          }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnExaminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarActionPerformed
@@ -670,6 +734,17 @@ public class crudProducto extends javax.swing.JPanel {
         } catch (Exception ex) {
             return null;
         }
+    }
+
+    @Override
+    public void actualizar() {
+        try {
+            Limpiar();
+            fillTable(productService.findAllProducts());
+        } catch (Exception ex) {
+           successMessage(ex.getMessage(), "Atención");
+        }
+       
     }
     
     
