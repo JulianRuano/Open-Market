@@ -11,7 +11,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gson.Gson;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.List;
 
 
@@ -297,7 +299,12 @@ public class ProductAccessImplSockets implements IProductAccess {
         protocol.addParameter("price", Double.toString(product.getPrice()));
         protocol.addParameter("address", product.getAddress());
         protocol.addParameter("CategoryId", product.getCategoryId().toString());
-        protocol.addParameter("image", Arrays.toString(product.getImage()));
+        
+        
+        byte[] byteArray = product.getImage()/* Tu arreglo de bytes de la imagen */;
+        String encodedImage = Base64.getEncoder().encodeToString(byteArray);      
+        protocol.addParameter("image", encodedImage);
+        
 
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
