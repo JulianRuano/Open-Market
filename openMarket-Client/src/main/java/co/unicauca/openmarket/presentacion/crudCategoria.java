@@ -293,6 +293,11 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
                 }
                 fillTableId(categoryService.findCategoryById(Long.valueOf(this.txtBuscar.getText())));
             } else {
+                if (txtBuscar.getText().isEmpty()) {
+                    Messages.showMessageDialog("Debe ingresar el nombre de la categoria", "Atención");
+                    txtBuscar.requestFocus();
+                    return ;
+                }
                 fillTableName(categoryService.findCategoriesByName(this.txtBuscar.getText()));
             }
         } catch (NullPointerException ex) {
@@ -321,6 +326,9 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
             addCategory();
         } else if (addOption == 2) {
             //Editar
+            if (!validarIdNombre()) {
+                return;
+            }
             editCategory();
         } else {
             if (!validarId(txtCodCategoria)) {
@@ -353,7 +361,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         addOption = 2;
-        stateNew();
+        stateEdit();
         txtCodCategoria.requestFocus();
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -398,10 +406,22 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         }
     }
 
-    private void stateNew() {
-        //lblCodCategoria.setVisible(true);
+    private void stateEdit() {
+        lblCodCategoria.setVisible(true);
         lblNameCategory.setVisible(true);
-        //txtCodCategoria.setVisible(true);
+        txtCodCategoria.setVisible(true);
+        txtNameCategoria.setVisible(true);
+        btnNueva.setVisible(false);
+        btnEditar.setVisible(false);
+        btnEliminar.setVisible(false);
+        btnGuardar.setVisible(true);
+        btnCancelar.setVisible(true);
+        btnDeshacer.setVisible(false);
+        btnRehacer.setVisible(false);
+    }
+
+    private void stateNew() {
+        lblNameCategory.setVisible(true);
         txtNameCategoria.setVisible(true);
         btnNueva.setVisible(false);
         btnEditar.setVisible(false);
@@ -417,6 +437,8 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         lblNameCategory.setVisible(false);
         txtCodCategoria.setVisible(false);
         txtNameCategoria.setVisible(false);
+        rdBuscarId.setSelected(true);
+        tablaCategorias.setEnabled(false);
         btnCancelar.setVisible(false);
         btnGuardar.setVisible(false);
         btnNueva.setVisible(true);
@@ -444,10 +466,14 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
     }
 
     private void addCategory() {
+        if (txtNameCategoria.getText().isEmpty()) {
+            Messages.showMessageDialog("Debe ingresar el nombre de la categoria", "Atención");
+            txtNameCategoria.requestFocus();
+            return;
+        }
         try {
-            Long id = Long.parseLong(this.txtCodCategoria.getText());
             String name = this.txtNameCategoria.getText().trim();
-            Category OCategory = new Category(id, name);
+            Category OCategory = new Category(0L, name);
             OMAddCategoryCommand comm = new OMAddCategoryCommand(OCategory, categoryService);
             ominvoker.addCommand(comm);
             ominvoker.execute();
@@ -464,13 +490,10 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
     }
 
     private void editCategory() {
-        String id = this.txtCodCategoria.getText().trim();
-        if (id.equals("")) {
-            Messages.showMessageDialog("Debe buscar el producto a editar", "Atencion");
-            this.txtCodCategoria.requestFocus();
+        if (!encontrarCategoria()) {
             return;
         }
-        Long categoryId = Long.parseLong(id);
+        Long categoryId = Long.valueOf(txtCodCategoria.getText());
         String name = this.txtNameCategoria.getText().trim();
         Category OCategory = new Category(categoryId, name);
         OMEditCategoryCommand comm = new OMEditCategoryCommand(OCategory, categoryService);
@@ -487,15 +510,8 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
     }
 
     private void deleteCategory() {
-        try {
-            if (this.categoryService.findCategoryById(Long.valueOf(txtCodCategoria.getText())) == null) {
-                Messages.showMessageDialog("Categoria no encontrada", "Error");
-                cleanControls();
-                txtCodCategoria.requestFocus();
-                return;
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(crudCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        if (!encontrarCategoria()) {
+            return;
         }
         if (Messages.showConfirmDialog("Está seguro que desea eliminar esta Categoria?", "Confirmación") == JOptionPane.YES_NO_OPTION) {
             Long idCategory = Long.valueOf(txtCodCategoria.getText().trim());
@@ -513,6 +529,22 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         }
     }
 
+    private boolean validarIdNombre() {
+        if (txtCodCategoria.getText().isEmpty() || txtNameCategoria.getText().isEmpty()) {
+            Messages.showMessageDialog("Debe llenar todos los campos", "Atención");
+            txtCodCategoria.requestFocus();
+            cleanControls();
+            return false;
+        }
+        if (!validarNumeros(txtCodCategoria.getText().trim())) {
+            Messages.showMessageDialog("El ID debe ser numeros", "Error");
+            txtCodCategoria.setText("");
+            txtCodCategoria.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
     private boolean validarId(javax.swing.JTextField caja) {
         if (caja.getText().isEmpty()) {
             Messages.showMessageDialog("Debe ingresar el id de la categoria", "Atención");
@@ -524,6 +556,20 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
             caja.setText("");
             caja.requestFocus();
             return false;
+        }
+        return true;
+    }
+
+    private boolean encontrarCategoria() {
+        try {
+            if (this.categoryService.findCategoryById(Long.valueOf(txtCodCategoria.getText())) == null) {
+                Messages.showMessageDialog("Categoria no encontrada", "Error");
+                cleanControls();
+                txtCodCategoria.requestFocus();
+                return false;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(crudCategoria.class.getName()).log(Level.SEVERE, null, ex);
         }
         return true;
     }
