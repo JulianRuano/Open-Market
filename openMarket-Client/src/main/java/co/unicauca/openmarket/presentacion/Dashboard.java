@@ -74,9 +74,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         pnlBarraLateral.setBackground(new java.awt.Color(38, 145, 205));
 
-        btnCategoria.setBackground(new java.awt.Color(0, 0, 255));
         btnCategoria.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
-        btnCategoria.setForeground(new java.awt.Color(0, 255, 204));
         btnCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/book-content-solid-48.png"))); // NOI18N
         btnCategoria.setText("Categoria");
         btnCategoria.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -91,10 +89,13 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         btnProducto.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
+        btnProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/product_delivery_icon_152013.png"))); // NOI18N
         btnProducto.setText("Producto");
-        btnProducto.setBorder(null);
+        btnProducto.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
         btnProducto.setBorderPainted(false);
         btnProducto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnProducto.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnProducto.setIconTextGap(10);
         btnProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnProductoActionPerformed(evt);
@@ -102,7 +103,7 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         btnComprar.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
-        btnComprar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cart-regular-48.png"))); // NOI18N
+        btnComprar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cart-regular-36.png"))); // NOI18N
         btnComprar.setText("Tienda");
         btnComprar.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
         btnComprar.setBorderPainted(false);
@@ -230,7 +231,9 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnComprarActionPerformed
 
     private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
-        ShowJPanel(new crudCategoria());
+        crudCategoria instance = new crudCategoria(this.categoryService);
+        ShowJPanel(instance);
+        this.categoryService.addObservador(instance);
     }//GEN-LAST:event_btnCategoriaActionPerformed
 
 
