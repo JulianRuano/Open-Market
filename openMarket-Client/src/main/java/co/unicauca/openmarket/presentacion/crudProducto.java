@@ -201,7 +201,7 @@ public class crudProducto extends javax.swing.JPanel {
         rdNombreProducto.setSelected(true);
         rdNombreProducto.setText("Nombre Producto");
 
-        cbxCodigoCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxCodigoCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -419,7 +419,7 @@ public class crudProducto extends javax.swing.JPanel {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         stateNew();
-        txtNombre.requestFocus();
+        this.txtCodigoProducto.requestFocus();
         addOption = true;
     }//GEN-LAST:event_btnNuevoActionPerformed
 
