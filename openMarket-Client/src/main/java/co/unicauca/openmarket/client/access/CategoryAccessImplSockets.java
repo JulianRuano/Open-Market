@@ -36,7 +36,7 @@ public class CategoryAccessImplSockets  implements ICategoryAccess {
 
     @Override
     public boolean save(Category newCategory) throws Exception  {
-        boolean bandera=false;
+        boolean bandera = false;
         String jsonResponse = null;
         String requestJson = doSaveCategoryRequestJson(newCategory);
         try {
@@ -47,25 +47,22 @@ public class CategoryAccessImplSockets  implements ICategoryAccess {
         } catch (IOException ex) {
             Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.SEVERE, "No hubo conexión con el servidor", ex);
         }
-         if (jsonResponse == null) {
+        if (jsonResponse == null) {
             throw new Exception("No se pudo conectar con el servidor. Revise la red o que el servidor esté escuchando. ");
         } else {
+
             if (jsonResponse.contains("error")) {
                 //Devolvió algún error
                 Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
                 throw new Exception(extractMessages(jsonResponse));
-               
             } else {
-                //Encontró el customer
-
-                Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", jsonResponse);
-                bandera=true;
-                
+                //Agregó correctamente, devuelve true
+                //Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ("+newCategory.getCategoryId().toString()+ ")");
+                bandera = true;
             }
-            
         }
-      
-       return bandera;
+
+        return bandera;
     }
 
     @Override

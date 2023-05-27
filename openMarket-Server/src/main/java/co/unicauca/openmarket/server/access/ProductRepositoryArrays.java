@@ -17,8 +17,10 @@ import java.util.stream.Collectors;
 public class ProductRepositoryArrays implements IProductRepository{
    
      private static List<Product> productos;
+     private ICategoryRepository categoryService;
 
-    public ProductRepositoryArrays() {
+    public ProductRepositoryArrays(ICategoryRepository catRepo) {
+           this.categoryService=catRepo;
         if (productos== null){
             productos = new ArrayList();
         }

@@ -2,12 +2,14 @@
 package co.unicauca.openmarket.presentacion;
 
 import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.infra.Messages;
 import static co.unicauca.openmarket.client.infra.Messages.successMessage;
 import co.unicauca.openmarket.client.presentation.commands.OMAddProductCommand;
 import co.unicauca.openmarket.client.presentation.commands.OMDeleteProductCommand;
 import co.unicauca.openmarket.client.presentation.commands.OMEditProductCommand;
 import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
+import co.unicauca.openmarket.commons.domain.Category;
 import co.unicauca.openmarket.commons.domain.Product;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -15,20 +17,26 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import reloj.frameworkobsobs.Observador;
 
 /**
  *
  * @author brayan
  */
-public class crudProducto extends javax.swing.JPanel {
+public class crudProducto extends javax.swing.JPanel implements Observador{
     
     DefaultTableModel mModeloTabla = new DefaultTableModel();
     String Ruta = "";
@@ -39,11 +47,13 @@ public class crudProducto extends javax.swing.JPanel {
     private ProductService productService;
     private boolean addOption;
     private OMInvoker ominvoker;
+    private CategoryService categoryService;
     
-    public crudProducto(ProductService productService) {
+    public crudProducto(ProductService productService,OMInvoker ominvoker,CategoryService categoryService ) {
         initComponents();
         this.productService=productService;
-        ominvoker = new OMInvoker();  
+        this.categoryService=categoryService;
+        this.ominvoker =ominvoker;  
         mModeloTabla.addColumn("ID");
         mModeloTabla.addColumn("Nombre");
         mModeloTabla.addColumn("Descripcion");
@@ -53,9 +63,36 @@ public class crudProducto extends javax.swing.JPanel {
         mModeloTabla.addColumn("Stock");
         mModeloTabla.addColumn("Imagen");
         tblProductos.setModel(mModeloTabla);
+        
+List<Category> categories = this.categoryService.findAllCategories();
+if(!(categories==null)){
+    DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+Map<String, Long> categoryMap = new HashMap<>();
+
+for (Category category : categories) {
+    String categoryName = category.getName();
+    Long categoryId = category.getCategoryId();
+    modelo.addElement(categoryName);
+    categoryMap.put(categoryName, categoryId);
+}
+
+cbxCodigoCategoria.setModel(modelo);
+}
+
+
+
+
+
         stateInitial();
     }
-
+     private void initializeTable() {
+        tblProductos.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Id", "Name", "Description","Price","Direccion","IdCategoria","Image"
+                }
+        ));
+    }
     
     private void stateEdit() {
         btnNuevo.setVisible(false);
@@ -123,7 +160,38 @@ public class crudProducto extends javax.swing.JPanel {
     }
     
     
-    
+    private void fillTableId(Product product) {
+        tblProductos.setDefaultRenderer(Object.class, new RenderImagen());
+        DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
+
+        Object rowData[] = new Object[7];//No columnas
+        
+            rowData[0] = product.getProductId();
+            rowData[1] = product.getName();
+            rowData[2] = product.getDescription();
+            rowData[3] = product.getPrice();
+            rowData[4] = product.getAddress();
+            rowData[5] = product.getCategoryId();
+            
+            try {
+                byte[] imagen =product.getImage();
+                BufferedImage bufferedImage = null;
+                InputStream inputStream = new ByteArrayInputStream(imagen);
+                bufferedImage = ImageIO.read(inputStream);
+                ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(80, 80, 0));
+                rowData[6] = new JLabel(mIcono);
+                } catch (Exception e) {
+                    rowData[6] = new JLabel("No imagen");
+                }
+            
+            model.addRow(rowData);
+        
+        
+        tblProductos.setRowHeight(80);
+        tblProductos.getColumnModel().getColumn(0).setPreferredWidth(80);
+        tblProductos.getColumnModel().getColumn(1).setPreferredWidth(80);
+        tblProductos.getColumnModel().getColumn(2).setPreferredWidth(80);
+    }
     
     
     
@@ -168,6 +236,8 @@ public class crudProducto extends javax.swing.JPanel {
         btnEliminar = new javax.swing.JButton();
         btnDeshacer = new javax.swing.JButton();
         btnRehacer = new javax.swing.JButton();
+        lblStock = new javax.swing.JLabel();
+        txtStock = new javax.swing.JTextField();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -206,7 +276,11 @@ public class crudProducto extends javax.swing.JPanel {
         rdNombreProducto.setSelected(true);
         rdNombreProducto.setText("Nombre Producto");
 
-        cbxCodigoCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
+        cbxCodigoCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxCodigoCategoriaActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -316,6 +390,8 @@ public class crudProducto extends javax.swing.JPanel {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
+        lblStock.setText("Stock");
+
         javax.swing.GroupLayout pnlCrudpProductoLayout = new javax.swing.GroupLayout(pnlCrudpProducto);
         pnlCrudpProducto.setLayout(pnlCrudpProductoLayout);
         pnlCrudpProductoLayout.setHorizontalGroup(
@@ -325,19 +401,29 @@ public class crudProducto extends javax.swing.JPanel {
                 .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(txtDireccion)
-                        .addComponent(txtPrecio)
                         .addComponent(txtDescripcion)
                         .addComponent(txtNombre)
                         .addComponent(lblCodigoCategoria)
                         .addComponent(lblDireccion)
-                        .addComponent(lblPrecio)
                         .addComponent(jLabel3)
                         .addComponent(lblNombre)
                         .addComponent(lblCodigoProducto)
                         .addComponent(txtCodigoProducto)
                         .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
-                            .addComponent(cbxCodigoCategoria, 0, 239, Short.MAX_VALUE)
-                            .addGap(186, 186, 186)))
+                            .addComponent(cbxCodigoCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(186, 186, 186))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCrudpProductoLayout.createSequentialGroup()
+                            .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblPrecio)
+                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(6, 6, Short.MAX_VALUE)
+                            .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
+                                    .addComponent(lblStock)
+                                    .addGap(166, 166, 166))
+                                .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(txtStock)))))
                     .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addComponent(lblExaminar2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -345,7 +431,7 @@ public class crudProducto extends javax.swing.JPanel {
                         .addComponent(btnExaminar)))
                 .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                         .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
                                 .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -404,9 +490,13 @@ public class crudProducto extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblPrecio)
+                        .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblPrecio)
+                            .addComponent(lblStock))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtStock)
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblDireccion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -504,7 +594,31 @@ public class crudProducto extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRehacerActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-      
+       try{
+           
+                 Limpiar();
+               if(this.rdIdProducto.isSelected()==true){
+               
+                  fillTableId(productService.findProductById(Long.parseLong(this.txtBuscarProducto.getText())) );
+                }else if(this.rdIdCategoria.isSelected()==true){
+                     fillTable(productService.findProductsByCategory(Long.parseLong(this.txtBuscarProducto.getText())));
+                 }
+                else{
+                   fillTable (productService.findProductsByName(this.txtBuscarProducto.getText())); 
+             }
+          }catch(NullPointerException ex){
+                JOptionPane.showMessageDialog(null,
+                "Envia la informacion correspondiente",
+                "Error tipo de dato",
+                JOptionPane.ERROR_MESSAGE);
+          }catch(Exception e){
+              successMessage(e.getMessage(), "Atención"); 
+              JOptionPane.showMessageDialog(null,
+                "Seleccione por el dato que quiere buscar",
+                "Error al introducir el dato",
+                JOptionPane.ERROR_MESSAGE);
+              
+          }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnExaminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarActionPerformed
@@ -530,6 +644,11 @@ public class crudProducto extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnListarActionPerformed
 
+    private void cbxCodigoCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCodigoCategoriaActionPerformed
+
+
+    }//GEN-LAST:event_cbxCodigoCategoriaActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -553,6 +672,7 @@ public class crudProducto extends javax.swing.JPanel {
     private javax.swing.JLabel lblExaminar2;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblPrecio;
+    private javax.swing.JLabel lblStock;
     private javax.swing.JPanel pnlCrudpProducto;
     private javax.swing.JPanel pnlSeccionBotones;
     private javax.swing.JRadioButton rdIdCategoria;
@@ -565,6 +685,7 @@ public class crudProducto extends javax.swing.JPanel {
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
+    private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
     
     private void stateNew() {
@@ -672,6 +793,17 @@ public class crudProducto extends javax.swing.JPanel {
         } catch (Exception ex) {
             return null;
         }
+    }
+
+    @Override
+    public void actualizar() {
+        try {
+            Limpiar();
+            fillTable(productService.findAllProducts());
+        } catch (Exception ex) {
+           successMessage(ex.getMessage(), "Atención");
+        }
+       
     }
     
     

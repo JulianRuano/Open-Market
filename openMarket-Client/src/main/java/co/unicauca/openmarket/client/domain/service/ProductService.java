@@ -51,7 +51,7 @@ public class ProductService extends Observado {
             return false;
         }
         boolean result=repository.save(newProduct);
-       // this.notificar();
+        this.notificar();
         return result;
 
     }

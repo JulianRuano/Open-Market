@@ -8,6 +8,7 @@ package co.unicauca.openmarket.presentacion;
 import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,7 +25,8 @@ public class Dashboard extends javax.swing.JFrame {
      private ProductService productService;
      private CategoryService categoryService;
     private ShoppingCar shoppingCart;
-    long id;
+    private OMInvoker ominvokerCategorias;
+    private OMInvoker ominvokerProducts;
     
     public Dashboard(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart) {
         initComponents();
@@ -33,8 +35,8 @@ public class Dashboard extends javax.swing.JFrame {
          this.productService=productService;
          this.categoryService=categoryService;
          this.shoppingCart=shoppingCart;
-         
-       
+         ominvokerCategorias = new OMInvoker();
+         ominvokerProducts=new OMInvoker();
     }
     private void initStyles(){
       //btnPrimerBoton.putClientProperty("JButton.buttonType", "roundRect");
@@ -223,7 +225,10 @@ public class Dashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
-        ShowJPanel(new crudProducto( productService) );
+      
+        crudProducto instance2=new crudProducto(this.productService,this.ominvokerProducts,categoryService);
+        ShowJPanel(instance2);
+        productService.addObservador(instance2);
     }//GEN-LAST:event_btnProductoActionPerformed
 
 
@@ -232,7 +237,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnComprarActionPerformed
 
     private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
-        crudCategoria instance = new crudCategoria(this.categoryService);
+        crudCategoria instance = new crudCategoria(this.categoryService, this.ominvokerCategorias);
         ShowJPanel(instance);
         this.categoryService.addObservador(instance);
     }//GEN-LAST:event_btnCategoriaActionPerformed
