@@ -188,7 +188,7 @@ public class CategoryRepository implements ICategoryRepository {
         return categories;
     }
   @Override
-    public Category findByName(String name) {
+    public List<Category> findByName(String name) {
         List<Category> categories = new ArrayList<>();
         try {
             this.connect();

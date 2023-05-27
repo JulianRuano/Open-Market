@@ -52,7 +52,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
     private CategoryService categoryService;
     private ValidadorCampos validarCampos;
     private ValidadorFormularioProducto validarFormulario;
-    private Long selectedCategoryId;
+    private Integer selectedCategoryId;
 
     public crudProducto(ProductService productService, OMInvoker ominvoker, CategoryService categoryService) {
         initComponents();
@@ -74,11 +74,11 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         if (!(categories == null)) {
             DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
             modelo.addElement(""); // Agregar elemento vacío al inicio del modelo
-            Map<String, Long> categoryMap = new HashMap<>();
-            
+            Map<String, Integer> categoryMap = new HashMap<>();
+
             for (Category category : categories) {
                 String categoryName = category.getName();
-                Long categoryId = category.getCategoryId();
+                Integer categoryId = category.getCategoryId();
                 modelo.addElement(categoryName);
                 categoryMap.put(categoryName, categoryId);
             }
@@ -151,6 +151,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
             rowData[3] = listProducts.get(i).getPrice();
             rowData[4] = listProducts.get(i).getAddress();
             rowData[5] = listProducts.get(i).getCategoryId();
+             rowData[6] = listProducts.get(i).getStock();
 
             try {
                 byte[] imagen = listProducts.get(i).getImage();
@@ -158,9 +159,9 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
                 InputStream inputStream = new ByteArrayInputStream(imagen);
                 bufferedImage = ImageIO.read(inputStream);
                 ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(80, 80, 0));
-                rowData[6] = new JLabel(mIcono);
+                rowData[7] = new JLabel(mIcono);
             } catch (Exception e) {
-                rowData[6] = new JLabel("No imagen");
+                rowData[7] = new JLabel("No imagen");
             }
 
             model.addRow(rowData);
@@ -176,7 +177,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         tblProductos.setDefaultRenderer(Object.class, new RenderImagen());
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
 
-        Object rowData[] = new Object[7];//No columnas
+        Object rowData[] = new Object[8];//No columnas
 
         rowData[0] = product.getProductId();
         rowData[1] = product.getName();
@@ -184,16 +185,16 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         rowData[3] = product.getPrice();
         rowData[4] = product.getAddress();
         rowData[5] = product.getCategoryId();
-
+         rowData[6] = product.getStock();
         try {
             byte[] imagen = product.getImage();
             BufferedImage bufferedImage = null;
             InputStream inputStream = new ByteArrayInputStream(imagen);
             bufferedImage = ImageIO.read(inputStream);
             ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(80, 80, 0));
-            rowData[6] = new JLabel(mIcono);
+            rowData[7] = new JLabel(mIcono);
         } catch (Exception e) {
-            rowData[6] = new JLabel("No imagen");
+            rowData[7] = new JLabel("No imagen");
         }
 
         model.addRow(rowData);
@@ -544,8 +545,8 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         System.err.println(selectedCategoryId);
         List<MensajesError> errores = validarFormulario.validar(txtCodigoProducto, txtNombre, txtDescripcion,
-                txtPrecio, txtStock, txtDireccion,selectedCategoryId);
-                
+                txtPrecio, txtStock, txtDireccion, selectedCategoryId);
+
         if (!errores.isEmpty()) {
             String mensajeError = "Debe ingresar el/los siguiente(s) campo(s):\n";
             for (MensajesError mensaje : errores) {
@@ -606,7 +607,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
                 txtCodigoProducto.requestFocus();
                 return;
             }
-            Long productId = Long.parseLong(id);
+            Integer productId = Integer.valueOf(id);
             OMDeleteProductCommand comm = new OMDeleteProductCommand(productId, productService);
             ominvoker.addCommand(comm);
             ominvoker.execute();
@@ -646,9 +647,9 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
             Limpiar();
             if (this.rdIdProducto.isSelected() == true) {
 
-                fillTableId(productService.findProductById(Long.parseLong(this.txtBuscarProducto.getText())));
+                fillTableId(productService.findProductById(Integer.parseInt(this.txtBuscarProducto.getText())));
             } else if (this.rdIdCategoria.isSelected() == true) {
-                fillTable(productService.findProductsByCategory(Long.parseLong(this.txtBuscarProducto.getText())));
+                fillTable(productService.findProductsByCategory(Integer.parseInt(this.txtBuscarProducto.getText())));
             } else {
                 fillTable(productService.findProductsByName(this.txtBuscarProducto.getText()));
             }
@@ -682,7 +683,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
             File selectedFile = fileChooser.getSelectedFile();
             if (selectedFile != null && !selectedFile.isFile()) {
                 Messages.showMessageDialog("Debe elegir una imagen", "Atención");
-            } 
+            }
         }
     }//GEN-LAST:event_btnExaminarActionPerformed
 
@@ -766,17 +767,16 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
 
     private void addProduct() {
         try {
-            Long productId = Long.valueOf(this.txtCodigoProducto.getText());
+            int productId = Integer.parseInt(this.txtCodigoProducto.getText());
             String name = txtNombre.getText().trim();
             String description = txtDescripcion.getText().trim();
             double price = Double.parseDouble(this.txtPrecio.getText());
             String address = this.txtDireccion.getText();
-            Long categoryId = selectedCategoryId;
-
+            int stock = Integer.parseInt(txtStock.getText());
             //Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
             byte[] image = getImagen(Ruta);
-
-            Product OProduct = new Product(productId, name, description, price, name, 4l, image);
+// public Product(int productId, String name, String description, double price,String address ,int categoryId, int stock,byte [] image) {
+            Product OProduct = new Product(productId, name, description, price, address, selectedCategoryId, stock, image);
             OMAddProductCommand comm = new OMAddProductCommand(OProduct, productService);
             ominvoker.addCommand(comm);
             ominvoker.execute();
@@ -800,14 +800,15 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
             txtCodigoProducto.requestFocus();
             return;
         }
-        Long productId = Long.parseLong(id);
+        int productId = Integer.parseInt(id);
         String name = txtNombre.getText();
         String description = this.txtDescripcion.getText();
         double price = Double.parseDouble(this.txtPrecio.getText());
-        Long categoryId = Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
+        String direccion = txtDescripcion.getText();
+        int stock = Integer.parseInt(txtStock.getText());
         byte[] image = null;
 
-        Product OProduct = new Product(productId, name, description, price, name, categoryId, image);
+        Product OProduct = new Product(productId, name, description, price, direccion, selectedCategoryId, stock, image);
         OMEditProductCommand comm = new OMEditProductCommand(OProduct, productService);
         ominvoker.addCommand(comm);
         ominvoker.execute();

@@ -17,7 +17,7 @@ public class ValidadorFormularioProducto {
 
     public List<MensajesError> validar(JTextField txtCodigoProducto, JTextField txtNombre,
             JTextField txtDescripcion, JTextField txtPrecio, JTextField txtStock,
-            JTextField txtDireccion,Long selectedCategoryId) {
+            JTextField txtDireccion,Integer selectedCategoryId) {
         List<MensajesError> errores = new ArrayList<>();
 
         if (validarCampos.validarCampoVacio(txtCodigoProducto.getText())) {

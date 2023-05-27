@@ -22,7 +22,7 @@ public interface ICategoryRepository {
    boolean delete(int id);
    Category findById(int id);
    List<Category> findAll();
-   Category findByName(String name);
+   List<Category> findByName(String name);
    //boolean clearCategories();
 
 }
