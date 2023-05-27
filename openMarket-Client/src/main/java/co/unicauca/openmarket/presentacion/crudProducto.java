@@ -121,7 +121,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador{
         tblProductos.setDefaultRenderer(Object.class, new RenderImagen());
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
 
-        Object rowData[] = new Object[7];//No columnas
+        Object rowData[] = new Object[8];//No columnas
         for (int i = 0; i < listProducts.size(); i++) {
             rowData[0] = listProducts.get(i).getProductId();
             rowData[1] = listProducts.get(i).getName();
@@ -157,7 +157,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador{
         tblProductos.setDefaultRenderer(Object.class, new RenderImagen());
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
 
-        Object rowData[] = new Object[7];//No columnas
+        Object rowData[] = new Object[8];//No columnas
         
             rowData[0] = product.getProductId();
             rowData[1] = product.getName();
@@ -165,6 +165,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador{
             rowData[3] = product.getPrice();
             rowData[4] = product.getAddress();
             rowData[5] = product.getCategoryId();
+            rowData[6] = product.getStock();
             
             try {
                 byte[] imagen =product.getImage();
@@ -172,9 +173,9 @@ public class crudProducto extends javax.swing.JPanel implements Observador{
                 InputStream inputStream = new ByteArrayInputStream(imagen);
                 bufferedImage = ImageIO.read(inputStream);
                 ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(80, 80, 0));
-                rowData[6] = new JLabel(mIcono);
+                rowData[7] = new JLabel(mIcono);
                 } catch (Exception e) {
-                    rowData[6] = new JLabel("No imagen");
+                    rowData[7] = new JLabel("No imagen");
                 }
             
             model.addRow(rowData);

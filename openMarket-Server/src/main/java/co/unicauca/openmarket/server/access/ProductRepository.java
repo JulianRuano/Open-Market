@@ -258,7 +258,7 @@ public final class ProductRepository implements IProductRepository {
         try {                  
                 this.connect();
 
-                String productSql = "SELECT * FROM products WHERE categoryId = ?";
+                String productSql = "SELECT * FROM product WHERE categoryId = ?";
                 PreparedStatement pstmt = conn.prepareStatement(productSql);
                 pstmt.setLong(1, categoryId);
                 ResultSet res = pstmt.executeQuery();
