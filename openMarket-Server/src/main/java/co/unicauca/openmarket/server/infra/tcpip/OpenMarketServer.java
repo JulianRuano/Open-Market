@@ -6,12 +6,9 @@
 package co.unicauca.openmarket.server.infra.tcpip;
 
 import co.unicauca.openmarket.server.infra.tcpip.OpenMarketHandler;
-import co.unicauca.openmarket.server.access.CategoryRepositoryArrays;
-import co.unicauca.openmarket.server.access.ProductRepositoryArrays;
 import co.unicauca.openmarket.domain.services.CategoryService;
 import co.unicauca.openmarket.domain.services.ProductService;
-import co.unicauca.openmarket.server.access.ICategoryRepository;
-import co.unicauca.openmarket.server.access.IProductRepository;
+import co.unicauca.openmarket.server.access.CategoryRepository;
 import co.unicauca.openmarket.server.access.ProductRepository;
 import co.unicauca.strategyserver.infra.ServerSocketMultiThread;
 import java.util.Scanner;
@@ -29,10 +26,8 @@ public class OpenMarketServer {
         System.out.println("Ingrese el puerto de escucha");
         int port = teclado.nextInt();
         ServerSocketMultiThread myServer = new ServerSocketMultiThread(port);
-        OpenMarketHandler myHandler = new OpenMarketHandler();
-        ICategoryRepository catRepo= new CategoryRepositoryArrays();
-        IProductRepository prodRepo= new ProductRepositoryArrays(catRepo);           
-        myHandler.setCategoryService(new CategoryService(new CategoryRepositoryArrays()));
+        OpenMarketHandler myHandler = new OpenMarketHandler();       
+        myHandler.setCategoryService(new CategoryService(new CategoryRepository()));
         myHandler.setProductService(new ProductService(new ProductRepository()));   
         myServer.setServerHandler(myHandler);
         myServer.startServer();

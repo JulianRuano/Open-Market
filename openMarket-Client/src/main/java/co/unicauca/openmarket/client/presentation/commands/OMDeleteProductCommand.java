@@ -14,11 +14,11 @@ import java.util.logging.Logger;
  * @author julian ruano
  */
 public class OMDeleteProductCommand extends OMCommand{
-    private Long idProduct;
+    private int idProduct;
     private Product pP;
     private ProductService pS;
     boolean result=false;
-    public OMDeleteProductCommand(Long idProduct , ProductService pS){
+    public OMDeleteProductCommand(int idProduct , ProductService pS){
         this.idProduct = idProduct;
         this.pS = pS;
     }

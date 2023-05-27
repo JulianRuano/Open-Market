@@ -12,10 +12,6 @@ import co.unicauca.openmarket.client.access.IShoppingCartAccess;
 import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
-import co.unicauca.openmarket.client.presentation.GUICategoriesFind;
-import co.unicauca.openmarket.client.presentation.GUICategory;
-import co.unicauca.openmarket.client.presentation.GUIProducts;
-import co.unicauca.openmarket.client.presentation.GUIProductsFind;
 import co.unicauca.openmarket.presentacion.Dashboard;
 
 /**

@@ -10,21 +10,21 @@ package co.unicauca.openmarket.commons.domain;
  * @author brayan
  */
 public class Category {
-    private Long categoryId;
+    private int categoryId;
     private String name;
     
-    public Category(Long categoryId, String name) {
+    public Category(int categoryId, String name) {
         this.categoryId = categoryId;
         this.name = name;
     }
     public Category() {
     }
 
-    public Long getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Long categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 

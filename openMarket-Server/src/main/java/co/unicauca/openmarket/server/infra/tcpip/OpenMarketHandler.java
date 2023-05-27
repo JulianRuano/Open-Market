@@ -129,7 +129,7 @@ public class OpenMarketHandler extends ServerHandler {
      */
     private String processGetCategory(Protocol protocolRequest) {
         // Extraer la cedula del primer parámetro
-        Long id = Long.parseLong(protocolRequest.getParameters().get(0).getValue()) ;
+        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue()) ;
         Category category = categoryService.findById(id);
         if (category == null) {
             String errorJson = generateNotFoundErrorJson();
@@ -145,7 +145,7 @@ public class OpenMarketHandler extends ServerHandler {
      * @param protocolRequest Protocolo de la solicitud
      */
     private String processPostCategory(Protocol protocolRequest) {
-       Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue());
+        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
 
         Category category= this.categoryService.findById(id);
 
@@ -155,7 +155,7 @@ public class OpenMarketHandler extends ServerHandler {
 
          category = new Category();
         // Reconstruir La categoria a partir de lo que viene en los parámetros
-        category.setCategoryId(Long.valueOf(protocolRequest.getParameters().get(0).getValue()));
+        category.setCategoryId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
         category.setName(protocolRequest.getParameters().get(1).getValue());
         boolean response = categoryService.save(category);
         return String.valueOf(response);
@@ -164,7 +164,7 @@ public class OpenMarketHandler extends ServerHandler {
     
     private String processEditCategory(Protocol protocolRequest){
        // Editar el name de la categoria
-        Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue());
+        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         String name = protocolRequest.getParameters().get(1).getValue();
         Category newCategory = new Category(id, name);
         boolean response = categoryService.edit(id, newCategory);
@@ -173,7 +173,7 @@ public class OpenMarketHandler extends ServerHandler {
     }
     private String processDeleteCategory(Protocol protocolRequest){
        // Eliminar una categoria 
-       Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue());
+       int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
        boolean response = categoryService.delete(id);
        String respuesta=String.valueOf(response);
        return respuesta;
@@ -196,7 +196,7 @@ public class OpenMarketHandler extends ServerHandler {
     
      private String processGetProduct(Protocol protocolRequest) {
         // Extraer la cedula del primer parámetro
-        Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue()) ;
+        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue()) ;
         Product producto = productService.findById(id);
         if (producto == null) {
             String errorJson = generateNotFoundErrorJson();
@@ -208,12 +208,12 @@ public class OpenMarketHandler extends ServerHandler {
     private String processPostProduct(Protocol protocolRequest) {
         Product producto=new Product();
         // Reconstruir La categoria a partir de lo que viene en los parámetros
-        producto.setProductId(Long.valueOf(protocolRequest.getParameters().get(0).getValue()));
+        producto.setProductId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
         producto.setName(protocolRequest.getParameters().get(1).getValue());
         producto.setDescription(protocolRequest.getParameters().get(2).getValue());
         producto.setPrice(Double.parseDouble(protocolRequest.getParameters().get(3).getValue()));
         producto.setAddress(protocolRequest.getParameters().get(4).getValue());
-        producto.setCategoryId(Long.parseLong(protocolRequest.getParameters().get(5).getValue()));
+        producto.setCategoryId(Integer.parseInt(protocolRequest.getParameters().get(5).getValue()));
         producto.setStock(Integer.parseInt(protocolRequest.getParameters().get(6).getValue()));
 
         
@@ -227,12 +227,12 @@ public class OpenMarketHandler extends ServerHandler {
     private String processEditProduct(Protocol protocolRequest){
        Product producto=new Product();
         // Reconstruir La categoria a partir de lo que viene en los parámetros
-        producto.setProductId(Long.valueOf(protocolRequest.getParameters().get(0).getValue()));
+        producto.setProductId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
         producto.setName(protocolRequest.getParameters().get(1).getValue());
         producto.setDescription(protocolRequest.getParameters().get(2).getValue());
         producto.setPrice(Double.parseDouble(protocolRequest.getParameters().get(3).getValue()));
         producto.setAddress(protocolRequest.getParameters().get(4).getValue());
-        producto.setCategoryId(Long.parseLong(protocolRequest.getParameters().get(5).getValue()));
+        producto.setCategoryId(Integer.parseInt(protocolRequest.getParameters().get(5).getValue()));
         producto.setStock(Integer.parseInt(protocolRequest.getParameters().get(6).getValue()));
         producto.setImage(protocolRequest.getParameters().get(7).getValue().getBytes(StandardCharsets.UTF_8));
 
@@ -246,7 +246,7 @@ public class OpenMarketHandler extends ServerHandler {
     
     private String processBuyProduct(Protocol protocolRequest) {
         // Petecion de compra
-        Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue()) ;       
+        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue()) ;       
         String nameOnCard = protocolRequest.getParameters().get(1).getValue();
         String cardNumber =protocolRequest.getParameters().get(2).getValue();
         String CVC =protocolRequest.getParameters().get(3).getValue();
@@ -330,7 +330,7 @@ public class OpenMarketHandler extends ServerHandler {
 
     private String processDeleteProduct(Protocol protocolRequest) {
        // Eliminar una categoria 
-       Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue());
+       int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
        boolean response = productService.delete(id);
        String respuesta=String.valueOf(response);
        return respuesta;
@@ -347,7 +347,7 @@ public class OpenMarketHandler extends ServerHandler {
 
     private String processListCategoryProduct(Protocol protocolRequest) {
       List<Product>productos;
-      Long categoryId=Long.valueOf(protocolRequest.getParameters().get(0).getValue());
+      int categoryId= Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
       productos=productService.findByCategory(categoryId);
       return objectToJSON(productos);
     }

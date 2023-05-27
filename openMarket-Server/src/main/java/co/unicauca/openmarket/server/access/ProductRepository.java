@@ -93,12 +93,12 @@ public final class ProductRepository implements IProductRepository {
             ResultSet res = stmt.executeQuery(sql);
             while (res.next()) {
                 Product newProduct = new Product();
-                newProduct.setProductId(res.getLong("productId"));
+                newProduct.setProductId(res.getInt("productId"));
                 newProduct.setName(res.getString("name"));
                 newProduct.setDescription(res.getString("description"));
                 newProduct.setPrice(res.getDouble("price"));
                 newProduct.setAddress(res.getString("address"));
-                newProduct.setCategoryId(res.getLong("categoryId"));
+                newProduct.setCategoryId(res.getInt("categoryId"));
                 newProduct.setStock(res.getInt("stock"));
                 newProduct.setImage(res.getBytes("image"));
                 products.add(newProduct);
@@ -149,7 +149,7 @@ public final class ProductRepository implements IProductRepository {
     }
 
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(int id) {
         try {
             //Validate product
             if (id <= 0) {
@@ -173,7 +173,7 @@ public final class ProductRepository implements IProductRepository {
     }
 
     @Override
-    public Product findById(Long id) {
+    public Product findById(int id) {
         try {
             this.connect();
             String sql = "SELECT * FROM product  "
@@ -186,12 +186,12 @@ public final class ProductRepository implements IProductRepository {
 
             if (res.next()) {
                 Product newProduct = new Product();
-                newProduct.setProductId(res.getLong("productId"));
+                newProduct.setProductId(res.getInt("productId"));
                 newProduct.setName(res.getString("name"));
                 newProduct.setDescription(res.getString("description"));
                 newProduct.setPrice(res.getDouble("price"));
                 newProduct.setAddress(res.getString("address"));
-                newProduct.setCategoryId(res.getLong("categoryId"));
+                newProduct.setCategoryId(res.getInt("categoryId"));
                 newProduct.setStock(res.getInt("stock"));
                 newProduct.setImage(res.getBytes("image"));
                 pstmt.close();
@@ -221,12 +221,12 @@ public final class ProductRepository implements IProductRepository {
             ResultSet res = pstmt.executeQuery();
             while (res.next()) {
                 Product newProduct = new Product();
-                newProduct.setProductId(res.getLong("productId"));
+                newProduct.setProductId(res.getInt("productId"));
                 newProduct.setName(res.getString("name"));
                 newProduct.setDescription(res.getString("description"));
                 newProduct.setPrice(res.getDouble("price"));
                 newProduct.setAddress(res.getString("address"));
-                newProduct.setCategoryId(res.getLong("categoryId"));
+                newProduct.setCategoryId(res.getInt("categoryId"));
                 newProduct.setStock(res.getInt("stock"));
                 newProduct.setImage(res.getBytes("image"));
                 pstmt.close();
@@ -253,7 +253,7 @@ public final class ProductRepository implements IProductRepository {
 
   
     @Override
-    public List<Product> findByCategory(Long categoryId) {
+    public List<Product> findByCategory(int categoryId) {
         List<Product> products = new ArrayList<>();
         try {                  
                 this.connect();
@@ -265,12 +265,12 @@ public final class ProductRepository implements IProductRepository {
 
                 while (res.next()) {
                     Product newProduct = new Product();
-                    newProduct.setProductId(res.getLong("productId"));
+                    newProduct.setProductId(res.getInt("productId"));
                     newProduct.setName(res.getString("name"));
                     newProduct.setDescription(res.getString("description"));
                     newProduct.setPrice(res.getDouble("price"));
                     newProduct.setAddress(res.getString("address"));
-                    newProduct.setCategoryId(res.getLong("categoryId"));
+                    newProduct.setCategoryId(res.getInt("categoryId"));
                     newProduct.setStock(res.getInt("stock"));
                     newProduct.setImage(res.getBytes("image"));
                     products.add(newProduct);

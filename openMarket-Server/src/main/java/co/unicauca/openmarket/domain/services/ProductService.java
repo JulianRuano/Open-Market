@@ -36,10 +36,10 @@ public class ProductService {
         return repo.edit(product);
     }
     
-    public synchronized boolean delete(Long id){
+    public synchronized boolean delete(int id){
         return repo.delete(id);
     }
-    public synchronized Product findById(Long id){
+    public synchronized Product findById(int id){
         return repo.findById(id);
     };
     public synchronized List<Product> findAll(){
@@ -48,7 +48,7 @@ public class ProductService {
     public synchronized List<Product> findByName(String name){
         return repo.findByName(name);
     };
-    public synchronized List<Product> findByCategory(Long categoryId){
+    public synchronized List<Product> findByCategory(int categoryId){
         return repo.findByCategory(categoryId);
     };
 }

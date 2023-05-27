@@ -24,80 +24,26 @@ import javax.swing.JOptionPane;
  */
 public class CategoryRepository implements ICategoryRepository {
 
-    private Connection conn;
-
     public CategoryRepository() {
-        initDatabase();
-    }
-
-    @Override
-    public boolean save(Category newCategory) {
-        try {
-            if (newCategory == null || newCategory.getCategoryId()==null) {
-                return false;
-            }
-            String sql = "INSERT INTO categories ( categoryId,name) "
-                    + "VALUES ( ?,?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setLong(1, newCategory.getCategoryId());
-            pstmt.setString(2, newCategory.getName());
-            pstmt.executeUpdate();
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
-
-    private void initDatabase() {
-        // SQL statement for creating a new table
-
-        String sql = "CREATE TABLE IF NOT EXISTS categories (\n"
-                + "      categoryId integer PRIMARY KEY,\n"
-                + "      name text NOT NULL\n"
-                + ");";
-        try {
-            this.connect();
-            Statement stmt = conn.createStatement();
-            stmt.execute(sql);
-            //this.disconnect();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void connect() {
-        // SQLite connection string
-        //String url = "jdbc:sqlite:./myDatabase.db"; //Para Linux/Mac
-        //String url = "jdbc:sqlite:C:/sqlite/db/myDatabase.db"; //Para Windows
-        String url = "jdbc:sqlite::memory:";
-
-        try {
-            conn = DriverManager.getConnection(url);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
     
-    public boolean clearCategories() {
-    try {
-        String sql = "DELETE FROM categories";
-        PreparedStatement pstmt = conn.prepareStatement(sql);
-        pstmt.executeUpdate();
+    private Connection conn;
+    private final String bd = "openmarket";
+    private final String user = "root";
+    private final String password = "";
 
-        // Reset AUTOINCREMENT value for categoryId
-        String resetSql = "UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'categories'";
-        PreparedStatement pstmtReset = conn.prepareStatement(resetSql);
-        pstmtReset.executeUpdate();
-
-        return true;
-    } catch (SQLException ex) {
-        Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
+    
+    public boolean connect() {
+         try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            conn  = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/" + bd, user, password);
+            return conn != null;
+        } catch (Exception e) {
+            return false;
+        }
     }
-    return false;
-}
 
     public void disconnect() {
         try {
@@ -111,18 +57,62 @@ public class CategoryRepository implements ICategoryRepository {
     }
 
     @Override
-    public boolean edit(Long id, Category category) {
+    public boolean save(Category newCategory) {
+        try {
+            if (newCategory == null) {
+                return false;
+            }
+            this.connect();
+            String sql = "INSERT INTO category (name) "
+                    + "VALUES (?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, newCategory.getName());
+            pstmt.executeUpdate();
+            this.disconnect();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;       
+    }
+
+
+    public boolean clearCategories() {
+    try {
+        this.connect();
+        String sql = "DELETE FROM category";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.executeUpdate();
+
+        // Reset AUTOINCREMENT value for categoryId
+        String resetSql = "UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = 'category'";
+        PreparedStatement pstmtReset = conn.prepareStatement(resetSql);
+        pstmtReset.executeUpdate();
+        this.disconnect();
+        return true;
+    } catch (SQLException ex) {
+        Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return false;
+}
+
+
+
+    @Override
+    public boolean edit(int id, Category category) {
         try {
             if (id <= 0 || category == null) {
                 return false;
             }
-            String sql = "UPDATE categories "
+            this.connect();
+            String sql = "UPDATE category "
                     + "SET name=?"
                     + "WHERE categoryId=? ";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, category.getName());
             pstmt.setLong(2, id);
             pstmt.executeUpdate();
+            this.disconnect();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -131,16 +121,18 @@ public class CategoryRepository implements ICategoryRepository {
 }
 
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(int id) {
         try {
             if (id <= 0) {
                 return false;
             }
-             String sql = "DELETE FROM categories "
+             this.connect();
+             String sql = "DELETE FROM category "
                     + "WHERE categoryId = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, id);
             pstmt.executeUpdate();
+            this.disconnect();
             return true;
         } catch (SQLException e) {
               Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, e);
@@ -149,10 +141,10 @@ public class CategoryRepository implements ICategoryRepository {
     }
 
     @Override
-    public Category findById(Long id) {
+    public Category findById(int id) {
         try {
-            JOptionPane.showMessageDialog(null, "soy el ide: "+id);
-            String sql = "SELECT * FROM categories "
+            this.connect();
+            String sql = "SELECT * FROM category "
                     + "WHERE categoryId = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, id);
@@ -160,17 +152,15 @@ public class CategoryRepository implements ICategoryRepository {
 
             if (res.next()) {
                 Category cat = new Category();
-                cat.setCategoryId(res.getLong("categoryId"));
-                cat.setName(res.getString("name"));
-                  JOptionPane.showMessageDialog(null, "soy el ide: "+cat.getCategoryId());
-                  JOptionPane.showMessageDialog(null, "soy el ide: "+cat.getName());
+                cat.setCategoryId(res.getInt("categoryId"));
+                cat.setName(res.getString("name"));                 
+                this.disconnect();
                 return cat;
             } else {
                 return null;
             }
 
         } catch (SQLException ex) {
-            //Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
              Logger.getLogger(CategoryRepository.class.getName()).log(Level.SEVERE, "Error al consultar Customer de la base de datos", ex);
         }
         return null;
@@ -180,12 +170,13 @@ public class CategoryRepository implements ICategoryRepository {
     public List<Category> findAll() {
         List<Category> categories = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM categories";
+            this.connect();
+            String sql = "SELECT * FROM category";
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                Long id = rs.getLong("categoryId");
+                int id = rs.getInt("categoryId");
                 String name = rs.getString("name");
                 Category category = new Category(id, name);
                 categories.add(category);
@@ -193,19 +184,21 @@ public class CategoryRepository implements ICategoryRepository {
         } catch (SQLException e) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, e);
         }
+        this.disconnect();
         return categories;
     }
   @Override
     public List<Category> findByName(String name) {
         List<Category> categories = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM categories WHERE name = ?";
+            this.connect();
+            String sql = "SELECT * FROM category WHERE name = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, name);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                Long id = rs.getLong("categoryId");
+                int id = rs.getInt("categoryId");
                 String categoryName = rs.getString("name");
                 Category category = new Category(id, categoryName);
                 categories.add(category);
@@ -213,6 +206,7 @@ public class CategoryRepository implements ICategoryRepository {
         } catch (Exception e) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, e);
         }
+        this.disconnect();
         return categories;
     }
 

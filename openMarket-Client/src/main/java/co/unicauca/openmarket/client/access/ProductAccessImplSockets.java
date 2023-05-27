@@ -96,7 +96,7 @@ public class ProductAccessImplSockets implements IProductAccess {
     }
 
     @Override
-    public boolean delete(Long id)throws Exception {
+    public boolean delete(int id)throws Exception {
           boolean bandera=false;
         String jsonResponse = null;
         String requestJson = doDeleteproductRequestJson(id);
@@ -138,7 +138,7 @@ public class ProductAccessImplSockets implements IProductAccess {
          
     
     @Override
-    public Product findById(Long id)throws Exception {
+    public Product findById(int id)throws Exception {
         String jsonResponse = null;
         String requestJson = doFindProductIdRequestJson(id);
         System.out.println(requestJson);
@@ -208,7 +208,7 @@ public class ProductAccessImplSockets implements IProductAccess {
     }
 
     @Override
-    public List<Product> findByCategory(Long categoryName)throws Exception {
+    public List<Product> findByCategory(int categoryName)throws Exception {
       String jsonResponse = null;
         String requestJson = doListProductCategoryRequestJson(categoryName);
         System.out.println(requestJson);
@@ -292,12 +292,12 @@ public class ProductAccessImplSockets implements IProductAccess {
         protocol.setResource("product");
         protocol.setAction("post");
         
-        protocol.addParameter("productId",product.getProductId().toString());
+        protocol.addParameter("productId",  Integer.toString(product.getProductId()));
         protocol.addParameter("name",product.getName());
         protocol.addParameter("description", product.getDescription());
         protocol.addParameter("price", Double.toString(product.getPrice()));
         protocol.addParameter("address", product.getAddress());
-        protocol.addParameter("CategoryId", product.getCategoryId().toString());
+        protocol.addParameter("CategoryId", Integer.toString(product.getCategoryId()));
         protocol.addParameter("stock", Integer.toString(product.getStock()));
         
         byte[] byteArray = product.getImage()/* Tu arreglo de bytes de la imagen */;
@@ -352,11 +352,11 @@ public class ProductAccessImplSockets implements IProductAccess {
      * @return solicitud de consulta del producto en formato Json, algo como:
      * {"resource":"product","action":"get","parameters":[{"name":"id","value":""}]}
      */
-    private String doFindProductIdRequestJson(Long id) {
+    private String doFindProductIdRequestJson(int id) {
        Protocol protocol = new Protocol();
         protocol.setResource("product");
         protocol.setAction("get");
-        protocol.addParameter("productId",id.toString());
+        protocol.addParameter("productId",Integer.toString(id));
 
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
@@ -376,12 +376,12 @@ public class ProductAccessImplSockets implements IProductAccess {
         protocol.setResource("product");
         protocol.setAction("edit");
         
-        protocol.addParameter("productId",product.getProductId().toString());
+        protocol.addParameter("productId", Integer.toString(product.getProductId()) );
         protocol.addParameter("name",product.getName());
         protocol.addParameter("description", product.getDescription());
         protocol.addParameter("price", Double.toString(product.getPrice()));
         protocol.addParameter("address", product.getAddress());
-        protocol.addParameter("CategoryId", product.getCategoryId().toString());
+        protocol.addParameter("CategoryId",Integer.toString(product.getCategoryId()));
         protocol.addParameter("stock", Integer.toString(product.getStock()));
         protocol.addParameter("image", Arrays.toString(product.getImage()));
         
@@ -390,12 +390,12 @@ public class ProductAccessImplSockets implements IProductAccess {
         return requestJson; 
     }
 
-    private String doDeleteproductRequestJson(Long id) {
+    private String doDeleteproductRequestJson(int id) {
         Protocol protocol = new Protocol();
         protocol.setResource("product");
         protocol.setAction("delete");
         
-        protocol.addParameter("id", id.toString());
+        protocol.addParameter("id", Integer.toString(id));
        
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
@@ -423,11 +423,11 @@ public class ProductAccessImplSockets implements IProductAccess {
  
     }
 
-    private String doListProductCategoryRequestJson(Long categoryId) {
+    private String doListProductCategoryRequestJson(int categoryId) {
        Protocol protocol=new Protocol();
        protocol.setResource("product");
        protocol.setAction("listProductCategory");
-       protocol.addParameter("name",categoryId.toString());
+       protocol.addParameter("name",Integer.toString(categoryId));
        
          Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);

@@ -2,17 +2,17 @@ package co.unicauca.openmarket.commons.domain;
 
 
 public class Product {
-    private Long productId;
+    private int productId;
     private String name;    
     private String description; 
     private double price;
     private String address;   
-    private Long categoryId;
+    private int categoryId;
     private int stock;
     private byte [] image;
     
     
-    public Product(Long productId, String name, String description, double price,String address ,Long categoryId, int stock,byte [] image) {
+    public Product(int productId, String name, String description, double price,String address ,int categoryId, int stock,byte [] image) {
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -51,11 +51,11 @@ public class Product {
         this.image = image;
     }
     
-    public Long getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(Long productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
@@ -75,11 +75,11 @@ public class Product {
         this.description = description;
     }
 
-    public Long getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Long categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 

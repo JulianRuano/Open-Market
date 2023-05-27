@@ -18,9 +18,9 @@ import java.util.List;
 public interface ICategoryRepository {
     
    boolean save(Category newCategory);
-   boolean edit(Long id, Category category);
-   boolean delete(Long id);
-   Category findById(Long id);
+   boolean edit(int id, Category category);
+   boolean delete(int id);
+   Category findById(int id);
    List<Category> findAll();
    List<Category> findByName(String name);
    //boolean clearCategories();

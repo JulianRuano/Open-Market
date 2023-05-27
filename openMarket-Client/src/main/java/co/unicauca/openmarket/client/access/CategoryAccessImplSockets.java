@@ -66,7 +66,7 @@ public class CategoryAccessImplSockets  implements ICategoryAccess {
     }
 
     @Override
-    public boolean edit(Long id, Category newCategory) {
+    public boolean edit(int id, Category newCategory) {
          boolean bandera=false;
         String jsonResponse = null;
         String requestJson = doEditCategoryRequestJson(id,newCategory);
@@ -106,7 +106,7 @@ public class CategoryAccessImplSockets  implements ICategoryAccess {
     }
 
     @Override
-    public boolean delete(Long id) {
+    public boolean delete(int id) {
         boolean bandera=false;
         String jsonResponse = null;
         String requestJson = doDeleteCategoryRequestJson(id);
@@ -146,7 +146,7 @@ public class CategoryAccessImplSockets  implements ICategoryAccess {
     }
 
     @Override
-    public Category findById(Long id) {
+    public Category findById(int id) {
         String jsonResponse = null;
         String requestJson = doFindCategoyIdRequestJson(id);
         System.out.println(requestJson);
@@ -277,12 +277,12 @@ public class CategoryAccessImplSockets  implements ICategoryAccess {
      * @return solicitud de consulta del cliente en formato Json, algo como:
      * {"resource":"category","action":"get","parameters":[{"name":"id","value":"1"}]}
      */
-    private String doFindCategoyIdRequestJson(Long categoryId) {
+    private String doFindCategoyIdRequestJson(int categoryId) {
 
         Protocol protocol = new Protocol();
         protocol.setResource("category");
         protocol.setAction("get");
-        protocol.addParameter("categoryId", categoryId.toString());
+        protocol.addParameter("categoryId", Integer.toString(categoryId));
 
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
@@ -302,7 +302,7 @@ public class CategoryAccessImplSockets  implements ICategoryAccess {
         Protocol protocol = new Protocol();
         protocol.setResource("category");
         protocol.setAction("post");
-        protocol.addParameter("id", category.getCategoryId().toString());
+        protocol.addParameter("id", Integer.toString(category.getCategoryId()));
         protocol.addParameter("name", category.getName());
        
         Gson gson = new Gson();
@@ -310,12 +310,12 @@ public class CategoryAccessImplSockets  implements ICategoryAccess {
         return requestJson;
     }
     
-     private String doEditCategoryRequestJson(Long id,Category newCategory) {
+     private String doEditCategoryRequestJson(int id,Category newCategory) {
 
         Protocol protocol = new Protocol();
         protocol.setResource("category");
         protocol.setAction("edit");
-        protocol.addParameter("id", id.toString());
+        protocol.addParameter("id", Integer.toString(id));
         protocol.addParameter("name", newCategory.getName());
        
         Gson gson = new Gson();
@@ -323,11 +323,11 @@ public class CategoryAccessImplSockets  implements ICategoryAccess {
         return requestJson;
     }
      
-    private String doDeleteCategoryRequestJson(Long id){
+    private String doDeleteCategoryRequestJson(int id){
         Protocol protocol = new Protocol();
         protocol.setResource("category");
         protocol.setAction("delete");
-        protocol.addParameter("id", id.toString());
+        protocol.addParameter("id", Integer.toString(id));
        
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);

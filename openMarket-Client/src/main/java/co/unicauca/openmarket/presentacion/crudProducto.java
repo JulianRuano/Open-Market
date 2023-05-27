@@ -17,14 +17,12 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -64,25 +62,20 @@ public class crudProducto extends javax.swing.JPanel implements Observador{
         mModeloTabla.addColumn("Imagen");
         tblProductos.setModel(mModeloTabla);
         
-List<Category> categories = this.categoryService.findAllCategories();
-if(!(categories==null)){
-    DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
-Map<String, Long> categoryMap = new HashMap<>();
+        List<Category> categories = this.categoryService.findAllCategories();
+        if(!(categories==null)){
+            DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+        Map<String, Integer> categoryMap = new HashMap<>();
 
-for (Category category : categories) {
-    String categoryName = category.getName();
-    Long categoryId = category.getCategoryId();
-    modelo.addElement(categoryName);
-    categoryMap.put(categoryName, categoryId);
-}
+            for (Category category : categories) {
+                String categoryName = category.getName();
+                int categoryId = category.getCategoryId();
+                modelo.addElement(categoryName);
+                categoryMap.put(categoryName, categoryId);
+            }
 
-cbxCodigoCategoria.setModel(modelo);
-}
-
-
-
-
-
+                cbxCodigoCategoria.setModel(modelo);
+        }
         stateInitial();
     }
      private void initializeTable() {
@@ -561,7 +554,7 @@ cbxCodigoCategoria.setModel(modelo);
             txtCodigoProducto.requestFocus();
             return;
         }
-        Long productId = Long.parseLong(id);
+        int productId = Integer.parseInt(id);
         OMDeleteProductCommand comm = new OMDeleteProductCommand(productId, productService);
         ominvoker.addCommand(comm);
         ominvoker.execute();  
@@ -599,9 +592,9 @@ cbxCodigoCategoria.setModel(modelo);
                  Limpiar();
                if(this.rdIdProducto.isSelected()==true){
                
-                  fillTableId(productService.findProductById(Long.parseLong(this.txtBuscarProducto.getText())) );
+                  fillTableId(productService.findProductById(Integer.parseInt(this.txtBuscarProducto.getText())) );
                 }else if(this.rdIdCategoria.isSelected()==true){
-                     fillTable(productService.findProductsByCategory(Long.parseLong(this.txtBuscarProducto.getText())));
+                     fillTable(productService.findProductsByCategory(Integer.parseInt(this.txtBuscarProducto.getText())));
                  }
                 else{
                    fillTable (productService.findProductsByName(this.txtBuscarProducto.getText())); 
@@ -714,14 +707,13 @@ cbxCodigoCategoria.setModel(modelo);
     }
     private void addProduct() {
         try{
-            Long productId = 0l;
+            int productId = 0;
             String name = txtNombre.getText().trim();
             String description = txtDescripcion.getText().trim();
             double price =Double.parseDouble(this.txtPrecio.getText());
             String address =this.txtDireccion.getText();
-            //Long   categoryId =Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
-            Long   categoryId = 1l;
-            int stock = 0;
+            int    categoryId = 1;
+            int    stock = Integer.parseInt(this.txtStock.getText());
             byte [] image = getImagen(Ruta);
             
             
@@ -748,13 +740,13 @@ cbxCodigoCategoria.setModel(modelo);
             txtCodigoProducto.requestFocus();
             return;
         }
-        Long productId = Long.parseLong(id);
+        int productId = Integer.parseInt(id);
         String name=txtNombre.getText();
         String description=this.txtDescripcion.getText();
         double price =Double.parseDouble(this.txtPrecio.getText());
         String address =this.txtDireccion.getText();
-        Long   categoryId= 1l;
-        int stock = 0;
+        int    categoryId =Integer.parseInt((String) this.cbxCodigoCategoria.getSelectedItem());
+        int    stock = Integer.parseInt(this.txtStock.getText());
         byte [] image = null;
         
         Product OProduct = new Product(productId, name, description, price, address, categoryId,stock, image);      

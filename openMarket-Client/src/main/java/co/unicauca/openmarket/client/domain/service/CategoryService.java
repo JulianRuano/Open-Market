@@ -24,7 +24,7 @@ public class CategoryService extends Observado{
     public CategoryService(ICategoryAccess repository){
         this.repository=repository;
     }
-    public boolean saveCategory (Long id,String name)throws Exception{
+    public boolean saveCategory (int id,String name)throws Exception{
         Category newCategory=new Category();
         newCategory.setCategoryId(id);
         newCategory.setName(name);
@@ -36,7 +36,7 @@ public class CategoryService extends Observado{
         this.notificar();
         return result;
     }
-    public boolean editCategory(Long categoryId,Category cat) {
+    public boolean editCategory(int categoryId,Category cat) {
         
         //Validate product
         if(cat==null || cat.getName().isBlank()){
@@ -48,12 +48,12 @@ public class CategoryService extends Observado{
        return result;
     }
     
-   public boolean deleteCategory(Long id){
+   public boolean deleteCategory(int id){
        boolean result =repository.delete(id);
        this.notificar();
         return result;
     }  
-    public Category findCategoryById(Long id)throws Exception{
+    public Category findCategoryById(int id)throws Exception{
         return repository.findById(id);
     }
        public List<Category> findAllCategories(){

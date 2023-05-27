@@ -291,7 +291,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
                 if (!validarId(txtBuscar)) {
                     return;
                 }
-                fillTableId(categoryService.findCategoryById(Long.valueOf(this.txtBuscar.getText())));
+                fillTableId(categoryService.findCategoryById(Integer.parseInt(this.txtBuscar.getText())));
             } else {
                 if (txtBuscar.getText().isEmpty()) {
                     Messages.showMessageDialog("Debe ingresar el nombre de la categoria", "Atención");
@@ -473,7 +473,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         }
         try {
             String name = this.txtNameCategoria.getText().trim();
-            Category OCategory = new Category(0L, name);
+            Category OCategory = new Category(0, name);
             OMAddCategoryCommand comm = new OMAddCategoryCommand(OCategory, categoryService);
             ominvoker.addCommand(comm);
             ominvoker.execute();
@@ -493,7 +493,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         if (!encontrarCategoria()) {
             return;
         }
-        Long categoryId = Long.valueOf(txtCodCategoria.getText());
+        int categoryId = Integer.parseInt(txtCodCategoria.getText());
         String name = this.txtNameCategoria.getText().trim();
         Category OCategory = new Category(categoryId, name);
         OMEditCategoryCommand comm = new OMEditCategoryCommand(OCategory, categoryService);
@@ -514,7 +514,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
             return;
         }
         if (Messages.showConfirmDialog("Está seguro que desea eliminar esta Categoria?", "Confirmación") == JOptionPane.YES_NO_OPTION) {
-            Long idCategory = Long.valueOf(txtCodCategoria.getText().trim());
+            int idCategory = Integer.parseInt(txtCodCategoria.getText().trim());
             OMDeleteCategoryCommand comm = new OMDeleteCategoryCommand(idCategory, categoryService);
             ominvoker.addCommand(comm);
             ominvoker.execute();
@@ -562,7 +562,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
 
     private boolean encontrarCategoria() {
         try {
-            if (this.categoryService.findCategoryById(Long.valueOf(txtCodCategoria.getText())) == null) {
+            if (this.categoryService.findCategoryById(Integer.parseInt(txtCodCategoria.getText())) == null) {
                 Messages.showMessageDialog("Categoria no encontrada", "Error");
                 cleanControls();
                 txtCodCategoria.requestFocus();
