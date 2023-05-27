@@ -17,6 +17,7 @@ import co.unicauca.openmarket.server.application.PurchaseGenerator;
 import com.google.gson.Gson;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 
@@ -203,8 +204,10 @@ public class OpenMarketHandler extends ServerHandler {
         producto.setPrice(Double.parseDouble(protocolRequest.getParameters().get(3).getValue()));
         producto.setAddress(protocolRequest.getParameters().get(4).getValue());
         producto.setCategoryId(Long.parseLong(protocolRequest.getParameters().get(5).getValue()));
-        producto.setImage(protocolRequest.getParameters().get(6).getValue().getBytes(StandardCharsets.UTF_8));
         
+        byte[] decodedImage = Base64.getDecoder().decode(protocolRequest.getParameters().get(6).getValue());             
+        producto.setImage(decodedImage);
+
         boolean response = this.getServiceProduc().save(producto);
         String respuesta=String.valueOf(response);
         return respuesta;

@@ -1,0 +1,13 @@
+co\unicauca\openmarket\server\access\CategoryRepositoryArrays.class
+co\unicauca\openmarket\domain\services\CategoryService.class
+co\unicauca\openmarket\server\domain\Location.class
+co\unicauca\openmarket\server\access\ProductRepository.class
+co\unicauca\openmarket\server\infra\tcpip\OpenMarketHandler.class
+co\unicauca\openmarket\domain\services\ProductService.class
+co\unicauca\openmarket\server\access\Factory.class
+co\unicauca\openmarket\server\domain\User.class
+co\unicauca\openmarket\server\access\CategoryRepository.class
+co\unicauca\openmarket\server\access\IProductRepository.class
+co\unicauca\openmarket\server\access\ProductRepositoryArrays.class
+co\unicauca\openmarket\server\infra\tcpip\OpeMarketServer.class
+co\unicauca\openmarket\server\access\ICategoryRepository.class

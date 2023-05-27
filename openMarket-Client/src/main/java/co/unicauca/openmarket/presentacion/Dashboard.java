@@ -76,6 +76,7 @@ public class Dashboard extends javax.swing.JFrame {
         pnlBarraLateral.setBackground(new java.awt.Color(38, 145, 205));
 
         btnCategoria.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
+        btnCategoria.setForeground(new java.awt.Color(0, 0, 0));
         btnCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/book-content-solid-48.png"))); // NOI18N
         btnCategoria.setText("Categoria");
         btnCategoria.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -146,7 +147,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(198, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlHeader.setBackground(new java.awt.Color(0, 102, 204));
@@ -178,7 +179,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
         pnlContenidoIzquierdoLayout.setVerticalGroup(
             pnlContenidoIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 677, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
@@ -203,8 +204,8 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlContenidoIzquierdo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(pnlContenidoIzquierdo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

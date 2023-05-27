@@ -13,6 +13,7 @@ import co.unicauca.openmarket.client.infra.Messages;
 import static co.unicauca.openmarket.client.infra.Messages.successMessage;
 import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
 import co.unicauca.openmarket.commons.application.Invoice;
+import javax.swing.table.DefaultTableModel;
 
 
 
@@ -23,13 +24,22 @@ public class GUIPaymet extends javax.swing.JFrame {
      private Long idProduct;
      private ShoppingCar shoppingCart;
       private GUIPaymet  comprar;
+      DefaultTableModel mModeloTabla = new DefaultTableModel();
+      
+      
      
     public GUIPaymet(Long id,ShoppingCar shoppingCart) {
         this.idProduct = id;
         this.shoppingCart = shoppingCart;
+        ominvoker = new OMInvoker();  
+       
         
         initComponents();
         stateInitial();    
+    }
+
+    GUIPaymet() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
@@ -48,12 +58,12 @@ public class GUIPaymet extends javax.swing.JFrame {
         txtYear = new javax.swing.JTextField();
         lblNombreTitular = new javax.swing.JLabel();
         txtCardNumber = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        lblCodigoSeguridad = new javax.swing.JLabel();
         txtCVC = new javax.swing.JTextField();
         txtMonth = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lblFechaExpiracion = new javax.swing.JLabel();
+        lblMes = new javax.swing.JLabel();
+        lblAnio = new javax.swing.JLabel();
         pnlSouth = new javax.swing.JPanel();
         btnConfirm = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -61,6 +71,7 @@ public class GUIPaymet extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Informacion de pago");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlCenter.setName("pnlCenter"); // NOI18N
 
@@ -76,7 +87,7 @@ public class GUIPaymet extends javax.swing.JFrame {
 
         lblNombreTitular.setText("Nombre del titular:");
 
-        jLabel4.setText("Codigo de seguridad:");
+        lblCodigoSeguridad.setText("Codigo de seguridad:");
 
         txtCVC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,11 +95,11 @@ public class GUIPaymet extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Fecha de expiracion:");
+        lblFechaExpiracion.setText("Fecha de expiracion:");
 
-        jLabel6.setText("Mes");
+        lblMes.setText("Mes");
 
-        jLabel7.setText("jLabel7");
+        lblAnio.setText("Año");
 
         javax.swing.GroupLayout pnlCenterLayout = new javax.swing.GroupLayout(pnlCenter);
         pnlCenter.setLayout(pnlCenterLayout);
@@ -107,18 +118,18 @@ public class GUIPaymet extends javax.swing.JFrame {
                                 .addComponent(lblNombreTitular, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblNumeroTarjeta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtCardNumber, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblCodigoSeguridad, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlCenterLayout.createSequentialGroup()
-                                    .addComponent(jLabel7)
+                                    .addComponent(lblAnio)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jLabel5))
+                                    .addComponent(lblFechaExpiracion))
                                 .addComponent(txtCVC))
                             .addGroup(pnlCenterLayout.createSequentialGroup()
                                 .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlCenterLayout.createSequentialGroup()
                                         .addGap(76, 76, 76)
-                                        .addComponent(jLabel6))
+                                        .addComponent(lblMes))
                                     .addGroup(pnlCenterLayout.createSequentialGroup()
                                         .addGap(48, 48, 48)
                                         .addComponent(txtMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
@@ -136,7 +147,7 @@ public class GUIPaymet extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCardNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblCodigoSeguridad, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCenterLayout.createSequentialGroup()
@@ -144,16 +155,18 @@ public class GUIPaymet extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7)))
+                            .addComponent(lblMes, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblAnio)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCenterLayout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblFechaExpiracion, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(13, 13, 13)))
                 .addGroup(pnlCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        getContentPane().add(pnlCenter, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 360));
 
         pnlSouth.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -189,7 +202,7 @@ public class GUIPaymet extends javax.swing.JFrame {
                 .addComponent(btnCancelar)
                 .addGap(46, 46, 46)
                 .addComponent(btnCerrar)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         pnlSouthLayout.setVerticalGroup(
             pnlSouthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,20 +215,7 @@ public class GUIPaymet extends javax.swing.JFrame {
                 .addGap(22, 22, 22))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlCenter, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addComponent(pnlSouth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlCenter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
-                .addComponent(pnlSouth, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        getContentPane().add(pnlSouth, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 358, -1, 45));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -293,10 +293,10 @@ public class GUIPaymet extends javax.swing.JFrame {
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnConfirm;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel lblAnio;
+    private javax.swing.JLabel lblCodigoSeguridad;
+    private javax.swing.JLabel lblFechaExpiracion;
+    private javax.swing.JLabel lblMes;
     private javax.swing.JLabel lblNombreTitular;
     private javax.swing.JLabel lblNumeroTarjeta;
     private javax.swing.JPanel pnlCenter;
