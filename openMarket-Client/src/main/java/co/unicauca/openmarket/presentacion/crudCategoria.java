@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import reloj.frameworkobsobs.Observador;
-import java.util.Random;
+
 
 /**
  *
@@ -478,9 +478,8 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
             return;
         }
         try {
-            Random r = new Random();
             String name = this.txtNameCategoria.getText().trim();
-            Category OCategory = new Category(r.nextLong(100-0), name);
+            Category OCategory = new Category(0L, name);
             OMAddCategoryCommand comm = new OMAddCategoryCommand(OCategory, categoryService);
             ominvoker.addCommand(comm);
             ominvoker.execute();
