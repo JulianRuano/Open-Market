@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface ICategoryRepository {
     
-   boolean save(Category newCategory);
+   int save(Category newCategory);
    boolean edit(int id, Category category);
    boolean delete(int id);
    Category findById(int id);

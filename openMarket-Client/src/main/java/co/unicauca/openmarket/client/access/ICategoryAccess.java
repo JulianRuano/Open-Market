@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface ICategoryAccess {
     
-   boolean save(Category newCategory)throws Exception;
+   int save(Category newCategory)throws Exception;
    boolean edit(int id, Category category);
    boolean delete(int id);
    Category findById(int id);

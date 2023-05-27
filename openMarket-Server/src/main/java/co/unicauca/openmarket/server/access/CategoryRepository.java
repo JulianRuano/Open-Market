@@ -6,12 +6,14 @@
 package co.unicauca.openmarket.server.access;
 
 import co.unicauca.openmarket.commons.domain.Category;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -57,23 +59,28 @@ public class CategoryRepository implements ICategoryRepository {
     }
 
     @Override
-    public boolean save(Category newCategory) {
+    public int save(Category newCategory) {
         try {
             if (newCategory == null) {
-                return false;
+                return 0;
             }
             this.connect();
-            String sql = "INSERT INTO category (name) "
-                    + "VALUES (?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            String sql = "{CALL InsertCategory(?, ?)}";
+                  
+            CallableStatement  pstmt = conn.prepareCall(sql);
             pstmt.setString(1, newCategory.getName());
+            pstmt.registerOutParameter(2, Types.INTEGER);
             pstmt.executeUpdate();
+            
+            int categoryId = pstmt.getInt(2);
+            
+            pstmt.close();
             this.disconnect();
-            return true;
+            return categoryId;
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;       
+        return 0;       
     }
 
 

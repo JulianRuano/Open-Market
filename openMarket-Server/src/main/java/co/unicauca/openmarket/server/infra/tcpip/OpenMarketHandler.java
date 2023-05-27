@@ -157,7 +157,7 @@ public class OpenMarketHandler extends ServerHandler {
         // Reconstruir La categoria a partir de lo que viene en los parámetros
         category.setCategoryId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
         category.setName(protocolRequest.getParameters().get(1).getValue());
-        boolean response = categoryService.save(category);
+        int response = categoryService.save(category);
         return String.valueOf(response);
     }
     

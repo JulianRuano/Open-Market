@@ -15,6 +15,9 @@ import reloj.frameworkobsobs.Observado;
  */
 public class CategoryService extends Observado{
     
+    private int idCategory;
+    
+    
     
     public CategoryService(){
         
@@ -31,11 +34,18 @@ public class CategoryService extends Observado{
         if(newCategory.getName().isBlank()){
             return false;
         }
+        boolean result= false;
         
-        boolean result=repository.save(newCategory);
+        this.idCategory = repository.save(newCategory);
+        
+        if (idCategory > 0 ){        
+            result= true;
+        }       
+        
         this.notificar();
         return result;
     }
+    
     public boolean editCategory(int categoryId,Category cat) {
         
         //Validate product
@@ -63,6 +73,11 @@ public class CategoryService extends Observado{
        public List<Category> findCategoriesByName(String name)throws Exception{
         return repository.findByName(name);
     }
-      
+
+    public int getIdCategory() {
+        return idCategory;
+    }
+    
+       
 }  
         

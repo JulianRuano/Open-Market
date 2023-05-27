@@ -35,8 +35,8 @@ public class CategoryAccessImplSockets  implements ICategoryAccess {
 
 
     @Override
-    public boolean save(Category newCategory) throws Exception  {
-        boolean bandera = false;
+    public int save(Category newCategory) throws Exception  {
+        int id = 0;
         String jsonResponse = null;
         String requestJson = doSaveCategoryRequestJson(newCategory);
         try {
@@ -56,13 +56,14 @@ public class CategoryAccessImplSockets  implements ICategoryAccess {
                 Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
                 throw new Exception(extractMessages(jsonResponse));
             } else {
-                //Agregó correctamente, devuelve true
-                //Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ("+newCategory.getCategoryId().toString()+ ")");
-                bandera = true;
+                //Agregó correctamente, devuelve el id
+                int idCategory = Integer.parseInt(jsonResponse);
+                Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", idCategory);
+                id = idCategory;
             }
         }
 
-        return bandera;
+        return id;
     }
 
     @Override

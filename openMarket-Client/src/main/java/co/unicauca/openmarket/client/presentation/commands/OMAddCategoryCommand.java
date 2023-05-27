@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 public class OMAddCategoryCommand extends OMCommand {
     
     private Category cC;
+    private int idCategory;
     private CategoryService cS;
     boolean result=false;
     public OMAddCategoryCommand(Category cC, CategoryService cS){
@@ -25,8 +26,12 @@ public class OMAddCategoryCommand extends OMCommand {
 
     @Override
     public void make() {
-        try {          
+        try { 
             result = cS.saveCategory(cC.getCategoryId(), cC.getName());
+            if (result){
+                this.idCategory = cS.getIdCategory();
+            }
+            
         } catch (Exception ex) {
             Logger.getLogger(OMAddCategoryCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -34,7 +39,7 @@ public class OMAddCategoryCommand extends OMCommand {
 
     @Override
     public void unmake() {
-        result = cS.deleteCategory(cC.getCategoryId());
+        result = cS.deleteCategory(idCategory);
     }
         
     public boolean result(){
