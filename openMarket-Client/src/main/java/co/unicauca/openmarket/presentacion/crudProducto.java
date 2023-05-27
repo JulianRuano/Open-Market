@@ -49,9 +49,10 @@ public class crudProducto extends javax.swing.JPanel implements Observador{
     private OMInvoker ominvoker;
     private CategoryService categoryService;
     
-    public crudProducto(ProductService productService,OMInvoker ominvoker) {
+    public crudProducto(ProductService productService,OMInvoker ominvoker,CategoryService categoryService ) {
         initComponents();
         this.productService=productService;
+        this.categoryService=categoryService;
         this.ominvoker =ominvoker;  
         mModeloTabla.addColumn("ID");
         mModeloTabla.addColumn("Nombre");
@@ -61,9 +62,10 @@ public class crudProducto extends javax.swing.JPanel implements Observador{
         mModeloTabla.addColumn("ID categoria");
         mModeloTabla.addColumn("Imagen");
         tblProductos.setModel(mModeloTabla);
+        
 List<Category> categories = this.categoryService.findAllCategories();
-
-DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+if(!(categories==null)){
+    DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
 Map<String, Long> categoryMap = new HashMap<>();
 
 for (Category category : categories) {
@@ -74,6 +76,9 @@ for (Category category : categories) {
 }
 
 cbxCodigoCategoria.setModel(modelo);
+}
+
+
 
 
 

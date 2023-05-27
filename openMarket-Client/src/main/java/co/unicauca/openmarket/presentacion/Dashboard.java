@@ -226,7 +226,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
       
-        crudProducto instance2=new crudProducto(this.productService,this.ominvokerProducts);
+        crudProducto instance2=new crudProducto(this.productService,this.ominvokerProducts,categoryService);
         ShowJPanel(instance2);
         productService.addObservador(instance2);
     }//GEN-LAST:event_btnProductoActionPerformed
