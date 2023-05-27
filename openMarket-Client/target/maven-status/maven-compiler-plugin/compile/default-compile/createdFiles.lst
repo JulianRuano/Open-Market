@@ -17,6 +17,7 @@ co\unicauca\openmarket\client\presentation\commands\OMAddProductCommand.class
 co\unicauca\openmarket\client\presentation\commands\OMCommand.class
 co\unicauca\openmarket\presentacion\crudProducto$4.class
 co\unicauca\openmarket\client\access\ICategoryAccess.class
+co\unicauca\openmarket\presentacion\crudCategoria$8.class
 co\unicauca\openmarket\client\presentation\commands\OMEditProductCommand.class
 co\unicauca\openmarket\client\presentation\GUICategoriesFind$1.class
 co\unicauca\openmarket\client\presentation\GUICategoriesFind$4.class
@@ -27,10 +28,10 @@ co\unicauca\openmarket\presentacion\GUIPaymet$2.class
 co\unicauca\openmarket\presentacion\Tienda.class
 co\unicauca\openmarket\presentacion\crudProducto$3.class
 co\unicauca\openmarket\presentacion\Dashboard$1.class
+co\unicauca\openmarket\presentacion\crudCategoria$6.class
 co\unicauca\openmarket\presentacion\GUIPaymet.class
 co\unicauca\openmarket\client\presentation\commands\OMDeleteCategoryCommand.class
 co\unicauca\openmarket\client\presentation\GUIProductsFind$3.class
-.netbeans_automatic_build
 co\unicauca\openmarket\client\presentation\GUIProducts$6.class
 co\unicauca\openmarket\presentacion\GUIPaymet$1.class
 co\unicauca\openmarket\client\presentation\GUICategory$4.class
@@ -47,6 +48,7 @@ co\unicauca\openmarket\client\presentation\GUIProducts.class
 co\unicauca\openmarket\presentacion\Dashboard.class
 co\unicauca\openmarket\client\presentation\GUIProductsFind.class
 co\unicauca\openmarket\presentacion\crudProducto$5.class
+co\unicauca\openmarket\presentacion\crudCategoria$7.class
 co\unicauca\openmarket\presentacion\crudCategoria$1.class
 co\unicauca\openmarket\client\presentation\GUIProducts$1.class
 co\unicauca\openmarket\presentacion\crudProducto$8.class
@@ -73,6 +75,7 @@ co\unicauca\openmarket\presentacion\Tienda$2.class
 co\unicauca\openmarket\client\infra\Messages.class
 co\unicauca\openmarket\client\presentation\GUICategory$1.class
 co\unicauca\openmarket\client\presentation\commands\test.class
+co\unicauca\openmarket\presentacion\crudCategoria$9.class
 co\unicauca\openmarket\client\domain\service\CategoryService.class
 co\unicauca\openmarket\client\access\ShoppingCartAccessImplSockets.class
 co\unicauca\openmarket\client\presentation\GUICategory$7.class

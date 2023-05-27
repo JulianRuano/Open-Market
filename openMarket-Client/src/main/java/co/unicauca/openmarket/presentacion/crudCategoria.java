@@ -8,9 +8,13 @@ import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.infra.Messages;
 import static co.unicauca.openmarket.client.infra.Messages.successMessage;
 import co.unicauca.openmarket.client.presentation.commands.OMAddCategoryCommand;
+import co.unicauca.openmarket.client.presentation.commands.OMDeleteCategoryCommand;
+import co.unicauca.openmarket.client.presentation.commands.OMEditCategoryCommand;
 import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
 import co.unicauca.openmarket.commons.domain.Category;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import reloj.frameworkobsobs.Observador;
@@ -22,16 +26,16 @@ import reloj.frameworkobsobs.Observador;
 public class crudCategoria extends javax.swing.JPanel implements Observador {
 
     private CategoryService categoryService;
-    private boolean addOption;
+    private int addOption;
     private OMInvoker ominvoker;
 
     /**
      * Creates new form crudCategoria
      */
-    public crudCategoria(CategoryService categoryService) {
+    public crudCategoria(CategoryService categoryService, OMInvoker ominvoker) {
         initComponents();
         this.categoryService = categoryService;
-        ominvoker = new OMInvoker();
+        this.ominvoker = ominvoker;
         initializeTable();
         stateInitial();
     }
@@ -129,6 +133,11 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -142,17 +151,32 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         btnEliminar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnDeshacer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnDeshacer.setText("Deshacer");
         btnDeshacer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnDeshacer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeshacerActionPerformed(evt);
+            }
+        });
 
         btnRehacer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnRehacer.setText("Rehacer");
         btnRehacer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRehacer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRehacerActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnGuardar.setText("Guardar");
+        btnGuardar.setText("Confirmar");
         btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,10 +200,10 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRehacer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnCancelar)
-                .addContainerGap(342, Short.MAX_VALUE))
+                .addContainerGap(320, Short.MAX_VALUE))
         );
         pnlSeccionBotonesLayout.setVerticalGroup(
             pnlSeccionBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,6 +288,9 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         try {
             if (this.rdBuscarId.isSelected() == true) {
+                if (!validarId(txtBuscar)) {
+                    return;
+                }
                 fillTableId(categoryService.findCategoryById(Long.valueOf(this.txtBuscar.getText())));
             } else {
                 fillTableName(categoryService.findCategoriesByName(this.txtBuscar.getText()));
@@ -285,26 +312,21 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
     private void btnNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaActionPerformed
         stateNew();
         this.txtCodCategoria.requestFocus();
-        addOption = true;
+        addOption = 1;
     }//GEN-LAST:event_btnNuevaActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        try {
-            Long id = Long.parseLong(this.txtCodCategoria.getText());
-            String name = this.txtNameCategoria.getText().trim();
-            Category OCategory = new Category(id, name);
-            OMAddCategoryCommand comm = new OMAddCategoryCommand(OCategory, categoryService);
-            ominvoker.addCommand(comm);
-            ominvoker.execute();
-            if (comm.result()) {
-                Messages.showMessageDialog("Se grabo con exito", "Atencion");
-                cleanControls();
-                stateInitial();
-            } else {
-                Messages.showMessageDialog("Error al grabar, lo siento mucho", "Atencion");
+        if (addOption == 1) {
+            //Agregar
+            addCategory();
+        } else if (addOption == 2) {
+            //Editar
+            editCategory();
+        } else {
+            if (!validarId(txtCodCategoria)) {
+                return;
             }
-        } catch (Exception ex) {
-            successMessage(ex.getMessage(), "Atención");
+            deleteCategory();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -312,6 +334,34 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         stateInitial();
         cleanControls();
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacerActionPerformed
+        ominvoker.unexecute();
+        if (!ominvoker.hasMoreCommands()) {
+            this.btnDeshacer.setVisible(false);
+        }
+        this.btnRehacer.setVisible(true);
+    }//GEN-LAST:event_btnDeshacerActionPerformed
+
+    private void btnRehacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacerActionPerformed
+        ominvoker.reExecuted();
+        if (!ominvoker.hasMoreCommandsRedo()) {
+            this.btnRehacer.setVisible(false);
+        }
+        this.btnDeshacer.setVisible(true);
+    }//GEN-LAST:event_btnRehacerActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        addOption = 2;
+        stateNew();
+        txtCodCategoria.requestFocus();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        addOption = 3;
+        stateDelete();
+        txtCodCategoria.requestFocus();
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -349,17 +399,17 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
     }
 
     private void stateNew() {
-        lblCodCategoria.setVisible(true);
+        //lblCodCategoria.setVisible(true);
         lblNameCategory.setVisible(true);
-        txtCodCategoria.setVisible(true);
+        //txtCodCategoria.setVisible(true);
         txtNameCategoria.setVisible(true);
         btnNueva.setVisible(false);
         btnEditar.setVisible(false);
         btnEliminar.setVisible(false);
         btnGuardar.setVisible(true);
         btnCancelar.setVisible(true);
-        btnDeshacer.setVisible(ominvoker.hasMoreCommands());
-        btnRehacer.setVisible(ominvoker.hasMoreCommandsRedo());
+        btnDeshacer.setVisible(false);
+        btnRehacer.setVisible(false);
     }
 
     private void stateInitial() {
@@ -376,8 +426,109 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         btnRehacer.setVisible(ominvoker.hasMoreCommandsRedo());
     }
 
+    private void stateDelete() {
+        lblCodCategoria.setVisible(true);
+        txtCodCategoria.setVisible(true);
+        btnNueva.setVisible(false);
+        btnEditar.setVisible(false);
+        btnEliminar.setVisible(false);
+        btnCancelar.setVisible(true);
+        btnGuardar.setVisible(true);
+        btnDeshacer.setVisible(false);
+        btnRehacer.setVisible(false);
+    }
+
     private void cleanControls() {
         txtCodCategoria.setText("");
         txtNameCategoria.setText("");
+    }
+
+    private void addCategory() {
+        try {
+            Long id = Long.parseLong(this.txtCodCategoria.getText());
+            String name = this.txtNameCategoria.getText().trim();
+            Category OCategory = new Category(id, name);
+            OMAddCategoryCommand comm = new OMAddCategoryCommand(OCategory, categoryService);
+            ominvoker.addCommand(comm);
+            ominvoker.execute();
+            if (comm.result()) {
+                Messages.showMessageDialog("Se grabo con exito", "Atencion");
+                cleanControls();
+                stateInitial();
+            } else {
+                Messages.showMessageDialog("Error al grabar, lo siento mucho", "Atencion");
+            }
+        } catch (Exception ex) {
+            successMessage(ex.getMessage(), "Atención");
+        }
+    }
+
+    private void editCategory() {
+        String id = this.txtCodCategoria.getText().trim();
+        if (id.equals("")) {
+            Messages.showMessageDialog("Debe buscar el producto a editar", "Atencion");
+            this.txtCodCategoria.requestFocus();
+            return;
+        }
+        Long categoryId = Long.parseLong(id);
+        String name = this.txtNameCategoria.getText().trim();
+        Category OCategory = new Category(categoryId, name);
+        OMEditCategoryCommand comm = new OMEditCategoryCommand(OCategory, categoryService);
+        ominvoker.addCommand(comm);
+        ominvoker.execute();
+
+        if (comm.result()) {
+            Messages.showMessageDialog("Se editó con éxito", "Atención");
+            cleanControls();
+            stateInitial();
+        } else {
+            Messages.showMessageDialog("Error al editar, lo siento mucho", "Atención");
+        }
+    }
+
+    private void deleteCategory() {
+        try {
+            if (this.categoryService.findCategoryById(Long.valueOf(txtCodCategoria.getText())) == null) {
+                Messages.showMessageDialog("Categoria no encontrada", "Error");
+                cleanControls();
+                txtCodCategoria.requestFocus();
+                return;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(crudCategoria.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (Messages.showConfirmDialog("Está seguro que desea eliminar esta Categoria?", "Confirmación") == JOptionPane.YES_NO_OPTION) {
+            Long idCategory = Long.valueOf(txtCodCategoria.getText().trim());
+            OMDeleteCategoryCommand comm = new OMDeleteCategoryCommand(idCategory, categoryService);
+            ominvoker.addCommand(comm);
+            ominvoker.execute();
+            if (comm.result()) {
+                Messages.showMessageDialog("Categoria eliminada con exito", "Atención");
+                stateInitial();
+                cleanControls();
+            } else {
+                Messages.showMessageDialog("Categoria no encontrada", "Error");
+
+            }
+        }
+    }
+
+    private boolean validarId(javax.swing.JTextField caja) {
+        if (caja.getText().isEmpty()) {
+            Messages.showMessageDialog("Debe ingresar el id de la categoria", "Atención");
+            caja.requestFocus();
+            return false;
+        }
+        if (!validarNumeros(caja.getText().trim())) {
+            Messages.showMessageDialog("El ID debe ser numeros", "Error");
+            caja.setText("");
+            caja.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    private boolean validarNumeros(String datos) {
+        return datos.matches("[0-9]*");
     }
 }
