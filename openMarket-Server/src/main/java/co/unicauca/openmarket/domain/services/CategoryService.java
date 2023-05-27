@@ -33,7 +33,7 @@ public class CategoryService {
      * @param newCategory 
      * @return objeto tipo category
      */
-    public synchronized boolean save(Category newCategory) {
+    public synchronized boolean save(Category newCategory) {       
         return repo.save(newCategory);
     }
     

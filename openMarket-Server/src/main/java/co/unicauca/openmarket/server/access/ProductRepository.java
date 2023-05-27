@@ -13,105 +13,26 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * Es una implementación que tiene libertad de hacer una implementación del
- * contrato. Lo puede hacer con Sqlite, postgres, mysql, u otra tecnología
- *
- * @author Libardo, Julio
- */
-public class ProductRepository implements IProductRepository {
+
+public final class ProductRepository implements IProductRepository {
 
     private Connection conn;
+    private final String bd = "openmarket";
+    private final String user = "root";
+    private final String password = "";
 
     public ProductRepository() {
-        initDatabase();
+        
     }
-
-    @Override
-    public boolean save(Product newProduct) {
-
-        try {
-            //Validate product
-            if (newProduct == null || newProduct.getName().isBlank()) {
-                return false;
-            }
-            //this.connect();
-
-            String sql = "INSERT INTO products ( productId, name, description, categoryId ) "
-                    + "VALUES ( ?, ?, ?, ? )";
-
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-             pstmt.setLong(1, newProduct.getProductId());
-            pstmt.setString(2, newProduct.getName());
-            pstmt.setString(3, newProduct.getDescription());
-            pstmt.setLong(4, newProduct.getCategoryId());
-            pstmt.executeUpdate();
-            //this.disconnect();
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
-
-    @Override
-    public List<Product> findAll() {
-        List<Product> products = new ArrayList<>();
-        try {
-
-            String sql = "SELECT * FROM products";
-            //this.connect();
-
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            while (rs.next()) {
-                Product newProduct = new Product();
-                newProduct.setProductId(rs.getLong("productId"));
-                newProduct.setName(rs.getString("name"));
-                newProduct.setDescription(rs.getString("description"));
-
-                products.add(newProduct);
-            }
-            //this.disconnect();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return products;
-    }
-
-    public void initDatabase() {
-        // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS products (\n"
-                + "	productId integer PRIMARY KEY,\n"
-                + "	name text NOT NULL,\n"
-                + "	description text NULL,\n"
-                + "     categoryId integer,\n"
-                + "     FOREIGN KEY (categoryId) REFERENCES categories(categoryId)\n"
-                + ");";
-
-        try {
-            this.connect();
-            Statement stmt = conn.createStatement();
-            stmt.execute(sql);
-            //sentencia para crear la tabla categoria
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public void connect() {
-        // SQLite connection string
-        //String url = "jdbc:sqlite:./myDatabase.db"; //Para Linux/Mac
-        //String url = "jdbc:sqlite:C:/sqlite/db/myDatabase.db"; //Para Windows
-        String url = "jdbc:sqlite::memory:";
-
-        try {
-            conn = DriverManager.getConnection(url);
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
+    
+    public boolean connect() {
+         try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            conn  = DriverManager.getConnection(
+                    "jdbc:mysql://localhost/" + bd, user, password);
+            return conn != null;
+        } catch (Exception e) {
+            return false;
         }
     }
 
@@ -127,29 +48,100 @@ public class ProductRepository implements IProductRepository {
     }
 
     @Override
+    public boolean save(Product newProduct) {
+
+        try {
+            //Validate product
+            if (newProduct == null || newProduct.getName().isBlank()) {
+                return false;
+            }
+            this.connect();
+
+            String sql = "INSERT INTO product (ProductId,name,description,price,address,image,categoryId) "
+                    + "VALUES ( ?, ?, ?, ? , ?, ?, ?)";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setLong(1, newProduct.getProductId());
+                pstmt.setString(2, newProduct.getName());
+                pstmt.setString(3, newProduct.getDescription());
+                pstmt.setDouble(4, newProduct.getPrice());
+                pstmt.setString(5, newProduct.getAddress());
+                pstmt.setBytes(6, newProduct.getImage());
+                pstmt.setLong(7, newProduct.getCategoryId());
+                pstmt.executeUpdate();
+                pstmt.close();
+                this.disconnect();
+                return true;  
+            }
+                          
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        disconnect();
+        return false;
+    }
+
+    @Override
+    public List<Product> findAll() {
+        List<Product> products = new ArrayList<>();
+        try {
+
+            String sql = "SELECT * FROM product";
+            this.connect();
+
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery(sql);
+            while (res.next()) {
+                Product newProduct = new Product();
+                newProduct.setProductId(res.getLong("ProductId"));
+                newProduct.setName(res.getString("name"));
+                newProduct.setDescription(res.getString("description"));
+                newProduct.setPrice(res.getDouble("price"));
+                newProduct.setAddress(res.getString("address"));
+                newProduct.setCategoryId(res.getLong("categoryId"));
+                newProduct.setImage(res.getBytes("image"));
+                products.add(newProduct);
+            }
+            this.disconnect();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return products;
+    }
+
+    
+
+    
+
+    @Override
     public boolean edit(Product product) {
         try {
             //Validate product
             if (product.getProductId()<= 0 || product == null) {
                 return false;
             }
-            //this.connect();
+            this.connect();
 
-            String sql = "UPDATE  products "
-                    + "SET name=?, description=?, categoryId=? "
+            String sql = "UPDATE  product "
+                    + "SET name=?, description=?, price=?, address=?, categoryId=?, image=?  "
                     + "WHERE productId = ?";
 
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            PreparedStatement pstmt = conn.prepareStatement(sql);        
             pstmt.setString(1, product.getName());
             pstmt.setString(2, product.getDescription());
-            pstmt.setLong(3, product.getCategoryId());
-            pstmt.setLong(4, product.getProductId());
+            pstmt.setDouble(3, product.getPrice());
+            pstmt.setString(4, product.getAddress());
+            pstmt.setBytes(5, product.getImage());
+            pstmt.setLong(6, product.getCategoryId());
             pstmt.executeUpdate();
-            //this.disconnect();
+            pstmt.close();
+            this.disconnect();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.disconnect();
         return false;
     }
 
@@ -160,15 +152,16 @@ public class ProductRepository implements IProductRepository {
             if (id <= 0) {
                 return false;
             }
-            //this.connect();
+            this.connect();
 
-            String sql = "DELETE FROM products "
+            String sql = "DELETE FROM product "
                     + "WHERE productId = ?";
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, id);
             pstmt.executeUpdate();
-            //this.disconnect();
+            pstmt.close();
+            this.disconnect();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -179,29 +172,34 @@ public class ProductRepository implements IProductRepository {
     @Override
     public Product findById(Long id) {
         try {
-
-            String sql = "SELECT * FROM products  "
+            this.connect();
+            String sql = "SELECT * FROM product  "
                     + "WHERE productId = ?";
-
+            
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, id);
 
             ResultSet res = pstmt.executeQuery();
 
             if (res.next()) {
-                Product prod = new Product();
-                prod.setProductId(res.getLong("productId"));
-                prod.setName(res.getString("name"));
-                prod.setDescription(res.getString("description"));
-                return prod;
-            } else {
-                return null;
-            }
-            //this.disconnect();
+                Product newProduct = new Product();
+                newProduct.setProductId(res.getLong("ProductId"));
+                newProduct.setName(res.getString("name"));
+                newProduct.setDescription(res.getString("description"));
+                newProduct.setPrice(res.getDouble("price"));
+                newProduct.setAddress(res.getString("address"));
+                newProduct.setCategoryId(res.getLong("categoryId"));
+                newProduct.setImage(res.getBytes("image"));
+                pstmt.close();
+                this.disconnect();             
+                return newProduct;
+            } 
+            
 
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.disconnect();
         return null;
     }
 
@@ -210,22 +208,26 @@ public class ProductRepository implements IProductRepository {
         List<Product> products = new ArrayList<>();
         try {
 
-            String sql = "SELECT * FROM products"
+            String sql = "SELECT * FROM product"
                     + " WHERE name = ?";
-            //this.connect();
+            this.connect();
 
-            PreparedStatement stmt = conn.prepareStatement(sql);
-            stmt.setString(1, pname);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, pname);
+            ResultSet res = pstmt.executeQuery();
+            while (res.next()) {
                 Product newProduct = new Product();
-                newProduct.setProductId(rs.getLong("productId"));
-                newProduct.setName(rs.getString("name"));
-                newProduct.setDescription(rs.getString("description"));
-
+                newProduct.setProductId(res.getLong("ProductId"));
+                newProduct.setName(res.getString("name"));
+                newProduct.setDescription(res.getString("description"));
+                newProduct.setPrice(res.getDouble("price"));
+                newProduct.setAddress(res.getString("address"));
+                newProduct.setCategoryId(res.getLong("categoryId"));
+                newProduct.setImage(res.getBytes("image"));
+                pstmt.close();
                 products.add(newProduct);
             }
-            //this.disconnect();
+            this.disconnect();
 
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -236,9 +238,10 @@ public class ProductRepository implements IProductRepository {
 
     public void cleanDatabase() {
         try {
-            String sql = "DELETE FROM products";
+            String sql = "DELETE FROM product";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.executeUpdate();
+            pstmt.close();
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -248,38 +251,31 @@ public class ProductRepository implements IProductRepository {
     @Override
     public List<Product> findByCategory(Long categoryId) {
         List<Product> products = new ArrayList<>();
-        try {
-            // Get the categoryId for the given categoryName
-            String categorySql = "SELECT categoryId FROM categories WHERE categoryId = ?";
-            PreparedStatement categoryStmt = conn.prepareStatement(categorySql);
-            categoryStmt.setLong(1, categoryId);
-            ResultSet categoryRs = categoryStmt.executeQuery();
+        try {                  
+                this.connect();
 
-            if (categoryRs.next()) {
-                long id = categoryRs.getLong("categoryId");
-
-                // Find products with the given categoryId
                 String productSql = "SELECT * FROM products WHERE categoryId = ?";
-                PreparedStatement productStmt = conn.prepareStatement(productSql);
-                productStmt.setLong(1, categoryId);
-                ResultSet productRs = productStmt.executeQuery();
+                PreparedStatement pstmt = conn.prepareStatement(productSql);
+                pstmt.setLong(1, categoryId);
+                ResultSet res = pstmt.executeQuery();
 
-                while (productRs.next()) {
+                while (res.next()) {
                     Product newProduct = new Product();
-                    newProduct.setProductId(productRs.getLong("productId"));
-                    newProduct.setName(productRs.getString("name"));
-                    newProduct.setDescription(productRs.getString("description"));
+                    newProduct.setProductId(res.getLong("ProductId"));
+                    newProduct.setName(res.getString("name"));
+                    newProduct.setDescription(res.getString("description"));
+                    newProduct.setPrice(res.getDouble("price"));
+                    newProduct.setAddress(res.getString("address"));
+                    newProduct.setCategoryId(res.getLong("categoryId"));
+                    newProduct.setImage(res.getBytes("image"));
                     products.add(newProduct);
-                }
-            } else {
-                // No category found with the given categoryName
-                return products;
-            }
-
+                }   
+                pstmt.close();
+           
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        this.disconnect();
         return products;
     }
 

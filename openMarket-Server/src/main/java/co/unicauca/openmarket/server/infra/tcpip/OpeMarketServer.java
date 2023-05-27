@@ -9,6 +9,7 @@ import co.unicauca.openmarket.server.access.CategoryRepositoryArrays;
 import co.unicauca.openmarket.server.access.ProductRepositoryArrays;
 import co.unicauca.openmarket.domain.services.CategoryService;
 import co.unicauca.openmarket.domain.services.ProductService;
+import co.unicauca.openmarket.server.access.ProductRepository;
 import co.unicauca.strategyserver.infra.ServerSocketMultiThread;
 import java.util.Scanner;
 
@@ -28,7 +29,8 @@ public class OpeMarketServer {
         ServerSocketMultiThread myServer = new ServerSocketMultiThread(port);
         OpenMarketHandler myHandler = new OpenMarketHandler();
         myHandler.setService(new CategoryService(new CategoryRepositoryArrays()));
-        myHandler.setServiceProduct(new ProductService(new ProductRepositoryArrays()));
+        //myHandler.setServiceProduct(new ProductService(new ProductRepositoryArrays()));
+        myHandler.setServiceProduct(new ProductService(new ProductRepository()));
         myServer.setServerHandler(myHandler);
         myServer.startServer();
     }
