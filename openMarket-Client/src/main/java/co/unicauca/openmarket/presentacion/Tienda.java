@@ -61,7 +61,7 @@ public class Tienda extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProductos = new javax.swing.JTable();
         txtComprar = new javax.swing.JTextField();
-        btnComprar = new javax.swing.JButton();
+        btnComprar2 = new javax.swing.JButton();
         txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
 
@@ -78,10 +78,10 @@ public class Tienda extends javax.swing.JPanel {
         ));
         jScrollPane1.setViewportView(tblProductos);
 
-        btnComprar.setText("Comprar");
-        btnComprar.addActionListener(new java.awt.event.ActionListener() {
+        btnComprar2.setText("Comprar");
+        btnComprar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnComprarActionPerformed(evt);
+                btnComprar2ActionPerformed(evt);
             }
         });
 
@@ -103,7 +103,7 @@ public class Tienda extends javax.swing.JPanel {
                         .addGap(103, 103, 103)
                         .addComponent(txtComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32)
-                        .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnComprar2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlTiendaLayout.createSequentialGroup()
                         .addGap(89, 89, 89)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -123,7 +123,7 @@ public class Tienda extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(pnlTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnComprar2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(59, Short.MAX_VALUE))
         );
 
@@ -157,12 +157,12 @@ public class Tienda extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
+    private void btnComprar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprar2ActionPerformed
         Long idProducto=Long.parseLong(this.txtComprar.getText());
          //compra=new GUIPaymet(idProducto,shoppingCart); 
         
         //compra.setVisible(true);
-    }//GEN-LAST:event_btnComprarActionPerformed
+    }//GEN-LAST:event_btnComprar2ActionPerformed
      private void fillTable(List<Product> listProducts) {
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
 
@@ -198,7 +198,7 @@ public class Tienda extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
-    private javax.swing.JButton btnComprar;
+    private javax.swing.JButton btnComprar2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlTienda;
     private javax.swing.JTable tblProductos;
