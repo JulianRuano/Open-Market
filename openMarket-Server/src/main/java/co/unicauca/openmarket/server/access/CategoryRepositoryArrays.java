@@ -80,11 +80,13 @@ public final class CategoryRepositoryArrays implements ICategoryRepository{
     }
 
     @Override
-    public List<Category> findByName(String name) {
-    List<Category> filteredCategories = category.stream()
-            .filter(c -> c.getName().contains(name))
-            .collect(Collectors.toList());
-    return filteredCategories.isEmpty() ? null : filteredCategories;
+    public Category findByName(String name) {
+           for (Category OCategory : category) {
+            if (OCategory.getName().equals(name)) {
+                return OCategory;
+            }
+        }
+        return null;
     }
 
     

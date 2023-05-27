@@ -223,7 +223,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lblCodigoCategoria">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Codigo Cataegoria"/>
+            <Property name="text" type="java.lang.String" value="Categoria"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtPrecio">

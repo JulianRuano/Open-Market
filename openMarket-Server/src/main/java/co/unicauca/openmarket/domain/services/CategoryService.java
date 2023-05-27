@@ -50,7 +50,7 @@ public class CategoryService {
     public synchronized List<Category> findAll(){
         return repo.findAll();
     };
-    public synchronized List<Category> findByName(String name){
+    public synchronized Category findByName(String name){
         return repo.findByName(name);
     };
 }

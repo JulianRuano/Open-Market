@@ -38,7 +38,7 @@ public class OpenMarketHandler extends ServerHandler {
     private static CategoryService categoryService;
      private static Helpers helpers;
     public OpenMarketHandler() {
-       
+       this.helpers= new Helpers();
     }
 
     /**
@@ -146,7 +146,7 @@ public class OpenMarketHandler extends ServerHandler {
      */
     private String processPostCategory(Protocol protocolRequest) {
        Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue());
-
+        
         Category category= this.categoryService.findById(id);
 
         if(!(category == null)){
@@ -187,7 +187,7 @@ public class OpenMarketHandler extends ServerHandler {
     private String processGetListCategory(Protocol protocolRequest){
        //Listar categorias por nombre 
        String name = protocolRequest.getParameters().get(0).getValue();
-       List<Category> category;
+       Category category;
        category = categoryService.findByName(name);
        return objectToJSON(category);
     }

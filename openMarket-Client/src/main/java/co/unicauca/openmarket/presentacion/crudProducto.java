@@ -1,4 +1,3 @@
-
 package co.unicauca.openmarket.presentacion;
 
 import co.unicauca.openmarket.client.domain.service.ProductService;
@@ -11,7 +10,12 @@ import co.unicauca.openmarket.client.presentation.commands.OMEditProductCommand;
 import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
 import co.unicauca.openmarket.commons.domain.Category;
 import co.unicauca.openmarket.commons.domain.Product;
+import co.unicauca.openmarket.presentacion.validaciones.ValidadorCampos;
+import co.unicauca.openmarket.presentacion.validaciones.producto.MensajesError;
+import co.unicauca.openmarket.presentacion.validaciones.producto.ValidadorFormularioProducto;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -36,8 +40,8 @@ import reloj.frameworkobsobs.Observador;
  *
  * @author brayan
  */
-public class crudProducto extends javax.swing.JPanel implements Observador{
-    
+public class crudProducto extends javax.swing.JPanel implements Observador {
+
     DefaultTableModel mModeloTabla = new DefaultTableModel();
     String Ruta = "";
 
@@ -48,12 +52,17 @@ public class crudProducto extends javax.swing.JPanel implements Observador{
     private boolean addOption;
     private OMInvoker ominvoker;
     private CategoryService categoryService;
-    
-    public crudProducto(ProductService productService,OMInvoker ominvoker,CategoryService categoryService ) {
+    private ValidadorCampos validarCampos;
+    private ValidadorFormularioProducto validarFormulario;
+    private Long selectedCategoryId;
+
+    public crudProducto(ProductService productService, OMInvoker ominvoker, CategoryService categoryService) {
         initComponents();
-        this.productService=productService;
-        this.categoryService=categoryService;
-        this.ominvoker =ominvoker;  
+        this.productService = productService;
+        this.categoryService = categoryService;
+        this.ominvoker = ominvoker;
+        this.validarCampos = new ValidadorCampos();
+        this.validarFormulario = new ValidadorFormularioProducto();
         mModeloTabla.addColumn("ID");
         mModeloTabla.addColumn("Nombre");
         mModeloTabla.addColumn("Descripcion");
@@ -62,37 +71,45 @@ public class crudProducto extends javax.swing.JPanel implements Observador{
         mModeloTabla.addColumn("ID categoria");
         mModeloTabla.addColumn("Imagen");
         tblProductos.setModel(mModeloTabla);
-        
-List<Category> categories = this.categoryService.findAllCategories();
-if(!(categories==null)){
-    DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
-Map<String, Long> categoryMap = new HashMap<>();
+        List<Category> categories = this.categoryService.findAllCategories();
+        if (!(categories == null)) {
+            DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+            modelo.addElement(""); // Agregar elemento vacío al inicio del modelo
+            Map<String, Long> categoryMap = new HashMap<>();
+            
+            for (Category category : categories) {
+                String categoryName = category.getName();
+                Long categoryId = category.getCategoryId();
+                modelo.addElement(categoryName);
+                categoryMap.put(categoryName, categoryId);
+            }
 
-for (Category category : categories) {
-    String categoryName = category.getName();
-    Long categoryId = category.getCategoryId();
-    modelo.addElement(categoryName);
-    categoryMap.put(categoryName, categoryId);
-}
+            cbxCodigoCategoria.setModel(modelo);
+            cbxCodigoCategoria.setSelectedItem(null);
 
-cbxCodigoCategoria.setModel(modelo);
-}
+            cbxCodigoCategoria.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String selectedCategoryName = (String) cbxCodigoCategoria.getSelectedItem();
+                    selectedCategoryId = categoryMap.get(selectedCategoryName);
 
-
-
-
+                    // Aquí puedes utilizar el selectedCategoryId como necesites
+                }
+            });
+        }
 
         stateInitial();
     }
-     private void initializeTable() {
+
+    private void initializeTable() {
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
                 new String[]{
-                    "Id", "Name", "Description","Price","Direccion","IdCategoria","Image"
+                    "Id", "Name", "Description", "Price", "Direccion", "IdCategoria", "Image"
                 }
         ));
     }
-    
+
     private void stateEdit() {
         btnNuevo.setVisible(false);
         btnEditar.setVisible(false);
@@ -100,11 +117,11 @@ cbxCodigoCategoria.setModel(modelo);
         btnCancelar.setVisible(true);
         btnGuardar.setVisible(true);
         btnBuscar.setVisible(false);
-       txtCodigoProducto.setEnabled(true);
+        txtCodigoProducto.setEnabled(true);
         txtNombre.setEnabled(true);
         txtDescripcion.setEnabled(true);
         txtDescripcion.setEnabled(true);
-        cbxCodigoCategoria.setEnabled(true);   
+        cbxCodigoCategoria.setEnabled(true);
     }
 
     private void stateInitial() {
@@ -122,7 +139,7 @@ cbxCodigoCategoria.setModel(modelo);
         btnDeshacer.setVisible(ominvoker.hasMoreCommands());
         btnRehacer.setVisible(ominvoker.hasMoreCommandsRedo());
     }
-    
+
     private void fillTable(List<Product> listProducts) {
         tblProductos.setDefaultRenderer(Object.class, new RenderImagen());
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
@@ -135,7 +152,7 @@ cbxCodigoCategoria.setModel(modelo);
             rowData[3] = listProducts.get(i).getPrice();
             rowData[4] = listProducts.get(i).getAddress();
             rowData[5] = listProducts.get(i).getCategoryId();
-            
+
             try {
                 byte[] imagen = listProducts.get(i).getImage();
                 BufferedImage bufferedImage = null;
@@ -143,61 +160,57 @@ cbxCodigoCategoria.setModel(modelo);
                 bufferedImage = ImageIO.read(inputStream);
                 ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(80, 80, 0));
                 rowData[6] = new JLabel(mIcono);
-                } catch (Exception e) {
-                    rowData[6] = new JLabel("No imagen");
-                }
-            
+            } catch (Exception e) {
+                rowData[6] = new JLabel("No imagen");
+            }
+
             model.addRow(rowData);
         }
-        
+
         tblProductos.setRowHeight(80);
         tblProductos.getColumnModel().getColumn(0).setPreferredWidth(80);
         tblProductos.getColumnModel().getColumn(1).setPreferredWidth(80);
         tblProductos.getColumnModel().getColumn(2).setPreferredWidth(80);
     }
-    
-    
+
     private void fillTableId(Product product) {
         tblProductos.setDefaultRenderer(Object.class, new RenderImagen());
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
 
         Object rowData[] = new Object[7];//No columnas
-        
-            rowData[0] = product.getProductId();
-            rowData[1] = product.getName();
-            rowData[2] = product.getDescription();
-            rowData[3] = product.getPrice();
-            rowData[4] = product.getAddress();
-            rowData[5] = product.getCategoryId();
-            
-            try {
-                byte[] imagen =product.getImage();
-                BufferedImage bufferedImage = null;
-                InputStream inputStream = new ByteArrayInputStream(imagen);
-                bufferedImage = ImageIO.read(inputStream);
-                ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(80, 80, 0));
-                rowData[6] = new JLabel(mIcono);
-                } catch (Exception e) {
-                    rowData[6] = new JLabel("No imagen");
-                }
-            
-            model.addRow(rowData);
-        
-        
+
+        rowData[0] = product.getProductId();
+        rowData[1] = product.getName();
+        rowData[2] = product.getDescription();
+        rowData[3] = product.getPrice();
+        rowData[4] = product.getAddress();
+        rowData[5] = product.getCategoryId();
+
+        try {
+            byte[] imagen = product.getImage();
+            BufferedImage bufferedImage = null;
+            InputStream inputStream = new ByteArrayInputStream(imagen);
+            bufferedImage = ImageIO.read(inputStream);
+            ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(80, 80, 0));
+            rowData[6] = new JLabel(mIcono);
+        } catch (Exception e) {
+            rowData[6] = new JLabel("No imagen");
+        }
+
+        model.addRow(rowData);
+
         tblProductos.setRowHeight(80);
         tblProductos.getColumnModel().getColumn(0).setPreferredWidth(80);
         tblProductos.getColumnModel().getColumn(1).setPreferredWidth(80);
         tblProductos.getColumnModel().getColumn(2).setPreferredWidth(80);
     }
-    
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-   @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -248,7 +261,7 @@ cbxCodigoCategoria.setModel(modelo);
 
         lblDireccion.setText("Direccion");
 
-        lblCodigoCategoria.setText("Codigo Cataegoria");
+        lblCodigoCategoria.setText("Categoria");
 
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -528,11 +541,47 @@ cbxCodigoCategoria.setModel(modelo);
         cleanControls();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-         if (txtNombre.getText().trim().equals("")) {
-            Messages.showMessageDialog("Debe ingresar el nombre del producto", "Atención");
-            txtNombre.requestFocus();
+        System.err.println(selectedCategoryId);
+        List<MensajesError> errores = validarFormulario.validar(txtCodigoProducto, txtNombre, txtDescripcion,
+                txtPrecio, txtStock, txtDireccion,selectedCategoryId);
+                
+        if (!errores.isEmpty()) {
+            String mensajeError = "Debe ingresar el/los siguiente(s) campo(s):\n";
+            for (MensajesError mensaje : errores) {
+                mensajeError += mensaje.getMensaje() + "\n";
+            }
+            Messages.showMessageDialog(mensajeError, "Atención");
+
+            // Coloca el foco en el primer campo con error
+            switch (errores.get(0)) {
+                case CODIGO_PRODUCTO:
+                    txtCodigoProducto.requestFocus();
+                    break;
+                case NOMBRE_PRODUCTO:
+                    txtNombre.requestFocus();
+                    break;
+                case DESCRIPCION_PRODUCTO:
+                    txtDescripcion.requestFocus();
+                    break;
+                case PRECIO_PRODUCTO:
+                    txtPrecio.requestFocus();
+                    break;
+                case STOCK_PRODUCTO:
+                    txtStock.requestFocus();
+                    break;
+                case CATEGORIA_PRODUCTO:
+                    cbxCodigoCategoria.requestFocus();
+                    break;
+                case DIRECCION_PRODUCTO:
+                    txtDireccion.requestFocus();
+                    break;
+                // Resto de los casos
+            }
+
             return;
+
         }
         if (addOption) {
             //Agregar
@@ -541,7 +590,7 @@ cbxCodigoCategoria.setModel(modelo);
         } else {
             //Editar
             editProduct();
-        } 
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
@@ -551,72 +600,73 @@ cbxCodigoCategoria.setModel(modelo);
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-         try{
-           String id = txtCodigoProducto.getText().trim();
-        if (id.equals("")) {
-            Messages.showMessageDialog("Debe buscar el producto a eliminar", "Atención");
-            txtCodigoProducto.requestFocus();
-            return;
-        }
-        Long productId = Long.parseLong(id);
-        OMDeleteProductCommand comm = new OMDeleteProductCommand(productId, productService);
-        ominvoker.addCommand(comm);
-        ominvoker.execute();  
-        
-        if (Messages.showConfirmDialog("Está seguro que desea eliminar este producto?", "Confirmación") == JOptionPane.YES_NO_OPTION) {
-            if(comm.result()) {
-                Messages.showMessageDialog("Producto eliminado con éxito", "Atención");
-                stateInitial();
-                cleanControls();
+        try {
+            String id = txtCodigoProducto.getText().trim();
+            if (id.equals("")) {
+                Messages.showMessageDialog("Debe buscar el producto a eliminar", "Atención");
+                txtCodigoProducto.requestFocus();
+                return;
             }
-        } 
-        }catch(Exception ex){
-            successMessage(ex.getMessage(), "Atención");   
+            Long productId = Long.parseLong(id);
+            OMDeleteProductCommand comm = new OMDeleteProductCommand(productId, productService);
+            ominvoker.addCommand(comm);
+            ominvoker.execute();
+
+            if (Messages.showConfirmDialog("Está seguro que desea eliminar este producto?", "Confirmación") == JOptionPane.YES_NO_OPTION) {
+                if (comm.result()) {
+                    Messages.showMessageDialog("Producto eliminado con éxito", "Atención");
+                    stateInitial();
+                    cleanControls();
+                }
+            }
+        } catch (Exception ex) {
+            successMessage(ex.getMessage(), "Atención");
         }
-            
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacerActionPerformed
-          ominvoker.unexecute();
-        if(!ominvoker.hasMoreCommands())
+        ominvoker.unexecute();
+        if (!ominvoker.hasMoreCommands()) {
             this.btnDeshacer.setVisible(false);
+        }
         this.btnRehacer.setVisible(true);
     }//GEN-LAST:event_btnDeshacerActionPerformed
 
     private void btnRehacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacerActionPerformed
         ominvoker.reExecuted();
-        if(!ominvoker.hasMoreCommandsRedo())
+        if (!ominvoker.hasMoreCommandsRedo()) {
             this.btnRehacer.setVisible(false);
+        }
         this.btnDeshacer.setVisible(true);
     }//GEN-LAST:event_btnRehacerActionPerformed
 
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-       try{
-           
-                 Limpiar();
-               if(this.rdIdProducto.isSelected()==true){
-               
-                  fillTableId(productService.findProductById(Long.parseLong(this.txtBuscarProducto.getText())) );
-                }else if(this.rdIdCategoria.isSelected()==true){
-                     fillTable(productService.findProductsByCategory(Long.parseLong(this.txtBuscarProducto.getText())));
-                 }
-                else{
-                   fillTable (productService.findProductsByName(this.txtBuscarProducto.getText())); 
-             }
-          }catch(NullPointerException ex){
-                JOptionPane.showMessageDialog(null,
-                "Envia la informacion correspondiente",
-                "Error tipo de dato",
-                JOptionPane.ERROR_MESSAGE);
-          }catch(Exception e){
-              successMessage(e.getMessage(), "Atención"); 
-              JOptionPane.showMessageDialog(null,
-                "Seleccione por el dato que quiere buscar",
-                "Error al introducir el dato",
-                JOptionPane.ERROR_MESSAGE);
-              
-          }
+        try {
+
+            Limpiar();
+            if (this.rdIdProducto.isSelected() == true) {
+
+                fillTableId(productService.findProductById(Long.parseLong(this.txtBuscarProducto.getText())));
+            } else if (this.rdIdCategoria.isSelected() == true) {
+                fillTable(productService.findProductsByCategory(Long.parseLong(this.txtBuscarProducto.getText())));
+            } else {
+                fillTable(productService.findProductsByName(this.txtBuscarProducto.getText()));
+            }
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Envia la informacion correspondiente",
+                    "Error tipo de dato",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            successMessage(e.getMessage(), "Atención");
+            JOptionPane.showMessageDialog(null,
+                    "Seleccione por el dato que quiere buscar",
+                    "Error al introducir el dato",
+                    JOptionPane.ERROR_MESSAGE);
+
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnExaminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarActionPerformed
@@ -629,16 +679,22 @@ cbxCodigoCategoria.setModel(modelo);
             Image mImagen = new ImageIcon(Ruta).getImage();
             ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblExaminar2.getWidth(), lblExaminar2.getHeight(), 0));
             lblExaminar2.setIcon(mIcono);
+
+            // Validar si se ha seleccionado una imagen
+            File selectedFile = fileChooser.getSelectedFile();
+            if (selectedFile != null && !selectedFile.isFile()) {
+                Messages.showMessageDialog("Debe elegir una imagen", "Atención");
+            } 
         }
     }//GEN-LAST:event_btnExaminarActionPerformed
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        
-        try{
+
+        try {
             Limpiar();
-            fillTable( productService.findAllProducts());
-        }catch(Exception ex){
-            successMessage(ex.getMessage(), "Atención"); 
+            fillTable(productService.findAllProducts());
+        } catch (Exception ex) {
+            successMessage(ex.getMessage(), "Atención");
         }
     }//GEN-LAST:event_btnListarActionPerformed
 
@@ -646,7 +702,6 @@ cbxCodigoCategoria.setModel(modelo);
 
 
     }//GEN-LAST:event_cbxCodigoCategoriaActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -685,7 +740,7 @@ cbxCodigoCategoria.setModel(modelo);
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
-    
+
     private void stateNew() {
         btnNuevo.setVisible(false);
         btnEditar.setVisible(false);
@@ -708,23 +763,21 @@ cbxCodigoCategoria.setModel(modelo);
         txtDescripcion.setText("");
         txtPrecio.setText("");
         txtDireccion.setText("");
-        cbxCodigoCategoria.setToolTipText("");   
+        cbxCodigoCategoria.setToolTipText("");
     }
+
     private void addProduct() {
-        try{
-            Long productId=Long.parseLong(this.txtCodigoProducto.getText());
+        try {
+            Long productId = Long.valueOf(this.txtCodigoProducto.getText());
             String name = txtNombre.getText().trim();
             String description = txtDescripcion.getText().trim();
-            double price=Double.parseDouble(this.txtPrecio.getText());
-            String address=this.txtDireccion.getText();
-            Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
-          
-            
-          
+            double price = Double.parseDouble(this.txtPrecio.getText());
+            String address = this.txtDireccion.getText();
+            Long categoryId = selectedCategoryId;
+
             //Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
-            byte [] image = getImagen(Ruta);
-            
-            
+            byte[] image = getImagen(Ruta);
+
             Product OProduct = new Product(productId, name, description, price, name, 4l, image);
             OMAddProductCommand comm = new OMAddProductCommand(OProduct, productService);
             ominvoker.addCommand(comm);
@@ -736,11 +789,12 @@ cbxCodigoCategoria.setModel(modelo);
             } else {
                 Messages.showMessageDialog("Error al grabar, lo siento mucho", "Atención");
             }
-        }catch(Exception ex){
-             successMessage(ex.getMessage(), "Atención");
+        } catch (Exception ex) {
+            successMessage(ex.getMessage(), "Atención");
         }
-           
+
     }
+
     private void editProduct() {
         String id = txtCodigoProducto.getText().trim();
         if (id.equals("")) {
@@ -749,38 +803,38 @@ cbxCodigoCategoria.setModel(modelo);
             return;
         }
         Long productId = Long.parseLong(id);
-        String name=txtNombre.getText();
-        String description=this.txtDescripcion.getText();
-        double price =Double.parseDouble(this.txtPrecio.getText());
-        Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
-        byte [] image = null;
-        
-        Product OProduct = new Product(productId, name, description, price, name, categoryId, image);      
+        String name = txtNombre.getText();
+        String description = this.txtDescripcion.getText();
+        double price = Double.parseDouble(this.txtPrecio.getText());
+        Long categoryId = Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
+        byte[] image = null;
+
+        Product OProduct = new Product(productId, name, description, price, name, categoryId, image);
         OMEditProductCommand comm = new OMEditProductCommand(OProduct, productService);
         ominvoker.addCommand(comm);
         ominvoker.execute();
-        
-        try{
-             if (comm.result()) {
+
+        try {
+            if (comm.result()) {
                 Messages.showMessageDialog("Se editó con éxito", "Atención");
                 cleanControls();
                 stateInitial();
             } else {
                 Messages.showMessageDialog("Error al editar, lo siento mucho", "Atención");
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             successMessage(ex.getMessage(), "Atención");
         }
-            
+
     }
-    
+
     private void Limpiar() {
         for (int i = 0; i < tblProductos.getRowCount(); i++) {
             mModeloTabla.removeRow(i);
             i -= 1;
         }
     }
-    
+
     private byte[] getImagen(String Ruta) {
         File imagen = new File(Ruta);
         try {
@@ -799,11 +853,9 @@ cbxCodigoCategoria.setModel(modelo);
             Limpiar();
             fillTable(productService.findAllProducts());
         } catch (Exception ex) {
-           successMessage(ex.getMessage(), "Atención");
+            successMessage(ex.getMessage(), "Atención");
         }
-       
+
     }
-    
-    
 
 }

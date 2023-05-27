@@ -196,7 +196,7 @@ public class CategoryRepository implements ICategoryRepository {
         return categories;
     }
   @Override
-    public List<Category> findByName(String name) {
+    public Category findByName(String name) {
         List<Category> categories = new ArrayList<>();
         try {
             String sql = "SELECT * FROM categories WHERE name = ?";
@@ -210,10 +210,12 @@ public class CategoryRepository implements ICategoryRepository {
                 Category category = new Category(id, categoryName);
                 categories.add(category);
             }
+            
         } catch (Exception e) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, e);
         }
-        return categories;
+        return null;
     }
+    
 
 }
