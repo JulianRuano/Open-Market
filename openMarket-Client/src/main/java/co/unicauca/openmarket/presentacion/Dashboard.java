@@ -8,6 +8,7 @@ package co.unicauca.openmarket.presentacion;
 import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,7 +25,7 @@ public class Dashboard extends javax.swing.JFrame {
      private ProductService productService;
      private CategoryService categoryService;
     private ShoppingCar shoppingCart;
-    long id;
+    private OMInvoker ominvokerCategorias;
     
     public Dashboard(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart) {
         initComponents();
@@ -33,7 +34,7 @@ public class Dashboard extends javax.swing.JFrame {
          this.productService=productService;
          this.categoryService=categoryService;
          this.shoppingCart=shoppingCart;
-         
+         ominvokerCategorias = new OMInvoker();
        
     }
     private void initStyles(){
@@ -232,7 +233,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnComprarActionPerformed
 
     private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
-        crudCategoria instance = new crudCategoria(this.categoryService);
+        crudCategoria instance = new crudCategoria(this.categoryService, this.ominvokerCategorias);
         ShowJPanel(instance);
         this.categoryService.addObservador(instance);
     }//GEN-LAST:event_btnCategoriaActionPerformed
