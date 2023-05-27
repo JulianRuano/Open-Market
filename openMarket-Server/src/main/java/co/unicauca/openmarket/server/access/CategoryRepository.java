@@ -203,11 +203,13 @@ public class CategoryRepository implements ICategoryRepository {
                 Category category = new Category(id, categoryName);
                 categories.add(category);
             }
+            
         } catch (Exception e) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, e);
         }
         this.disconnect();
         return categories;
     }
+    
 
 }

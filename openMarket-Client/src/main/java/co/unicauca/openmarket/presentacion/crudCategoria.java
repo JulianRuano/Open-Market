@@ -488,7 +488,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
                 cleanControls();
                 stateInitial();
             } else {
-                Messages.showMessageDialog("Error al grabar, lo siento mucho", "Atencion");
+                Messages.showMessageDialog("Ya existe esa categoría", "Error");
             }
         } catch (Exception ex) {
             successMessage(ex.getMessage(), "Atención");
