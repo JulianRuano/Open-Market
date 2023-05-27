@@ -1,13 +1,14 @@
-D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\domain\services\CategoryService.java
-D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\IProductRepository.java
-D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\domain\Location.java
-D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\infra\tcpip\OpeMarketServer.java
-D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\ProductRepository.java
-D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\CategoryRepository.java
-D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\Factory.java
-D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\domain\User.java
-D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\domain\services\ProductService.java
-D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\CategoryRepositoryArrays.java
-D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\ICategoryRepository.java
-D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\ProductRepositoryArrays.java
-D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\infra\tcpip\OpenMarketHandler.java
+C:\Users\fre90\Documents\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\ICategoryRepository.java
+C:\Users\fre90\Documents\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\CategoryRepository.java
+C:\Users\fre90\Documents\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\domain\services\CategoryService.java
+C:\Users\fre90\Documents\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\infra\tcpip\OpeMarketServer.java
+C:\Users\fre90\Documents\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\domain\User.java
+C:\Users\fre90\Documents\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\application\PurchaseGenerator.java
+C:\Users\fre90\Documents\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\ProductRepository.java
+C:\Users\fre90\Documents\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\IProductRepository.java
+C:\Users\fre90\Documents\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\infra\tcpip\OpenMarketHandler.java
+C:\Users\fre90\Documents\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\domain\services\ProductService.java
+C:\Users\fre90\Documents\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\Factory.java
+C:\Users\fre90\Documents\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\CategoryRepositoryArrays.java
+C:\Users\fre90\Documents\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\ProductRepositoryArrays.java
+C:\Users\fre90\Documents\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\domain\Location.java

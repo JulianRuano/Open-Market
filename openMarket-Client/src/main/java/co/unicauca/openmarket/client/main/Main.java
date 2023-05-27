@@ -9,7 +9,7 @@ import co.unicauca.openmarket.client.access.Factory;
 import co.unicauca.openmarket.client.access.ICategoryAccess;
 import co.unicauca.openmarket.client.access.IProductAccess;
 import co.unicauca.openmarket.client.access.IShoppingCartAccess;
-import co.unicauca.openmarket.client.application.ShoppingCar;
+import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.presentation.GUICategoriesFind;

@@ -2,7 +2,9 @@ C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Clie
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\GUIPaymet.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMEditCategoryCommand.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\GUICategory.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\RenderImagen.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\GUIPaymet.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\application\ShoppingCar.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\GUIProductsFind.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\crudCategoria.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\Tienda.java
@@ -27,7 +29,6 @@ C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Clie
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\IProductAccess.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\infra\OpenMarketSocket.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMCommand.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\application\ShoppingCar.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMEditProductCommand.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\main\Main.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\GUIProducts.java

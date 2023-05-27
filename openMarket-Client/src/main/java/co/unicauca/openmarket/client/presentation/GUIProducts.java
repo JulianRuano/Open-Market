@@ -2,7 +2,7 @@ package co.unicauca.openmarket.client.presentation;
 
 
 
-import co.unicauca.openmarket.client.application.ShoppingCar;
+import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.infra.Messages;
 import static co.unicauca.openmarket.client.infra.Messages.successMessage;
@@ -412,6 +412,7 @@ public class GUIProducts extends javax.swing.JFrame {
     }
 
     private void addProduct() {
+        /*
         try{
             Long id=Long.parseLong(this.txtId.getText());
             String name = txtName.getText().trim();
@@ -432,11 +433,12 @@ public class GUIProducts extends javax.swing.JFrame {
             }
         }catch(Exception ex){
              successMessage(ex.getMessage(), "Atención");
-        }
+        }*/
            
     }
 
     private void editProduct() {
+        /*
         String id = txtId.getText().trim();
         if (id.equals("")) {
             Messages.showMessageDialog("Debe buscar el producto a editar", "Atención");
@@ -464,6 +466,6 @@ public class GUIProducts extends javax.swing.JFrame {
         }catch(Exception ex){
             successMessage(ex.getMessage(), "Atención");
         }
-            
+            */
     }
 }

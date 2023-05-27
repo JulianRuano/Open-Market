@@ -203,9 +203,14 @@ public class crudProducto extends javax.swing.JPanel {
         rdNombreProducto.setSelected(true);
         rdNombreProducto.setText("Nombre Producto");
 
-        cbxCodigoCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxCodigoCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
 
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnListar.setText("Listar Todo");
         btnListar.addActionListener(new java.awt.event.ActionListener() {
@@ -424,7 +429,7 @@ public class crudProducto extends javax.swing.JPanel {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         stateNew();
-        txtNombre.requestFocus();
+        this.txtCodigoProducto.requestFocus();
         addOption = true;
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -495,6 +500,11 @@ public class crudProducto extends javax.swing.JPanel {
         this.btnDeshacer.setVisible(true);
     }//GEN-LAST:event_btnRehacerActionPerformed
 
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+      
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
     private void btnExaminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
@@ -517,6 +527,7 @@ public class crudProducto extends javax.swing.JPanel {
             successMessage(ex.getMessage(), "Atención"); 
         }
     }//GEN-LAST:event_btnListarActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -585,6 +596,10 @@ public class crudProducto extends javax.swing.JPanel {
             String description = txtDescripcion.getText().trim();
             double price=Double.parseDouble(this.txtPrecio.getText());
             String address=this.txtDireccion.getText();
+            Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
+          
+            
+          
             //Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
             byte [] image = getImagen(Ruta);
             

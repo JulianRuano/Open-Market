@@ -4,17 +4,83 @@
  */
 package co.unicauca.openmarket.presentacion;
 
+import co.unicauca.openmarket.client.domain.service.CategoryService;
+import co.unicauca.openmarket.client.infra.Messages;
+import static co.unicauca.openmarket.client.infra.Messages.successMessage;
+import co.unicauca.openmarket.client.presentation.commands.OMAddCategoryCommand;
+import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
+import co.unicauca.openmarket.commons.domain.Category;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import reloj.frameworkobsobs.Observador;
+
 /**
  *
  * @author fre90
  */
-public class crudCategoria extends javax.swing.JPanel {
+public class crudCategoria extends javax.swing.JPanel implements Observador {
+
+    private CategoryService categoryService;
+    private boolean addOption;
+    private OMInvoker ominvoker;
 
     /**
      * Creates new form crudCategoria
      */
-    public crudCategoria() {
+    public crudCategoria(CategoryService categoryService) {
         initComponents();
+        this.categoryService = categoryService;
+        ominvoker = new OMInvoker();
+        initializeTable();
+        stateInitial();
+    }
+
+    private void initializeTable() {
+        tablaCategorias.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Id", "Name"
+                }
+        ));
+    }
+
+    private void fillTable(List<Category> listCategories) {
+        initializeTable();
+        DefaultTableModel model = (DefaultTableModel) tablaCategorias.getModel();
+
+        Object rowData[] = new Object[2];//No columnas
+        for (int i = 0; i < listCategories.size(); i++) {
+            rowData[0] = listCategories.get(i).getCategoryId();
+            rowData[1] = listCategories.get(i).getName();
+
+            model.addRow(rowData);
+        }
+    }
+
+    private void fillTableId(Category category) {
+        initializeTable();
+        DefaultTableModel model = (DefaultTableModel) tablaCategorias.getModel();
+
+        Object rowData[] = new Object[2];//No columnas
+        rowData[0] = category.getCategoryId();
+        rowData[1] = category.getName();
+
+        model.addRow(rowData);
+    }
+
+    private void fillTableName(List<Category> listCategories) {
+        initializeTable();
+        DefaultTableModel model = (DefaultTableModel) tablaCategorias.getModel();
+
+        Object rowData[] = new Object[2];//No columnas
+        for (int i = 0; i < listCategories.size(); i++) {
+            rowData[0] = listCategories.get(i).getCategoryId();
+
+            rowData[1] = listCategories.get(i).getName();
+
+            model.addRow(rowData);
+        }
     }
 
     /**
@@ -30,9 +96,11 @@ public class crudCategoria extends javax.swing.JPanel {
         pnlSeccionBotones = new javax.swing.JPanel();
         btnNueva = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnDeshacer = new javax.swing.JButton();
+        btnRehacer = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
         pnlCrudCategoria = new javax.swing.JPanel();
         lblCodCategoria = new javax.swing.JLabel();
         txtCodCategoria = new javax.swing.JTextField();
@@ -52,51 +120,80 @@ public class crudCategoria extends javax.swing.JPanel {
         btnNueva.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnNueva.setText("Nueva");
         btnNueva.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnNueva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevaActionPerformed(evt);
+            }
+        });
 
         btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
-        btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnGuardar.setText("Guardar");
-        btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnCancelar.setText("Cancelar");
         btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jButton5.setText("Eliminar");
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        btnDeshacer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnDeshacer.setText("Deshacer");
+        btnDeshacer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        btnRehacer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnRehacer.setText("Rehacer");
+        btnRehacer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+
+        btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnGuardar.setText("Guardar");
+        btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlSeccionBotonesLayout = new javax.swing.GroupLayout(pnlSeccionBotones);
         pnlSeccionBotones.setLayout(pnlSeccionBotonesLayout);
         pnlSeccionBotonesLayout.setHorizontalGroup(
             pnlSeccionBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSeccionBotonesLayout.createSequentialGroup()
-                .addGap(44, 44, 44)
+                .addGap(24, 24, 24)
                 .addComponent(btnNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53)
-                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
-                .addComponent(jButton5)
-                .addContainerGap(299, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEliminar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnDeshacer)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRehacer)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnGuardar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCancelar)
+                .addContainerGap(342, Short.MAX_VALUE))
         );
         pnlSeccionBotonesLayout.setVerticalGroup(
             pnlSeccionBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSeccionBotonesLayout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
+            .addGroup(pnlSeccionBotonesLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
                 .addGroup(pnlSeccionBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDeshacer, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRehacer, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40))
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
         add(pnlSeccionBotones, java.awt.BorderLayout.PAGE_END);
@@ -137,10 +234,20 @@ public class crudCategoria extends javax.swing.JPanel {
 
         btnBuscar.setText("Buscar");
         btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
         pnlCrudCategoria.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 50, -1, 30));
 
         btnListarTodo.setText("Listar Todo");
         btnListarTodo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnListarTodo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarTodoActionPerformed(evt);
+            }
+        });
         pnlCrudCategoria.add(btnListarTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 50, 120, 30));
 
         btngGrupo1.add(rdBuscarNombre);
@@ -150,16 +257,74 @@ public class crudCategoria extends javax.swing.JPanel {
         add(pnlCrudCategoria, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnListarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTodoActionPerformed
+        fillTable(categoryService.findAllCategories());
+    }//GEN-LAST:event_btnListarTodoActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try {
+            if (this.rdBuscarId.isSelected() == true) {
+                fillTableId(categoryService.findCategoryById(Long.valueOf(this.txtBuscar.getText())));
+            } else {
+                fillTableName(categoryService.findCategoriesByName(this.txtBuscar.getText()));
+            }
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Envia la informacion correspondiente",
+                    "Error tipo de dato",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,
+                    "Seleccione por el dato que quiere buscar",
+                    "Error al introducir el dato",
+                    JOptionPane.ERROR_MESSAGE);
+            successMessage(e.getMessage(), "Atención");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaActionPerformed
+        stateNew();
+        this.txtCodCategoria.requestFocus();
+        addOption = true;
+    }//GEN-LAST:event_btnNuevaActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        try {
+            Long id = Long.parseLong(this.txtCodCategoria.getText());
+            String name = this.txtNameCategoria.getText().trim();
+            Category OCategory = new Category(id, name);
+            OMAddCategoryCommand comm = new OMAddCategoryCommand(OCategory, categoryService);
+            ominvoker.addCommand(comm);
+            ominvoker.execute();
+            if (comm.result()) {
+                Messages.showMessageDialog("Se grabo con exito", "Atencion");
+                cleanControls();
+                stateInitial();
+            } else {
+                Messages.showMessageDialog("Error al grabar, lo siento mucho", "Atencion");
+            }
+        } catch (Exception ex) {
+            successMessage(ex.getMessage(), "Atención");
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        stateInitial();
+        cleanControls();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnDeshacer;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnListarTodo;
     private javax.swing.JButton btnNueva;
+    private javax.swing.JButton btnRehacer;
     private javax.swing.ButtonGroup btngGrupo1;
-    private javax.swing.JButton jButton5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblCodCategoria;
@@ -173,4 +338,46 @@ public class crudCategoria extends javax.swing.JPanel {
     private javax.swing.JTextField txtCodCategoria;
     private javax.swing.JTextField txtNameCategoria;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void actualizar() {
+        try {
+            fillTable(categoryService.findAllCategories());
+        } catch (Exception ex) {
+            successMessage(ex.getMessage(), "Atención");
+        }
+    }
+
+    private void stateNew() {
+        lblCodCategoria.setVisible(true);
+        lblNameCategory.setVisible(true);
+        txtCodCategoria.setVisible(true);
+        txtNameCategoria.setVisible(true);
+        btnNueva.setVisible(false);
+        btnEditar.setVisible(false);
+        btnEliminar.setVisible(false);
+        btnGuardar.setVisible(true);
+        btnCancelar.setVisible(true);
+        btnDeshacer.setVisible(ominvoker.hasMoreCommands());
+        btnRehacer.setVisible(ominvoker.hasMoreCommandsRedo());
+    }
+
+    private void stateInitial() {
+        lblCodCategoria.setVisible(false);
+        lblNameCategory.setVisible(false);
+        txtCodCategoria.setVisible(false);
+        txtNameCategoria.setVisible(false);
+        btnCancelar.setVisible(false);
+        btnGuardar.setVisible(false);
+        btnNueva.setVisible(true);
+        btnEditar.setVisible(true);
+        btnEliminar.setVisible(true);
+        btnDeshacer.setVisible(ominvoker.hasMoreCommands());
+        btnRehacer.setVisible(ominvoker.hasMoreCommandsRedo());
+    }
+
+    private void cleanControls() {
+        txtCodCategoria.setText("");
+        txtNameCategoria.setText("");
+    }
 }
