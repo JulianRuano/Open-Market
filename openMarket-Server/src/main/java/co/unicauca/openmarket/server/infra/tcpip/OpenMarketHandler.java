@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package co.unicauca.openmarket.server.infra.tcpip;
+
 import co.unicauca.openmarket.server.infra.Context;
 import co.unicauca.openmarket.commons.application.Invoice;
 import co.unicauca.openmarket.commons.application.PaymentDetails;
@@ -22,23 +23,21 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-
-
-
 /**
  *
  * @author brayan majin, julian ruano
  */
 public class OpenMarketHandler extends ServerHandler {
+
     /**
-     * Servicio de categoria
-     * servicio de producto
+     * Servicio de categoria servicio de producto
      */
     private static ProductService productService;
     private static CategoryService categoryService;
-     private static Helpers helpers;
+    private static Helpers helpers;
+
     public OpenMarketHandler() {
-       
+        this.helpers = new Helpers();
     }
 
     /**
@@ -49,10 +48,10 @@ public class OpenMarketHandler extends ServerHandler {
     @Override
     public String processRequest(String requestJson) {
         // Convertir la solicitud a objeto Protocol para poderlo procesar
-        Gson gson = new Gson();  
+        Gson gson = new Gson();
         Protocol protocolRequest;
         protocolRequest = gson.fromJson(requestJson, Protocol.class);
-        String response="";
+        String response = "";
         switch (protocolRequest.getResource()) {
             case "category" -> {
                 if (protocolRequest.getAction().equals("get")) {
@@ -63,25 +62,25 @@ public class OpenMarketHandler extends ServerHandler {
                     // Agregar una categoria    
                     response = processPostCategory(protocolRequest);
                 }
-                if (protocolRequest.getAction().equals("edit")){
+                if (protocolRequest.getAction().equals("edit")) {
                     // Editar categoria
                     response = processEditCategory(protocolRequest);
-                } 
-                if(protocolRequest.getAction().equals("delete")){
+                }
+                if (protocolRequest.getAction().equals("delete")) {
                     //Eliminar categoria
                     response = processDeleteCategory(protocolRequest);
                 }
-                if(protocolRequest.getAction().equals("listCategory")){
+                if (protocolRequest.getAction().equals("listCategory")) {
                     //Lista de las categoria
                     response = processListCategory();
                 }
-                if(protocolRequest.getAction().equals("getListCategory")){
+                if (protocolRequest.getAction().equals("getListCategory")) {
                     //Listar categorias por nombre
                     response = processGetListCategory(protocolRequest);
                 }
                 break;
             }
-            case"product"->{
+            case "product" -> {
                 if (protocolRequest.getAction().equals("get")) {
                     // Consultar un producto por ide
                     response = processGetProduct(protocolRequest);
@@ -90,29 +89,29 @@ public class OpenMarketHandler extends ServerHandler {
                     // Agregar un nuevo producto  
                     response = processPostProduct(protocolRequest);
                 }
-                if (protocolRequest.getAction().equals("edit")){
+                if (protocolRequest.getAction().equals("edit")) {
                     // Editar un producto
                     response = processEditProduct(protocolRequest);
                 }
-                if (protocolRequest.getAction().equals("delete")){
+                if (protocolRequest.getAction().equals("delete")) {
                     // eliminar un producto
                     response = processDeleteProduct(protocolRequest);
                 }
-                  if (protocolRequest.getAction().equals("listProductName")){
+                if (protocolRequest.getAction().equals("listProductName")) {
                     // Editar un producto
                     response = processListNameProduct(protocolRequest);
                 }
-                if (protocolRequest.getAction().equals("listProductCategory")){
+                if (protocolRequest.getAction().equals("listProductCategory")) {
                     //listar los productos por categoria
                     response = processListCategoryProduct(protocolRequest);
                 }
-                if (protocolRequest.getAction().equals("listAllProduct")){
+                if (protocolRequest.getAction().equals("listAllProduct")) {
                     // Editar un producto
                     response = processListAllProduct();
                 }
                 break;
-             }
-            case"shoppingCart"->{
+            }
+            case "shoppingCart" -> {
                 if (protocolRequest.getAction().equals("buy")) {
                     // Petecion de compra
                     response = processBuyProduct(protocolRequest);
@@ -121,7 +120,7 @@ public class OpenMarketHandler extends ServerHandler {
         }
         return response;
     }
-    
+
     /**
      * Procesa la solicitud de consultar una categoria
      *
@@ -129,7 +128,7 @@ public class OpenMarketHandler extends ServerHandler {
      */
     private String processGetCategory(Protocol protocolRequest) {
         // Extraer la cedula del primer parámetro
-        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue()) ;
+        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         Category category = categoryService.findById(id);
         if (category == null) {
             String errorJson = generateNotFoundErrorJson();
@@ -138,7 +137,7 @@ public class OpenMarketHandler extends ServerHandler {
             return objectToJSON(category);
         }
     }
-  
+
     /**
      * Procesa la solicitud de agregar una categoria
      *
@@ -147,56 +146,56 @@ public class OpenMarketHandler extends ServerHandler {
     private String processPostCategory(Protocol protocolRequest) {
         int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
 
-        Category category= this.categoryService.findById(id);
+        Category category = this.categoryService.findById(id);
 
-        if(!(category == null)){
+        if (!(category == null)) {
             return helpers.generateBadRequestJson(Context.CATEGORY);
         }
 
-         category = new Category();
+        category = new Category();
         // Reconstruir La categoria a partir de lo que viene en los parámetros
         category.setCategoryId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
         category.setName(protocolRequest.getParameters().get(1).getValue());
         int response = categoryService.save(category);
         return String.valueOf(response);
     }
-    
-    
-    private String processEditCategory(Protocol protocolRequest){
-       // Editar el name de la categoria
+
+    private String processEditCategory(Protocol protocolRequest) {
+        // Editar el name de la categoria
         int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         String name = protocolRequest.getParameters().get(1).getValue();
         Category newCategory = new Category(id, name);
         boolean response = categoryService.edit(id, newCategory);
-        String respuesta=String.valueOf(response);
+        String respuesta = String.valueOf(response);
         return respuesta;
     }
-    private String processDeleteCategory(Protocol protocolRequest){
-       // Eliminar una categoria 
-       int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
-       boolean response = categoryService.delete(id);
-       String respuesta=String.valueOf(response);
-       return respuesta;
+
+    private String processDeleteCategory(Protocol protocolRequest) {
+        // Eliminar una categoria 
+        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        boolean response = categoryService.delete(id);
+        String respuesta = String.valueOf(response);
+        return respuesta;
     }
-    private String processListCategory(){
-       // Lista de todas las categorias
-       List<Category> category;
-       category = categoryService.findAll();
-       return objectToJSON(category);
+
+    private String processListCategory() {
+        // Lista de todas las categorias
+        List<Category> category;
+        category = categoryService.findAll();
+        return objectToJSON(category);
     }
-    private String processGetListCategory(Protocol protocolRequest){
-       //Listar categorias por nombre 
-       String name = protocolRequest.getParameters().get(0).getValue();
-       List<Category> category;
-       category = categoryService.findByName(name);
-       return objectToJSON(category);
+
+    private String processGetListCategory(Protocol protocolRequest) {
+        //Listar categorias por nombre 
+        String name = protocolRequest.getParameters().get(0).getValue();
+        List<Category> category;
+        category = categoryService.findByName(name);
+        return objectToJSON(category);
     }
-    
-    
-    
-     private String processGetProduct(Protocol protocolRequest) {
+
+    private String processGetProduct(Protocol protocolRequest) {
         // Extraer la cedula del primer parámetro
-        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue()) ;
+        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         Product producto = productService.findById(id);
         if (producto == null) {
             String errorJson = generateNotFoundErrorJson();
@@ -205,8 +204,9 @@ public class OpenMarketHandler extends ServerHandler {
             return objectToJSON(producto);
         }
     }
+
     private String processPostProduct(Protocol protocolRequest) {
-        Product producto=new Product();
+        Product producto = new Product();
         // Reconstruir La categoria a partir de lo que viene en los parámetros
         producto.setProductId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
         producto.setName(protocolRequest.getParameters().get(1).getValue());
@@ -216,16 +216,16 @@ public class OpenMarketHandler extends ServerHandler {
         producto.setCategoryId(Integer.parseInt(protocolRequest.getParameters().get(5).getValue()));
         producto.setStock(Integer.parseInt(protocolRequest.getParameters().get(6).getValue()));
 
-        
-        byte[] decodedImage = Base64.getDecoder().decode(protocolRequest.getParameters().get(7).getValue());             
+        byte[] decodedImage = Base64.getDecoder().decode(protocolRequest.getParameters().get(7).getValue());
         producto.setImage(decodedImage);
 
         boolean response = productService.save(producto);
-        String respuesta=String.valueOf(response);
+        String respuesta = String.valueOf(response);
         return respuesta;
     }
-    private String processEditProduct(Protocol protocolRequest){
-       Product producto=new Product();
+
+    private String processEditProduct(Protocol protocolRequest) {
+        Product producto = new Product();
         // Reconstruir La categoria a partir de lo que viene en los parámetros
         producto.setProductId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
         producto.setName(protocolRequest.getParameters().get(1).getValue());
@@ -236,48 +236,42 @@ public class OpenMarketHandler extends ServerHandler {
         producto.setStock(Integer.parseInt(protocolRequest.getParameters().get(6).getValue()));
         producto.setImage(protocolRequest.getParameters().get(7).getValue().getBytes(StandardCharsets.UTF_8));
 
-       
         boolean response = productService.edit(producto);
-        String respuesta=String.valueOf(response);
+        String respuesta = String.valueOf(response);
         return respuesta;
     }
-    
-    
-    
+
     private String processBuyProduct(Protocol protocolRequest) {
         // Petecion de compra
-        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue()) ;       
+        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         String nameOnCard = protocolRequest.getParameters().get(1).getValue();
-        String cardNumber =protocolRequest.getParameters().get(2).getValue();
-        String CVC =protocolRequest.getParameters().get(3).getValue();
-        String month =protocolRequest.getParameters().get(4).getValue();
-        String year =protocolRequest.getParameters().get(5).getValue();
-        
+        String cardNumber = protocolRequest.getParameters().get(2).getValue();
+        String CVC = protocolRequest.getParameters().get(3).getValue();
+        String month = protocolRequest.getParameters().get(4).getValue();
+        String year = protocolRequest.getParameters().get(5).getValue();
+
         // Contruiomos los objectos
         Product producto = productService.findById(id);
         PaymentDetails paymentDetails = new PaymentDetails(nameOnCard, cardNumber, CVC, month, year);
         PurchaseGenerator purchaseGenerator = new PurchaseGenerator();
-        
+
         if (!purchaseGenerator.validator(paymentDetails)) {
             String errorJson = generateCardNotFoundErrorJson();
             return errorJson;
         } else {
             // Implementar logica       
             String reference = purchaseGenerator.generateCode();
-            Invoice invoice = new Invoice(reference, producto.getName());      
+            Invoice invoice = new Invoice(reference, producto.getName());
             return objectToJSON(invoice);
         }
     }
-    
-    
+
     /**
-     * Genera un ErrorJson 
+     * Genera un ErrorJson
      *
      * @return error en formato json
      */
-    
-    
-    private String generateCardNotFoundErrorJson(){
+    private String generateCardNotFoundErrorJson() {
         List<JsonError> errors = new ArrayList<>();
         JsonError error = new JsonError();
         error.setCode("000");
@@ -290,8 +284,7 @@ public class OpenMarketHandler extends ServerHandler {
 
         return errorsJson;
     }
-    
-    
+
     private String generateNotFoundErrorJson() {
         List<JsonError> errors = new ArrayList<>();
         JsonError error = new JsonError();
@@ -305,8 +298,8 @@ public class OpenMarketHandler extends ServerHandler {
 
         return errorsJson;
     }
-    
-     /**
+
+    /**
      * @return the service
      */
     public CategoryService getCategoryService() {
@@ -329,34 +322,32 @@ public class OpenMarketHandler extends ServerHandler {
     }
 
     private String processDeleteProduct(Protocol protocolRequest) {
-       // Eliminar una categoria 
-       int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
-       boolean response = productService.delete(id);
-       String respuesta=String.valueOf(response);
-       return respuesta;
+        // Eliminar una categoria 
+        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        boolean response = productService.delete(id);
+        String respuesta = String.valueOf(response);
+        return respuesta;
     }
 
     private String processListNameProduct(Protocol protocolRequest) {
-      List<Product>productos;
-      String name=protocolRequest.getParameters().get(0).getValue();
-      productos=productService.findByName(name);
-      return objectToJSON(productos);
-      
-      
+        List<Product> productos;
+        String name = protocolRequest.getParameters().get(0).getValue();
+        productos = productService.findByName(name);
+        return objectToJSON(productos);
+
     }
 
     private String processListCategoryProduct(Protocol protocolRequest) {
-      List<Product>productos;
-      int categoryId= Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
-      productos=productService.findByCategory(categoryId);
-      return objectToJSON(productos);
+        List<Product> productos;
+        int categoryId = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        productos = productService.findByCategory(categoryId);
+        return objectToJSON(productos);
     }
 
     private String processListAllProduct() {
-      List<Product>productos;
-      productos=productService.findAll();
-      return objectToJSON(productos);
+        List<Product> productos;
+        productos = productService.findAll();
+        return objectToJSON(productos);
     }
-    
-   
+
 }
