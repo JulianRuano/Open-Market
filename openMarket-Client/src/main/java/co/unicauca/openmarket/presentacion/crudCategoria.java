@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import reloj.frameworkobsobs.Observador;
+import java.util.Random;
 
 /**
  *
@@ -282,7 +283,12 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnListarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTodoActionPerformed
-        fillTable(categoryService.findAllCategories());
+        if(categoryService.findAllCategories() == null){
+            Messages.showMessageDialog("No hay categorias registradas", "Informacion");
+            return;
+        }else{
+            fillTable(categoryService.findAllCategories());
+        }
     }//GEN-LAST:event_btnListarTodoActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -398,11 +404,11 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void actualizar() {
+    public void actualizar() {     
         try {
             fillTable(categoryService.findAllCategories());
         } catch (Exception ex) {
-            successMessage(ex.getMessage(), "Atención");
+            
         }
     }
 
@@ -472,8 +478,9 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
             return;
         }
         try {
+            Random r = new Random();
             String name = this.txtNameCategoria.getText().trim();
-            Category OCategory = new Category(0L, name);
+            Category OCategory = new Category(r.nextLong(100-0), name);
             OMAddCategoryCommand comm = new OMAddCategoryCommand(OCategory, categoryService);
             ominvoker.addCommand(comm);
             ominvoker.execute();
