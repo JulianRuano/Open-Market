@@ -10,6 +10,8 @@ import co.unicauca.openmarket.server.access.CategoryRepositoryArrays;
 import co.unicauca.openmarket.server.access.ProductRepositoryArrays;
 import co.unicauca.openmarket.domain.services.CategoryService;
 import co.unicauca.openmarket.domain.services.ProductService;
+import co.unicauca.openmarket.server.access.ICategoryRepository;
+import co.unicauca.openmarket.server.access.IProductRepository;
 import co.unicauca.openmarket.server.access.ProductRepository;
 import co.unicauca.strategyserver.infra.ServerSocketMultiThread;
 import java.util.Scanner;
@@ -18,20 +20,21 @@ import java.util.Scanner;
  *
  * @author brayan majin, julian ruano
  */
-public class OpeMarketServer {
+public class OpenMarketServer {
      /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         Scanner teclado = new Scanner(System.in);
         System.out.println("Ingrese el puerto de escucha");
         int port = teclado.nextInt();
         ServerSocketMultiThread myServer = new ServerSocketMultiThread(port);
         OpenMarketHandler myHandler = new OpenMarketHandler();
-        myHandler.setService(new CategoryService(new CategoryRepositoryArrays()));
-        //myHandler.setServiceProduct(new ProductService(new ProductRepositoryArrays()));
-        myHandler.setServiceProduct(new ProductService(new ProductRepository()));
+        ICategoryRepository catRepo= new CategoryRepositoryArrays();
+        IProductRepository prodRepo= new ProductRepositoryArrays(catRepo);
+
+        myHandler.setCategoryService(new CategoryService(catRepo));
+        myHandler.setProductService(new ProductService(prodRepo));
         myServer.setServerHandler(myHandler);
         myServer.startServer();
     }
