@@ -2,12 +2,14 @@
 package co.unicauca.openmarket.presentacion;
 
 import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.infra.Messages;
 import static co.unicauca.openmarket.client.infra.Messages.successMessage;
 import co.unicauca.openmarket.client.presentation.commands.OMAddProductCommand;
 import co.unicauca.openmarket.client.presentation.commands.OMDeleteProductCommand;
 import co.unicauca.openmarket.client.presentation.commands.OMEditProductCommand;
 import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
+import co.unicauca.openmarket.commons.domain.Category;
 import co.unicauca.openmarket.commons.domain.Product;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -15,9 +17,14 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -39,10 +46,12 @@ public class crudProducto extends javax.swing.JPanel {
     private ProductService productService;
     private boolean addOption;
     private OMInvoker ominvoker;
+    private CategoryService categoryService;
     
-    public crudProducto(ProductService productService) {
+    public crudProducto(ProductService productService,CategoryService categoryService) {
         initComponents();
         this.productService=productService;
+        this.categoryService=categoryService;
         ominvoker = new OMInvoker();  
         mModeloTabla.addColumn("ID");
         mModeloTabla.addColumn("Nombre");
@@ -52,6 +61,22 @@ public class crudProducto extends javax.swing.JPanel {
         mModeloTabla.addColumn("ID categoria");
         mModeloTabla.addColumn("Imagen");
         tblProductos.setModel(mModeloTabla);
+List<Category> categories = this.categoryService.findAllCategories();
+
+DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
+Map<String, Long> categoryMap = new HashMap<>();
+
+for (Category category : categories) {
+    String categoryName = category.getName();
+    Long categoryId = category.getCategoryId();
+    modelo.addElement(categoryName);
+    categoryMap.put(categoryName, categoryId);
+}
+
+cbxCodigoCategoria.setModel(modelo);
+
+
+
         stateInitial();
     }
 
@@ -203,7 +228,11 @@ public class crudProducto extends javax.swing.JPanel {
         rdNombreProducto.setSelected(true);
         rdNombreProducto.setText("Nombre Producto");
 
-        cbxCodigoCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
+        cbxCodigoCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxCodigoCategoriaActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -527,6 +556,11 @@ public class crudProducto extends javax.swing.JPanel {
             successMessage(ex.getMessage(), "Atención"); 
         }
     }//GEN-LAST:event_btnListarActionPerformed
+
+    private void cbxCodigoCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCodigoCategoriaActionPerformed
+
+
+    }//GEN-LAST:event_cbxCodigoCategoriaActionPerformed
 
 
 

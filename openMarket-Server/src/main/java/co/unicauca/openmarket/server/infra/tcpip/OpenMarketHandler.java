@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package co.unicauca.openmarket.server.infra.tcpip;
+import co.unicauca.openmarket.server.infra.Context;
 import co.unicauca.openmarket.commons.application.Invoice;
 import co.unicauca.openmarket.commons.application.PaymentDetails;
 import co.unicauca.openmarket.commons.domain.Category;
@@ -14,6 +15,7 @@ import co.unicauca.strategyserver.infra.ServerHandler;
 import co.unicauca.openmarket.commons.infra.JsonError;
 import co.unicauca.openmarket.domain.services.ProductService;
 import co.unicauca.openmarket.server.application.PurchaseGenerator;
+import co.unicauca.openmarket.server.infra.Helpers;
 import com.google.gson.Gson;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -34,7 +36,9 @@ public class OpenMarketHandler extends ServerHandler {
      */
     private static CategoryService service;
      private static ProductService serviceProduc;
+     private static Helpers helpers;
     public OpenMarketHandler() {
+       
     }
 
     /**
@@ -55,7 +59,6 @@ public class OpenMarketHandler extends ServerHandler {
                     // Consultar una categoria
                     response = processGetCategory(protocolRequest);
                 }
-
                 if (protocolRequest.getAction().equals("post")) {
                     // Agregar una categoria    
                     response = processPostCategory(protocolRequest);
@@ -142,13 +145,20 @@ public class OpenMarketHandler extends ServerHandler {
      * @param protocolRequest Protocolo de la solicitud
      */
     private String processPostCategory(Protocol protocolRequest) {
-        Category category = new Category();
+       Long id = Long.valueOf(protocolRequest.getParameters().get(0).getValue());
+
+        Category category= this.service.findById(id);
+
+        if(!(category == null)){
+            return helpers.generateBadRequestJson(Context.CATEGORY);
+        }
+
+         category = new Category();
         // Reconstruir La categoria a partir de lo que viene en los parámetros
         category.setCategoryId(Long.parseLong(protocolRequest.getParameters().get(0).getValue()));
         category.setName(protocolRequest.getParameters().get(1).getValue());
-        boolean response = getService().save(category);
-        String respuesta=String.valueOf(response);
-        return respuesta;
+        boolean response = service.save(category);
+        return String.valueOf(response);
     }
     
     
