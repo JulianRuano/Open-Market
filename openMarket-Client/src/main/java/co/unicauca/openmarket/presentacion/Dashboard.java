@@ -26,6 +26,7 @@ public class Dashboard extends javax.swing.JFrame {
      private CategoryService categoryService;
     private ShoppingCar shoppingCart;
     private OMInvoker ominvokerCategorias;
+    private OMInvoker ominvokerProducts;
     
     public Dashboard(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart) {
         initComponents();
@@ -35,7 +36,7 @@ public class Dashboard extends javax.swing.JFrame {
          this.categoryService=categoryService;
          this.shoppingCart=shoppingCart;
          ominvokerCategorias = new OMInvoker();
-       
+         ominvokerProducts=new OMInvoker();
     }
     private void initStyles(){
       //btnPrimerBoton.putClientProperty("JButton.buttonType", "roundRect");
@@ -224,7 +225,10 @@ public class Dashboard extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
-        ShowJPanel(new crudProducto( productService,categoryService) );
+      
+        crudProducto instance2=new crudProducto(this.productService,this.ominvokerProducts);
+        ShowJPanel(instance2);
+        productService.addObservador(instance2);
     }//GEN-LAST:event_btnProductoActionPerformed
 
 
