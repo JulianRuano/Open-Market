@@ -233,6 +233,8 @@ cbxCodigoCategoria.setModel(modelo);
         btnEliminar = new javax.swing.JButton();
         btnDeshacer = new javax.swing.JButton();
         btnRehacer = new javax.swing.JButton();
+        lblStock = new javax.swing.JLabel();
+        txtStock = new javax.swing.JTextField();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -385,6 +387,8 @@ cbxCodigoCategoria.setModel(modelo);
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
+        lblStock.setText("Stock");
+
         javax.swing.GroupLayout pnlCrudpProductoLayout = new javax.swing.GroupLayout(pnlCrudpProducto);
         pnlCrudpProducto.setLayout(pnlCrudpProductoLayout);
         pnlCrudpProductoLayout.setHorizontalGroup(
@@ -394,19 +398,29 @@ cbxCodigoCategoria.setModel(modelo);
                 .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(txtDireccion)
-                        .addComponent(txtPrecio)
                         .addComponent(txtDescripcion)
                         .addComponent(txtNombre)
                         .addComponent(lblCodigoCategoria)
                         .addComponent(lblDireccion)
-                        .addComponent(lblPrecio)
                         .addComponent(jLabel3)
                         .addComponent(lblNombre)
                         .addComponent(lblCodigoProducto)
                         .addComponent(txtCodigoProducto)
                         .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
-                            .addComponent(cbxCodigoCategoria, 0, 239, Short.MAX_VALUE)
-                            .addGap(186, 186, 186)))
+                            .addComponent(cbxCodigoCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(186, 186, 186))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCrudpProductoLayout.createSequentialGroup()
+                            .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblPrecio)
+                                .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(6, 6, Short.MAX_VALUE)
+                            .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
+                                    .addComponent(lblStock)
+                                    .addGap(166, 166, 166))
+                                .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
+                                    .addGap(6, 6, 6)
+                                    .addComponent(txtStock)))))
                     .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
                         .addGap(53, 53, 53)
                         .addComponent(lblExaminar2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -414,7 +428,7 @@ cbxCodigoCategoria.setModel(modelo);
                         .addComponent(btnExaminar)))
                 .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                         .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
                                 .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -473,9 +487,13 @@ cbxCodigoCategoria.setModel(modelo);
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblPrecio)
+                        .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblPrecio)
+                            .addComponent(lblStock))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtStock)
+                            .addComponent(txtPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblDireccion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -652,6 +670,7 @@ cbxCodigoCategoria.setModel(modelo);
     private javax.swing.JLabel lblExaminar2;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblPrecio;
+    private javax.swing.JLabel lblStock;
     private javax.swing.JPanel pnlCrudpProducto;
     private javax.swing.JPanel pnlSeccionBotones;
     private javax.swing.JRadioButton rdIdCategoria;
@@ -664,6 +683,7 @@ cbxCodigoCategoria.setModel(modelo);
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPrecio;
+    private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
     
     private void stateNew() {
