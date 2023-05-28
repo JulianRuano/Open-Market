@@ -1,0 +1,9 @@
+co\unicauca\openmarket\commons\application\Invoice.class
+co\unicauca\openmarket\commons\infra\Utilities.class
+co\unicauca\openmarket\commons\infra\Parameter.class
+co\unicauca\openmarket\commons\domain\Product.class
+co\unicauca\openmarket\commons\application\PaymentDetails.class
+co\unicauca\openmarket\commons\infra\Protocol.class
+co\unicauca\openmarket\commons\infra\JsonError.class
+co\unicauca\openmarket\commons\domain\Category.class
+co\unicauca\openmarket\commons\infra\Parameters.class
