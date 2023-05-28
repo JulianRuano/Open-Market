@@ -16,9 +16,10 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -27,22 +28,27 @@ import javax.swing.JOptionPane;
 public class CategoryRepository implements ICategoryRepository {
 
     public CategoryRepository() {
-        
+       
     }
     
     private Connection conn;
     private final String bd = "openmarket";
-    private final String user = "root";
-    private final String password = "";
+    private final String user = "codoslic_user";
+    private final String password = "singlecode4";
 
     
     public boolean connect() {
          try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conn  = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/" + bd, user, password);
+            String url = "jdbc:mysql://162.241.61.245:3306/codoslic_op";
+            Properties props = new Properties();
+            props.setProperty("user", "codoslic_user");
+            props.setProperty("password", "singlecode4");
+            this.conn = DriverManager.getConnection(url, props);         
+            
+             System.out.println("Conexion exitosa a la base de datos");
             return conn != null;
         } catch (Exception e) {
+            System.out.println("Error");
             return false;
         }
     }
@@ -75,6 +81,7 @@ public class CategoryRepository implements ICategoryRepository {
             int categoryId = pstmt.getInt(2);
             
             pstmt.close();
+            
             this.disconnect();
             return categoryId;
         } catch (SQLException ex) {

@@ -11,7 +11,7 @@ import java.util.List;
  * @author Libardo, Julio
  */
 public interface IProductRepository {
-    boolean save(Product newProduct);
+    int save(Product newProduct);
     
     boolean edit(Product newProduct);
     

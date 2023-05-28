@@ -154,7 +154,7 @@ public class OpenMarketHandler extends ServerHandler {
 
         category = new Category();
         // Reconstruir La categoria a partir de lo que viene en los parámetros
-        category.setCategoryId(Integer.parseInt(protocolRequest.getParameters().get(0).getValue()));
+        category.setCategoryId(id);
         category.setName(protocolRequest.getParameters().get(1).getValue());
         int response = categoryService.save(category);
         return String.valueOf(response);
@@ -219,9 +219,8 @@ public class OpenMarketHandler extends ServerHandler {
         byte[] decodedImage = Base64.getDecoder().decode(protocolRequest.getParameters().get(7).getValue());
         producto.setImage(decodedImage);
 
-        boolean response = productService.save(producto);
-        String respuesta = String.valueOf(response);
-        return respuesta;
+        int response = productService.save(producto);
+        return String.valueOf(response);
     }
 
     private String processEditProduct(Protocol protocolRequest) {

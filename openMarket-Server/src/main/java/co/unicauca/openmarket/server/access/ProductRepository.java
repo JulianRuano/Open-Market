@@ -2,40 +2,48 @@ package co.unicauca.openmarket.server.access;
 
 
 import co.unicauca.openmarket.commons.domain.Product;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
 public final class ProductRepository implements IProductRepository {
-
-    private Connection conn;
-    private final String bd = "openmarket";
-    private final String user = "root";
-    private final String password = "";
-
+    
     public ProductRepository() {
         
     }
+
+    private Connection conn;
+    private final String bd = "openmarket";
+    private final String user = "codoslic_user";
+    private final String password = "singlecode4";
+
     
     public boolean connect() {
          try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conn  = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/" + bd, user, password);
+            String url = "jdbc:mysql://162.241.61.245:3306/codoslic_op";
+            Properties props = new Properties();
+            props.setProperty("user", "codoslic_user");
+            props.setProperty("password", "singlecode4");
+            this.conn = DriverManager.getConnection(url, props);         
+            
+             System.out.println("Conexion exitosa a la base de datos");
             return conn != null;
         } catch (Exception e) {
+            System.out.println("Error"+e);
             return false;
         }
     }
-
     public void disconnect() {
         try {
             if (conn != null) {
@@ -48,19 +56,18 @@ public final class ProductRepository implements IProductRepository {
     }
 
     @Override
-    public boolean save(Product newProduct) {
+    public int save(Product newProduct) {
 
         try {
             //Validate product
-            if (newProduct == null || newProduct.getName().isBlank()) {
-                return false;
+            if (newProduct == null) {
+                return 0;
             }
             this.connect();
 
-            String sql = "INSERT INTO product (name,description,price,address,categoryId,stock,image) "
-                    + "VALUES ( ?, ?, ?, ? , ?, ?, ?)";
+            String sql = "{CALL InsertProduct(?, ?, ?, ?, ? ,? ,?, ?)}";
 
-            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            try (CallableStatement pstmt = conn.prepareCall(sql)) {
                 pstmt.setString(1, newProduct.getName());
                 pstmt.setString(2, newProduct.getDescription());
                 pstmt.setDouble(3, newProduct.getPrice());
@@ -68,17 +75,21 @@ public final class ProductRepository implements IProductRepository {
                 pstmt.setLong(5, newProduct.getCategoryId());
                 pstmt.setLong(6, newProduct.getStock());
                 pstmt.setBytes(7, newProduct.getImage());
+                pstmt.registerOutParameter(8, Types.INTEGER);
                 pstmt.executeUpdate();
+                
+                int productId = pstmt.getInt(8);
+                
                 pstmt.close();
                 this.disconnect();
-                return true;  
+                return productId;  
             }
                           
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         disconnect();
-        return false;
+        return 0;
     }
 
     @Override

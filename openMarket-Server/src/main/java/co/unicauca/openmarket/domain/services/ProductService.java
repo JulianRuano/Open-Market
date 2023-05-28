@@ -28,7 +28,7 @@ public class ProductService {
         this.repo = repo;
     }
      
-    public synchronized boolean save(Product newProduct) {
+    public synchronized int save(Product newProduct) {
         return repo.save(newProduct);
     }
     
