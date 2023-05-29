@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\domain\services\CategoryService.java
 D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\IProductRepository.java
 D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\application\PaymentHandler.java
@@ -20,3 +21,20 @@ D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\
 D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\infra\tcpip\OpenMarketHandler.java
 D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\domain\services\PaymentService.java
 D:\Universidad\Ingeniria de software 2\sprint\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\infra\ErrorResponse.java
+=======
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\domain\services\ProductService.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\ProductRepository.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\Factory.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\infra\tcpip\OpenMarketHandler.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\application\PurchaseGenerator.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\domain\User.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\infra\Helpers.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\domain\services\CategoryService.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\infra\ErrorResponse.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\IProductRepository.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\infra\tcpip\OpenMarketServer.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\ICategoryRepository.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\CategoryRepository.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\domain\Location.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\infra\Context.java
+>>>>>>> fba62c736ad8a268eea836c3e787ca94c1f9e422

@@ -33,6 +33,8 @@ public class Tienda extends javax.swing.JPanel {
     
     private final ProductService productService;
     private final ShoppingCar shoppingCart;
+    private final GUIPaymet compra;
+    
     int id;
     
     public Tienda(ProductService productService,ShoppingCar shoppingCart) {
@@ -46,7 +48,10 @@ public class Tienda extends javax.swing.JPanel {
         mModeloTabla.addColumn("Direccion");
         mModeloTabla.addColumn("ID categoria");
         mModeloTabla.addColumn("Imagen");
+
         tblProductos.setModel(mModeloTabla); 
+        compra = new GUIPaymet(shoppingCart);
+
     }
 
    
@@ -155,12 +160,25 @@ public class Tienda extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnComprar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprar2ActionPerformed
-         
+     
+        try{
+            int idProducto=Integer.parseInt(this.txtComprar.getText());
+            compra.obtenerProducto(productService.findProductById(idProducto));
+            compra.setVisible(true);
+        }catch(Exception e){
+            successMessage(e.getMessage(), "Atención"); 
+              JOptionPane.showMessageDialog(null,
+                "Seleccione por el dato que quiere buscar",
+                "Error al introducir el dato",
+                JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnComprar2ActionPerformed
      private void fillTable(List<Product> listProducts) {
+        tblProductos.setDefaultRenderer(Object.class, new RenderImagen());
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
 
-        Object rowData[] = new Object[7];//No columnas
+        Object rowData[] = new Object[8];//No columnas
         for (int i = 0; i < listProducts.size(); i++) {
             rowData[0] = listProducts.get(i).getProductId();
             rowData[1] = listProducts.get(i).getName();
@@ -168,25 +186,26 @@ public class Tienda extends javax.swing.JPanel {
             rowData[3] = listProducts.get(i).getPrice();
             rowData[4] = listProducts.get(i).getAddress();
             rowData[5] = listProducts.get(i).getCategoryId();
-            
+             rowData[6] = listProducts.get(i).getStock();
+
             try {
                 byte[] imagen = listProducts.get(i).getImage();
                 BufferedImage bufferedImage = null;
                 InputStream inputStream = new ByteArrayInputStream(imagen);
                 bufferedImage = ImageIO.read(inputStream);
-                ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(60, 60, 0));
-                rowData[6] = new JLabel(mIcono);
-                } catch (Exception e) {
-                    rowData[6] = new JLabel("No imagen");
-                }
-            
+                ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(80, 80, 0));
+                rowData[7] = new JLabel(mIcono);
+            } catch (Exception e) {
+                rowData[7] = new JLabel("No imagen");
+            }
+
             model.addRow(rowData);
         }
-        
-        tblProductos.setRowHeight(60);
-        tblProductos.getColumnModel().getColumn(0).setPreferredWidth(60);
-        tblProductos.getColumnModel().getColumn(1).setPreferredWidth(60);
-        tblProductos.getColumnModel().getColumn(2).setPreferredWidth(60);
+
+        tblProductos.setRowHeight(80);
+        tblProductos.getColumnModel().getColumn(0).setPreferredWidth(80);
+        tblProductos.getColumnModel().getColumn(1).setPreferredWidth(80);
+        tblProductos.getColumnModel().getColumn(2).setPreferredWidth(80);
     }
     
 

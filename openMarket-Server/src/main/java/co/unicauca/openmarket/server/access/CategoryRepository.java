@@ -7,6 +7,7 @@ package co.unicauca.openmarket.server.access;
 
 import co.unicauca.openmarket.commons.domain.Category;
 import java.sql.CallableStatement;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -39,7 +40,7 @@ public class CategoryRepository implements ICategoryRepository {
     
     public boolean connect() {
          try {
-            String url = "jdbc:mysql://162.241.61.245:3306/codoslic_op";
+            String url = "jdbc:mysql://162.241.61.245:3306/codoslic_op?noAccessToProcedureBodies=true";
             Properties props = new Properties();
             props.setProperty("user", "codoslic_user");
             props.setProperty("password", "singlecode4");
@@ -66,28 +67,28 @@ public class CategoryRepository implements ICategoryRepository {
 
     @Override
     public int save(Category newCategory) {
+        int categoryId = 0;
         try {
             if (newCategory == null) {
-                return 0;
+                return categoryId;
             }
             this.connect();
+            
             String sql = "{CALL InsertCategory(?, ?)}";
-                  
-            CallableStatement  pstmt = conn.prepareCall(sql);
-            pstmt.setString(1, newCategory.getName());
-            pstmt.registerOutParameter(2, Types.INTEGER);
-            pstmt.executeUpdate();
+            CallableStatement cstmt = conn.prepareCall(sql);
+            cstmt.setString(1, newCategory.getName());
+            cstmt.registerOutParameter(2, Types.INTEGER); 
+                
+            cstmt.executeUpdate();         
+            categoryId = cstmt.getInt(2);
             
-            int categoryId = pstmt.getInt(2);
-            
-            pstmt.close();
-            
+            cstmt.close();      
             this.disconnect();
             return categoryId;
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return 0;       
+        return categoryId;       
     }
 
 

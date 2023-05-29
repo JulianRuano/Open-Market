@@ -12,6 +12,7 @@ import java.util.logging.Logger;
  */
 public class OMAddProductCommand extends OMCommand{
     private Product pP;
+    private int idProduct;
     private ProductService pS;
     boolean result=false;
     public OMAddProductCommand(Product pP, ProductService pS){
@@ -24,6 +25,9 @@ public class OMAddProductCommand extends OMCommand{
     public void make() {
         try {
             result = pS.saveProduct(pP.getProductId(), pP.getName(), pP.getDescription(),pP.getPrice(),pP.getAddress(),pP.getCategoryId(),pP.getStock(),pP.getImage());
+            if(result){
+                this.idProduct=pS.getIdProduct();
+            }
         } catch (Exception ex) {
             Logger.getLogger(OMAddProductCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
