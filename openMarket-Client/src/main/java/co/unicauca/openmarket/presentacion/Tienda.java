@@ -33,7 +33,6 @@ public class Tienda extends javax.swing.JPanel {
     
     private final ProductService productService;
     private final ShoppingCar shoppingCart;
-    private GUIPaymet compra ;
     int id;
     
     public Tienda(ProductService productService,ShoppingCar shoppingCart) {
@@ -156,9 +155,7 @@ public class Tienda extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnComprar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprar2ActionPerformed
-         int idProducto=Integer.parseInt(this.txtComprar.getText());
-         compra = new GUIPaymet(idProducto,shoppingCart);       
-         compra.setVisible(true);
+         
     }//GEN-LAST:event_btnComprar2ActionPerformed
      private void fillTable(List<Product> listProducts) {
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
