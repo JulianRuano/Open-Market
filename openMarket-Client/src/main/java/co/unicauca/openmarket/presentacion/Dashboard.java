@@ -9,12 +9,10 @@ import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
-import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
+
 
 /**
  *
@@ -22,11 +20,11 @@ import javax.swing.UIManager;
  */
 public class Dashboard extends javax.swing.JFrame {
 
-     private ProductService productService;
-     private CategoryService categoryService;
-    private ShoppingCar shoppingCart;
-    private OMInvoker ominvokerCategorias;
-    private OMInvoker ominvokerProducts;
+     private final ProductService productService;
+     private final CategoryService categoryService;
+    private final ShoppingCar shoppingCart;
+    private final OMInvoker ominvokerCategorias;
+    private final OMInvoker ominvokerProducts;
     
     public Dashboard(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart) {
         initComponents();

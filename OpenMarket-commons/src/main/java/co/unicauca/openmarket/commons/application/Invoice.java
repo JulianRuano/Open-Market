@@ -6,9 +6,14 @@ package co.unicauca.openmarket.commons.application;
  */
 public class Invoice {
     private String reference;
-    private String name;
-    public Invoice(String reference ,String name){
-        this.name = name;
+    private String nameProduct;
+    private double price;
+    private String fecha;
+    
+    
+    public Invoice(){}
+    public Invoice(String reference ,String nameProduct,double price,String fecha){
+        this.nameProduct = nameProduct;
         this.reference = reference;
     }
 
@@ -20,12 +25,28 @@ public class Invoice {
         this.reference = reference;
     }
 
-    public String getName() {
-        return name;
+    public String getNameProduct() {
+        return nameProduct;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameProduct(String nameProduct) {
+        this.nameProduct = nameProduct;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
     
     

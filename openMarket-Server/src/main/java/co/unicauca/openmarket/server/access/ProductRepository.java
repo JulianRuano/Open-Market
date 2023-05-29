@@ -52,7 +52,6 @@ public final class ProductRepository implements IProductRepository {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
     }
 
     @Override
@@ -123,7 +122,32 @@ public final class ProductRepository implements IProductRepository {
     }
 
     
+    @Override
+    public List<Object> findNamePrice(int idProduct) {
+        List<Object> info = new ArrayList<>();
+        try {
+            this.connect();
+            String sql = "SELECT name,price FROM product"
+                    + "WHERE productId = ?";
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setLong(1, idProduct);
 
+            ResultSet res = pstmt.executeQuery();
+
+            if (res.next()) {
+                info.add(res.getString("name"));
+                info.add(res.getDouble("price"));
+                pstmt.close();
+                this.disconnect();             
+                return info;
+            }           
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.disconnect();
+        return null;
+    }
     
 
     @Override
@@ -217,6 +241,7 @@ public final class ProductRepository implements IProductRepository {
         this.disconnect();
         return null;
     }
+    
 
     @Override
     public List<Product> findByName(String pname) {

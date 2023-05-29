@@ -11,7 +11,7 @@ import java.util.List;
  * @author Libardo, Julio
  */
 public interface IProductAccess {
-    boolean save(Product newProduct)throws Exception;
+    int save(Product newProduct)throws Exception;
     
     boolean edit(Product producto)throws Exception;
     

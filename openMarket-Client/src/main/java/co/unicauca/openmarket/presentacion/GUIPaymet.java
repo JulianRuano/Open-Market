@@ -6,41 +6,27 @@
 package co.unicauca.openmarket.presentacion;
 
 
-import co.unicauca.openmarket.commons.application.PaymentDetails;
+import co.unicauca.openmarket.commons.application.creditCard;
 import co.unicauca.openmarket.client.domain.application.ShoppingCar;
-import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.infra.Messages;
-import static co.unicauca.openmarket.client.infra.Messages.successMessage;
-import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
 import co.unicauca.openmarket.commons.application.Invoice;
-import javax.swing.table.DefaultTableModel;
+
 
 
 
 public class GUIPaymet extends javax.swing.JFrame {
   
-     private boolean addOption;
-     private OMInvoker ominvoker;
-     private Long idProduct;
-     private ShoppingCar shoppingCart;
-      private GUIPaymet  comprar;
-      DefaultTableModel mModeloTabla = new DefaultTableModel();
-      
+     private final int idProduct;
+     private final ShoppingCar shoppingCart;    
       
      
-    public GUIPaymet(Long id,ShoppingCar shoppingCart) {
+    public GUIPaymet(int id,ShoppingCar shoppingCart) {
         this.idProduct = id;
-        this.shoppingCart = shoppingCart;
-        ominvoker = new OMInvoker();  
-       
-        
+        this.shoppingCart = shoppingCart;  
         initComponents();
         stateInitial();    
     }
 
-    GUIPaymet() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -238,13 +224,16 @@ public class GUIPaymet extends javax.swing.JFrame {
             Messages.showMessageDialog("Debe ingresar todos los datos", "Atención");
             return;
         }   
-        PaymentDetails paymentMethod = new PaymentDetails(nombreTitular, numTarjeta, CVC, mes, anio);       
-        Invoice result = shoppingCart.buy(idProduct,paymentMethod);    
+        creditCard paymentMethod = new creditCard(nombreTitular, numTarjeta, CVC, mes, anio);  
+        Invoice result = new Invoice();
+        result = shoppingCart.buy(idProduct,paymentMethod);    
         
-        if(!result.getName().isEmpty()) {
+        if(!result.getNameProduct().isEmpty()) {
             String message = ("Producto comprado con éxito "
                              +"\nReferencia: "+result.getReference()
-                             +"\nProducto: "+result.getName()
+                             +"\nfecha: "+result.getFecha()
+                             +"\nProducto: "+result.getNameProduct()
+                             +"\nPrecio: "+result.getPrice()
                              +"\nTotal: ");
             
             Messages.showMessageDialog(message, "Atención");

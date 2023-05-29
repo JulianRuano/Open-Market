@@ -34,8 +34,8 @@ public class ProductAccessImplSockets implements IProductAccess {
     }
 
     @Override
-    public boolean save(Product newProduct)throws Exception {
-        boolean bandera=false;
+    public int save(Product newProduct)throws Exception {
+        int id = 0;
         String jsonResponse = null;
         String requestJson = doSaveProductRequestJson(newProduct);
         try {
@@ -55,13 +55,13 @@ public class ProductAccessImplSockets implements IProductAccess {
                 Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
                 throw new Exception(extractMessages(jsonResponse));
             } else {
-                //Agregó correctamente, devuelve la cedula del customer 
-                //return customer.getId();
-                bandera=true;
+                int idProduct= Integer.parseInt(jsonResponse);
+                Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", idProduct);
+                id = idProduct;
             }
 
         }
-         return bandera;
+         return id;
     }
 
     @Override

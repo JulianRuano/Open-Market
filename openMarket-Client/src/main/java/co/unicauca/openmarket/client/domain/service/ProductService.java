@@ -13,6 +13,8 @@ import reloj.frameworkobsobs.Observado;
  * @author Libardo, Julio
  */
 public class ProductService extends Observado {
+    
+    private int idProduct;
       
     // Ahora hay una dependencia de una abstracción, no es algo concreto,
     // no sabe cómo está implementado.
@@ -45,12 +47,15 @@ public class ProductService extends Observado {
         newProduct.setCategoryId(categoryId);
         newProduct.setStock(stock);
         newProduct.setImage(image);
-            
-        //Validate product
-        if (newProduct.getName().isBlank() ) {
-            return false;
-        }
-        boolean result=repository.save(newProduct);
+        
+        boolean result= false;
+        
+        this.idProduct = repository.save(newProduct);
+        
+        if (idProduct > 0 ){        
+            result= true;
+        }  
+
         this.notificar();
         return result;
 

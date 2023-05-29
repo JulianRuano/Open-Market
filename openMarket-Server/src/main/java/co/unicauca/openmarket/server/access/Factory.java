@@ -35,47 +35,38 @@ public class Factory {
      * @param type cadena que indica qué tipo de clase hija debe instanciar
      * @return una clase hija de la abstracción IProductRepository
      */
-    public IProductRepository getRepository(String type) {
 
-        IProductRepository result = null;
-
-        switch (type) {
-            case "default":
-                result = new ProductRepository();
-                break;
-                
-        }
-
-        return result;
-
-    }
     
-    public ICategoryRepository getCatRepository() {
-        String type=Utilities.loadProperty("category.repository");
+    public ICategoryRepository getCatRepository(String type) {
          ICategoryRepository result = null;
 
         switch (type) {
-            case "default":
-                result = new CategoryRepository();
-            break;
+            case "default" -> result = new CategoryRepository();
 
     }
 
         return result;
 
     }
-    public IProductRepository getProdRepository() {
-        String type=Utilities.loadProperty("product.repository");
+    public IProductRepository getProdRepository(String type) {
          IProductRepository result = null;
 
         switch (type) {
-            case "default":
-                result = new ProductRepository();
-            break;
-
-    }
-
+            case "default" -> result = new ProductRepository();
+        }
         return result;
-
     }
+    
+    public IPaymentRepository getPayRepository(String type) {
+         IPaymentRepository result = null;
+
+        switch (type) {
+            case "default" -> result = new PaymentRepository();
+    }
+        return result;
+    }
+    
+    
+    
+    
 }

@@ -31,25 +31,23 @@ public class Tienda extends javax.swing.JPanel {
      DefaultTableModel mModeloTabla = new DefaultTableModel();
     
     
-    private ProductService productService;
-    private ShoppingCar shoppingCart;
-    private GUIPaymet compra;
-   Long id;
+    private final ProductService productService;
+    private final ShoppingCar shoppingCart;
+    private GUIPaymet compra ;
+    int id;
+    
     public Tienda(ProductService productService,ShoppingCar shoppingCart) {
        initComponents();
-      // this.compra=new GUIPaymet(id,shoppingCart);
-        this.productService=productService;
-       //his.shoppingCart=shoppingCart;
-         mModeloTabla.addColumn("ID");
+       this.productService=productService;
+       this.shoppingCart=shoppingCart;
+        mModeloTabla.addColumn("ID");
         mModeloTabla.addColumn("Nombre");
         mModeloTabla.addColumn("Descripcion");
         mModeloTabla.addColumn("Precio");
         mModeloTabla.addColumn("Direccion");
         mModeloTabla.addColumn("ID categoria");
         mModeloTabla.addColumn("Imagen");
-        tblProductos.setModel(mModeloTabla);
-          //compra=new GUIPaymet();
-       
+        tblProductos.setModel(mModeloTabla); 
     }
 
    
@@ -158,10 +156,9 @@ public class Tienda extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnComprar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprar2ActionPerformed
-        Long idProducto=Long.parseLong(this.txtComprar.getText());
-         //compra=new GUIPaymet(idProducto,shoppingCart); 
-        
-        //compra.setVisible(true);
+         int idProducto=Integer.parseInt(this.txtComprar.getText());
+         compra = new GUIPaymet(idProducto,shoppingCart);       
+         compra.setVisible(true);
     }//GEN-LAST:event_btnComprar2ActionPerformed
      private void fillTable(List<Product> listProducts) {
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
