@@ -65,7 +65,7 @@ public class ProductService extends Observado {
         }
         boolean result=false;
        
-        int idProduct=repository.save(newProduct);
+        this.idProduct=repository.save(newProduct);
         if(idProduct>0){
             result=true;
         }

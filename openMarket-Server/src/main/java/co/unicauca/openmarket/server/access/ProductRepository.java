@@ -31,7 +31,7 @@ public final class ProductRepository implements IProductRepository {
     
     public boolean connect() {
          try {
-            String url = "jdbc:mysql://162.241.61.245:3306/codoslic_op";
+            String url = "jdbc:mysql://162.241.61.245:3306/codoslic_op?noAccessToProcedureBodies=true";
             Properties props = new Properties();
             props.setProperty("user", "codoslic_user");
             props.setProperty("password", "singlecode4");
@@ -72,8 +72,8 @@ public final class ProductRepository implements IProductRepository {
                 pstmt.setString(2, newProduct.getDescription());
                 pstmt.setDouble(3, newProduct.getPrice());
                 pstmt.setString(4, newProduct.getAddress());
-                pstmt.setLong(5, newProduct.getCategoryId());
-                pstmt.setLong(6, newProduct.getStock());
+                pstmt.setInt(5, newProduct.getCategoryId());
+                pstmt.setInt(6, newProduct.getStock());
                 pstmt.setBytes(7, newProduct.getImage());
                 pstmt.registerOutParameter(8, Types.INTEGER);
                 pstmt.executeUpdate();
