@@ -10,10 +10,12 @@ import reloj.frameworkobsobs.Observado;
 
 /**
  *
- * @author Libardo, Julio
+ * @author brayan,jorge,freider,julian
  */
 public class ProductService extends Observado {
       
+    
+   private int idProduct; 
     // Ahora hay una dependencia de una abstracción, no es algo concreto,
     // no sabe cómo está implementado.
    public ProductService(){
@@ -29,6 +31,17 @@ public class ProductService extends Observado {
      *
      * @param repository una clase hija de IProductAccess
      */
+    
+    
+    
+    
+    public int getIdProduct() {
+        return idProduct;
+    }
+
+   
+    
+
     public ProductService(IProductAccess repository) {
         this.repository = repository;
     }
@@ -50,10 +63,14 @@ public class ProductService extends Observado {
         if (newProduct.getName().isBlank() ) {
             return false;
         }
-        boolean result=repository.save(newProduct);
+        boolean result=false;
+       
+        int idProduct=repository.save(newProduct);
+        if(idProduct>0){
+            result=true;
+        }
         this.notificar();
         return result;
-
     }
 
     public List<Product> findAllProducts()throws Exception {
