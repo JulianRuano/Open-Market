@@ -11,14 +11,8 @@ public class PaymentHandler {
         this.paymentS = paymentS;
     }
     
-    public boolean processPayment(String details) {
-        
-        if (paymentS.processPayment(details)){
-            return false;
-        }
-         
-        // Lógica adicional después de procesar el pago
-        return true;
+    public boolean processPayment(String details) {        
+        return paymentS.processPayment(details);
     }
     
 }

@@ -15,6 +15,8 @@ public class Invoice {
     public Invoice(String reference ,String nameProduct,double price,String fecha){
         this.nameProduct = nameProduct;
         this.reference = reference;
+        this.price = price;
+        this.fecha = fecha;
     }
 
     public String getReference() {
@@ -34,6 +36,11 @@ public class Invoice {
     }
 
     public double getPrice() {
+        return price;
+    }
+    
+     public double getTotal() {
+         //Logica para el total Implementar cuando este el carrito
         return price;
     }
 

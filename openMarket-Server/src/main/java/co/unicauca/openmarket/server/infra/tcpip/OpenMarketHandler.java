@@ -265,10 +265,13 @@ public class OpenMarketHandler extends ServerHandler {
             String errorJson = generateCardNotFoundErrorJson();
             return errorJson;
         } else {
-            List<Object> productNamePrice = productService.findNamePrice(idProduct);       
+            List<Object> productNamePrice = productService.findNamePrice(idProduct);
+            String productName = productNamePrice.get(0).toString();
+            double priceI = (double)productNamePrice.get(1);
             String reference = Reference.getReference();
-            String creationDate = paymentService.save(reference,details);             
-            Invoice invoice = new Invoice(reference, productNamePrice.get(0).toString(), (double)productNamePrice.get(1), creationDate);
+            String fecha = paymentService.save(reference,details); 
+            
+            Invoice invoice = new Invoice(reference, productName, priceI, fecha);
             return objectToJSON(invoice);
         }
     }

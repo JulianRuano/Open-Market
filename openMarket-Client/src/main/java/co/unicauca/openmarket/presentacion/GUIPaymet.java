@@ -11,7 +11,7 @@ import co.unicauca.openmarket.client.infra.Messages;
 import co.unicauca.openmarket.commons.application.Invoice;
 import co.unicauca.openmarket.commons.application.creditCard;
 import co.unicauca.openmarket.commons.domain.Product;
-import javax.swing.table.DefaultTableModel;
+
 
 
 
@@ -20,8 +20,7 @@ public class GUIPaymet extends javax.swing.JFrame {
 
      private int idProduct;
      private ShoppingCar shoppingCart;
-      private GUIPaymet  comprar;
-      DefaultTableModel mModeloTabla = new DefaultTableModel();
+  
       
       
      
@@ -40,8 +39,7 @@ public class GUIPaymet extends javax.swing.JFrame {
         this.lblName.setText(product.getName());
         this.lblDescription.setText(product.getDescription());
         this.lblPrice.setText(String.valueOf(product.getPrice()));
-        
-        
+        this.idProduct = product.getProductId();              
     }
 
    
@@ -335,7 +333,9 @@ public class GUIPaymet extends javax.swing.JFrame {
             String message = ("Producto comprado con éxito "
                              +"\nReferencia: "+result.getReference()
                              +"\nProducto: "+result.getNameProduct()
-                             +"\nTotal: ");
+                             +"\nPrecio: "+result.getPrice()
+                             +"\nFecha: "+result.getFecha()
+                             +"\nTotal: "+result.getTotal());
             
             Messages.showMessageDialog(message, "Atención");
             this.dispose();

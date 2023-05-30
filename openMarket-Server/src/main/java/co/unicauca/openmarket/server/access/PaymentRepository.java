@@ -7,7 +7,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.sql.Types;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -23,7 +25,7 @@ public class PaymentRepository implements IPaymentRepository{
     private Connection conn;
     public boolean connect() {
          try {
-            String url = "jdbc:mysql://162.241.61.245:3306/codoslic_op";
+            String url = "jdbc:mysql://162.241.61.245:3306/codoslic_op?noAccessToProcedureBodies=true";
             Properties props = new Properties();
             props.setProperty("user", "codoslic_user");
             props.setProperty("password", "singlecode4");
@@ -50,7 +52,7 @@ public class PaymentRepository implements IPaymentRepository{
     public String save(String receiptId, String details) {
         try {
             this.connect();
-            String sql = "{CALL InsertReceipt(?, ?)}";
+            String sql = "{CALL InsertReceipt(?, ?, ?)}";
                   
             CallableStatement  pstmt = conn.prepareCall(sql);
             pstmt.setString(1, receiptId);
@@ -58,16 +60,19 @@ public class PaymentRepository implements IPaymentRepository{
             pstmt.registerOutParameter(3, Types.INTEGER);
             pstmt.executeUpdate();
             
-            String createDate = pstmt.getNString(3);
+            Timestamp  createDate = pstmt.getTimestamp(3);                   
+            String formato = "yyyy-MM-dd HH:mm:ss";
+            SimpleDateFormat sdf = new SimpleDateFormat(formato);
+            String fechaString = sdf.format(createDate);
             
             pstmt.close();
             
             this.disconnect();
-            return createDate;
+            return fechaString;
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return "";     
+        return "NONE_BD";     
     }
   
     @Override

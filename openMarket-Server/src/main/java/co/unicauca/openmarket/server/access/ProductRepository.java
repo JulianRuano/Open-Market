@@ -128,16 +128,17 @@ public final class ProductRepository implements IProductRepository {
         try {
             this.connect();
             String sql = "SELECT name,price FROM product"
-                    + "WHERE productId = ?";
+                    + " WHERE productId = ?";
             
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setLong(1, idProduct);
+            pstmt.setInt(1, idProduct);
 
             ResultSet res = pstmt.executeQuery();
 
             if (res.next()) {
+                double price = res.getBigDecimal("price").doubleValue();
                 info.add(res.getString("name"));
-                info.add(res.getDouble("price"));
+                info.add(price);
                 pstmt.close();
                 this.disconnect();             
                 return info;
