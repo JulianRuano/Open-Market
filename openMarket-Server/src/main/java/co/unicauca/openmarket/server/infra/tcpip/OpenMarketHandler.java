@@ -267,11 +267,14 @@ public class OpenMarketHandler extends ServerHandler {
         } else {
             List<Object> productNamePrice = productService.findNamePrice(idProduct);
             String productName = productNamePrice.get(0).toString();
-            double priceI = (double)productNamePrice.get(1);
+            double price = (double)productNamePrice.get(1);           
+            
             String reference = Reference.getReference();
             String fecha = paymentService.save(reference,details); 
             
-            Invoice invoice = new Invoice(reference, productName, priceI, fecha);
+            paymentService.linkProduct(reference, idProduct);
+            
+            Invoice invoice = new Invoice(reference, productName, price, fecha);
             return objectToJSON(invoice);
         }
     }

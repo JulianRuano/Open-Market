@@ -125,7 +125,7 @@ public class CategoryRepository implements ICategoryRepository {
                     + "WHERE categoryId=? ";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, category.getName());
-            pstmt.setLong(2, id);
+            pstmt.setInt(2, id);
             pstmt.executeUpdate();
             this.disconnect();
             return true;
@@ -145,7 +145,7 @@ public class CategoryRepository implements ICategoryRepository {
              String sql = "DELETE FROM category "
                     + "WHERE categoryId = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setLong(1, id);
+            pstmt.setInt(1, id);
             pstmt.executeUpdate();
             this.disconnect();
             return true;
@@ -162,7 +162,7 @@ public class CategoryRepository implements ICategoryRepository {
             String sql = "SELECT * FROM category "
                     + "WHERE categoryId = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setLong(1, id);
+            pstmt.setInt(1, id);
             ResultSet res = pstmt.executeQuery();
 
             if (res.next()) {

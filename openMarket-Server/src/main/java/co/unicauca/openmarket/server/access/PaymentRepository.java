@@ -5,13 +5,10 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.sql.Types;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -74,6 +71,8 @@ public class PaymentRepository implements IPaymentRepository{
         }
         return "NONE_BD";     
     }
+    
+    
   
     @Override
     public Invoice findById(String reference) {
@@ -83,6 +82,25 @@ public class PaymentRepository implements IPaymentRepository{
     @Override
     public Double findPrice(String reference) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public boolean linkProduct(String receiptId, int productId) {
+       try {
+            this.connect();
+            String sql = "INSERT INTO tiene (receiptId, productId)" +
+                            "VALUES (?, ?)" ;
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, receiptId);
+            pstmt.setLong(2, productId);
+            pstmt.executeUpdate();
+            pstmt.close();
+            this.disconnect();
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }   
+    return false;
     }
 
     

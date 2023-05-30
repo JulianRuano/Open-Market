@@ -24,6 +24,10 @@ public class PaymentService {
         return repo.findById(reference);
     }
     
+    public synchronized boolean linkProduct(String receiptId, int productId){
+        return repo.linkProduct(receiptId, productId);
+    }
+    
 
 
   
