@@ -147,6 +147,7 @@ public class CategoryRepository implements ICategoryRepository {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             pstmt.executeUpdate();
+            pstmt.close();
             this.disconnect();
             return true;
         } catch (SQLException e) {
