@@ -767,7 +767,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
             double price = Double.parseDouble(this.txtPrecio.getText());
             String address = this.txtDireccion.getText();
             int stock = Integer.parseInt(txtStock.getText());
-            //Long categoryId=Long.parseLong((String) this.cbxCodigoCategoria.getSelectedItem());
+
             byte[] image = getImagen(Ruta);
 // public Product(int productId, String name, String description, double price,String address ,int categoryId, int stock,byte [] image) {
             Product OProduct = new Product(productId, name, description, price, address, selectedCategoryId, stock, image);
@@ -800,7 +800,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         double price = Double.parseDouble(this.txtPrecio.getText());
         String direccion = txtDescripcion.getText();
         int stock = Integer.parseInt(txtStock.getText());
-        byte[] image = null;
+        byte[] image = getImagen(Ruta);
 
         Product OProduct = new Product(productId, name, description, price, direccion, selectedCategoryId, stock, image);
         OMEditProductCommand comm = new OMEditProductCommand(OProduct, productService);

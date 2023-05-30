@@ -237,7 +237,8 @@ public class OpenMarketHandler extends ServerHandler {
         producto.setAddress(protocolRequest.getParameters().get(4).getValue());
         producto.setCategoryId(Integer.parseInt(protocolRequest.getParameters().get(5).getValue()));
         producto.setStock(Integer.parseInt(protocolRequest.getParameters().get(6).getValue()));
-        producto.setImage(protocolRequest.getParameters().get(7).getValue().getBytes(StandardCharsets.UTF_8));
+        byte[] decodedImage = Base64.getDecoder().decode(protocolRequest.getParameters().get(7).getValue());
+        producto.setImage(decodedImage);
 
         boolean response = productService.edit(producto);
         String respuesta = String.valueOf(response);

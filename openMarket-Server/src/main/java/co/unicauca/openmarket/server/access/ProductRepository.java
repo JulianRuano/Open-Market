@@ -161,18 +161,18 @@ public final class ProductRepository implements IProductRepository {
             this.connect();
 
             String sql = "UPDATE  product "
-                    + "SET name=?, description=?, price=?, address=?, categoryId=?, image=?  "
+                    + "SET name=?, description=?, price=?, address=?, categoryId=?, stock=?, image=?  "
                     + "WHERE productId = ?";
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setLong(1, newProduct.getProductId());
-                pstmt.setString(2, newProduct.getName());
-                pstmt.setString(3, newProduct.getDescription());
-                pstmt.setDouble(4, newProduct.getPrice());
-                pstmt.setString(5, newProduct.getAddress());
-                pstmt.setLong(6, newProduct.getCategoryId());
-                pstmt.setLong(7, newProduct.getStock());
-                pstmt.setBytes(8, newProduct.getImage());
+                pstmt.setString(1, newProduct.getName());
+                pstmt.setString(2, newProduct.getDescription());
+                pstmt.setDouble(3, newProduct.getPrice());
+                pstmt.setString(4, newProduct.getAddress());
+                pstmt.setInt(5, newProduct.getCategoryId());
+                pstmt.setInt(6, newProduct.getStock());
+                pstmt.setBytes(7, newProduct.getImage());
+                pstmt.setInt(8, newProduct.getProductId());
                 pstmt.executeUpdate();
             }
             this.disconnect();

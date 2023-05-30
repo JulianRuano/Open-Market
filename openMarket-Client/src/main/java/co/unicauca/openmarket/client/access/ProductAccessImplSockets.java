@@ -389,7 +389,12 @@ public class ProductAccessImplSockets implements IProductAccess {
         protocol.addParameter("address", product.getAddress());
         protocol.addParameter("CategoryId",Integer.toString(product.getCategoryId()));
         protocol.addParameter("stock", Integer.toString(product.getStock()));
-        protocol.addParameter("image", Arrays.toString(product.getImage()));
+        
+        byte[] byteArray = product.getImage()/* Tu arreglo de bytes de la imagen */;
+        String encodedImage = Base64.getEncoder().encodeToString(byteArray);      
+        protocol.addParameter("image", encodedImage);
+        
+
         
         Gson gson=new Gson();
         String requestJson = gson.toJson(protocol);
