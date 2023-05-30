@@ -160,16 +160,14 @@ public class CategoryRepository implements ICategoryRepository {
     public Category findById(int id) {
         try {
             this.connect();
-            String sql = "SELECT * FROM category "
-                    + "WHERE categoryId = ?";
+            String sql = "{CALL obtener_categoria(?)}";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, id);
             ResultSet res = pstmt.executeQuery();
-
             if (res.next()) {
                 Category cat = new Category();
-                cat.setCategoryId(res.getInt("categoryId"));
-                cat.setName(res.getString("name"));                 
+                cat.setCategoryId(res.getInt("id"));
+                cat.setName(res.getString("nombre"));                 
                 this.disconnect();
                 return cat;
             } else {
