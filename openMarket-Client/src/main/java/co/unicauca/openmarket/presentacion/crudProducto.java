@@ -47,7 +47,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
      * Creates new form crudProducto
      */
     private ProductService productService;
-    private boolean addOption;
+    private int addOption;
     private OMInvoker ominvoker;
     private CategoryService categoryService;
     private ValidadorCampos validarCampos;
@@ -108,33 +108,100 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
                 }
         ));
     }
+    
+    private void stateDelete(){
+        lblCodigoProducto.setVisible(true);
+        txtCodigoProducto.setVisible(true);
+        btnNuevo.setVisible(false);
+        btnEditar.setVisible(false);
+        btnEliminar.setVisible(false);
+        btnCancelar.setVisible(true);
+        btnGuardar.setVisible(true);
+        btnDeshacer.setVisible(false);
+        btnRehacer.setVisible(false);
+    }
 
     private void stateEdit() {
         btnNuevo.setVisible(false);
         btnEditar.setVisible(false);
-        btnEliminar.setVisible(true);
+        btnEliminar.setVisible(false);
         btnCancelar.setVisible(true);
         btnGuardar.setVisible(true);
-        btnBuscar.setVisible(false);
-        txtCodigoProducto.setEnabled(true);
-        txtNombre.setEnabled(true);
-        txtDescripcion.setEnabled(true);
-        txtDescripcion.setEnabled(true);
-        cbxCodigoCategoria.setEnabled(true);
+        lblCodigoCategoria.setVisible(true);
+        lblCodigoProducto.setVisible(true);
+        lblDireccion.setVisible(true);
+        lblExaminar2.setVisible(true);
+        lblNombre.setVisible(true);
+        lblPrecio.setVisible(true);
+        lblStock.setVisible(true);
+        lblDescripcion.setVisible(true);
+        txtCodigoProducto.setVisible(true);
+        txtNombre.setVisible(true);
+        txtPrecio.setVisible(true);
+        txtDireccion.setVisible(true);
+        txtDescripcion.setVisible(true);
+        txtStock.setVisible(true);
+        cbxCodigoCategoria.setVisible(true);
+        btnExaminar.setVisible(true);
+        btnDeshacer.setVisible(false);
+        btnRehacer.setVisible(false);
+    }
+    
+    private void stateNew() {
+        btnNuevo.setVisible(false);
+        btnEditar.setVisible(false);
+        btnEliminar.setVisible(false);
+        btnCancelar.setVisible(true);
+        btnGuardar.setVisible(true);
+        lblCodigoCategoria.setVisible(true);
+        lblDireccion.setVisible(true);
+        lblExaminar2.setVisible(true);
+        lblNombre.setVisible(true);
+        lblPrecio.setVisible(true);
+        lblStock.setVisible(true);
+        lblDescripcion.setVisible(true);
+        txtNombre.setVisible(true);
+        txtPrecio.setVisible(true);
+        txtDireccion.setVisible(true);
+        txtDescripcion.setVisible(true);
+        txtStock.setVisible(true);
+        cbxCodigoCategoria.setVisible(true);
+        btnExaminar.setVisible(true);
+        btnDeshacer.setVisible(false);
+        btnRehacer.setVisible(false);
+    }
+
+    private void cleanControls() {
+        txtCodigoProducto.setText("");
+        txtNombre.setText("");
+        txtDescripcion.setText("");
+        txtPrecio.setText("");
+        txtDireccion.setText("");
+        cbxCodigoCategoria.setToolTipText("");
     }
 
     private void stateInitial() {
         btnNuevo.setVisible(true);
         btnEditar.setVisible(true);
-        btnEliminar.setVisible(false);
+        btnEliminar.setVisible(true);
         btnCancelar.setVisible(false);
         btnGuardar.setVisible(false);
-        btnBuscar.setVisible(true);
-        txtCodigoProducto.setEnabled(false);
-        txtNombre.setEnabled(false);
-        txtDescripcion.setEnabled(false);
-        txtDescripcion.setEnabled(false);
-        cbxCodigoCategoria.setEnabled(false);
+        lblCodigoCategoria.setVisible(false);
+        lblCodigoProducto.setVisible(false);
+        lblDireccion.setVisible(false);
+        lblExaminar2.setVisible(false);
+        lblNombre.setVisible(false);
+        lblPrecio.setVisible(false);
+        lblStock.setVisible(false);
+        lblDescripcion.setVisible(false);
+        txtCodigoProducto.setVisible(false);
+        txtNombre.setVisible(false);
+        txtPrecio.setVisible(false);
+        txtDireccion.setVisible(false);
+        txtDescripcion.setVisible(false);
+        txtStock.setVisible(false);
+        cbxCodigoCategoria.setVisible(false);
+        btnExaminar.setVisible(false);
         btnDeshacer.setVisible(ominvoker.hasMoreCommands());
         btnRehacer.setVisible(ominvoker.hasMoreCommandsRedo());
     }
@@ -218,7 +285,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         pnlCrudpProducto = new javax.swing.JPanel();
         lblCodigoProducto = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblDescripcion = new javax.swing.JLabel();
         lblPrecio = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         txtCodigoProducto = new javax.swing.JTextField();
@@ -255,7 +322,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
 
         lblNombre.setText("Nombre");
 
-        jLabel3.setText("Descripcion");
+        lblDescripcion.setText("Descripcion");
 
         lblPrecio.setText("Precio");
 
@@ -369,21 +436,21 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         pnlSeccionBotonesLayout.setHorizontalGroup(
             pnlSeccionBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSeccionBotonesLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addGap(25, 25, 25)
                 .addComponent(btnNuevo)
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEditar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGuardar)
-                .addGap(28, 28, 28)
-                .addComponent(btnDeshacer)
-                .addGap(30, 30, 30)
-                .addComponent(btnRehacer)
-                .addGap(33, 33, 33)
-                .addComponent(btnCancelar)
-                .addGap(41, 41, 41)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEliminar)
-                .addContainerGap(248, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnDeshacer)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRehacer)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnGuardar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCancelar)
+                .addContainerGap(365, Short.MAX_VALUE))
         );
         pnlSeccionBotonesLayout.setVerticalGroup(
             pnlSeccionBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,7 +482,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
                         .addComponent(txtNombre)
                         .addComponent(lblCodigoCategoria)
                         .addComponent(lblDireccion)
-                        .addComponent(jLabel3)
+                        .addComponent(lblDescripcion)
                         .addComponent(lblNombre)
                         .addComponent(lblCodigoProducto)
                         .addComponent(txtCodigoProducto)
@@ -496,7 +563,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
                         .addGap(6, 6, 6)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
+                        .addComponent(lblDescripcion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -532,8 +599,8 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         stateNew();
-        this.txtCodigoProducto.requestFocus();
-        addOption = true;
+        this.txtNombre.requestFocus();
+        addOption = 1;
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -543,86 +610,38 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
 
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        System.err.println(selectedCategoryId);
-        List<MensajesError> errores = validarFormulario.validar(txtCodigoProducto, txtNombre, txtDescripcion,
-                txtPrecio, txtStock, txtDireccion, selectedCategoryId);
-
-        if (!errores.isEmpty()) {
-            String mensajeError = "Debe ingresar el/los siguiente(s) campo(s):\n";
-            for (MensajesError mensaje : errores) {
-                mensajeError += mensaje.getMensaje() + "\n";
-            }
-            Messages.showMessageDialog(mensajeError, "Atención");
-
-            // Coloca el foco en el primer campo con error
-            switch (errores.get(0)) {
-                case CODIGO_PRODUCTO:
-                    txtCodigoProducto.requestFocus();
-                    break;
-                case NOMBRE_PRODUCTO:
-                    txtNombre.requestFocus();
-                    break;
-                case DESCRIPCION_PRODUCTO:
-                    txtDescripcion.requestFocus();
-                    break;
-                case PRECIO_PRODUCTO:
-                    txtPrecio.requestFocus();
-                    break;
-                case STOCK_PRODUCTO:
-                    txtStock.requestFocus();
-                    break;
-                case CATEGORIA_PRODUCTO:
-                    cbxCodigoCategoria.requestFocus();
-                    break;
-                case DIRECCION_PRODUCTO:
-                    txtDireccion.requestFocus();
-                    break;
-                // Resto de los casos
-            }
-
-            return;
-
-        }
-        if (addOption) {
+        if (addOption == 1) {
             //Agregar
+            if(!validarCampos()){
+                return;
+            }
             addProduct();
 
-        } else {
+        } else if(addOption == 2){
             //Editar
+            if(!validarCampos()){
+                return;
+            }
             editProduct();
+        }else{
+            //Eliminar
+            if (!validarId(txtCodigoProducto)) {
+                return;
+            }
+            deleteProduct();
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        addOption = false;
+        addOption = 2;
         stateEdit();
         txtCodigoProducto.requestFocus();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        try {
-            String id = txtCodigoProducto.getText().trim();
-            if (id.equals("")) {
-                Messages.showMessageDialog("Debe buscar el producto a eliminar", "Atención");
-                txtCodigoProducto.requestFocus();
-                return;
-            }
-            Integer productId = Integer.valueOf(id);
-            OMDeleteProductCommand comm = new OMDeleteProductCommand(productId, productService);
-            ominvoker.addCommand(comm);
-            ominvoker.execute();
-
-            if (Messages.showConfirmDialog("Está seguro que desea eliminar este producto?", "Confirmación") == JOptionPane.YES_NO_OPTION) {
-                if (comm.result()) {
-                    Messages.showMessageDialog("Producto eliminado con éxito", "Atención");
-                    stateInitial();
-                    cleanControls();
-                }
-            }
-        } catch (Exception ex) {
-            successMessage(ex.getMessage(), "Atención");
-        }
-
+        addOption = 3;
+        stateDelete();
+        txtCodigoProducto.requestFocus();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacerActionPerformed
@@ -716,10 +735,10 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
     private javax.swing.JButton btnRehacer;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbxCodigoCategoria;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCodigoCategoria;
     private javax.swing.JLabel lblCodigoProducto;
+    private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblDireccion;
     private javax.swing.JLabel lblExaminar2;
     private javax.swing.JLabel lblNombre;
@@ -739,31 +758,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
     private javax.swing.JTextField txtPrecio;
     private javax.swing.JTextField txtStock;
     // End of variables declaration//GEN-END:variables
-
-    private void stateNew() {
-        btnNuevo.setVisible(false);
-        btnEditar.setVisible(false);
-        btnEliminar.setVisible(false);
-        btnCancelar.setVisible(true);
-        btnGuardar.setVisible(true);
-        btnBuscar.setVisible(false);
-        txtCodigoProducto.setEnabled(true);
-        txtNombre.setEnabled(true);
-        txtDescripcion.setEnabled(true);
-        txtPrecio.setVisible(true);
-        cbxCodigoCategoria.setEnabled(true);
-        btnDeshacer.setVisible(ominvoker.hasMoreCommands());
-        btnRehacer.setVisible(ominvoker.hasMoreCommandsRedo());
-    }
-
-    private void cleanControls() {
-        txtCodigoProducto.setText("");
-        txtNombre.setText("");
-        txtDescripcion.setText("");
-        txtPrecio.setText("");
-        txtDireccion.setText("");
-        cbxCodigoCategoria.setToolTipText("");
-    }
 
     private void addProduct() {
         try {
@@ -825,6 +819,93 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
             successMessage(ex.getMessage(), "Atención");
         }
 
+    }
+    
+    private void deleteProduct(){
+        try {
+            String id = txtCodigoProducto.getText().trim();
+            if (id.equals("")) {
+                Messages.showMessageDialog("Debe buscar el producto a eliminar", "Atención");
+                txtCodigoProducto.requestFocus();
+                return;
+            }
+            Integer productId = Integer.valueOf(id);
+            OMDeleteProductCommand comm = new OMDeleteProductCommand(productId, productService);
+            ominvoker.addCommand(comm);
+            ominvoker.execute();
+
+            if (Messages.showConfirmDialog("Está seguro que desea eliminar este producto?", "Confirmación") == JOptionPane.YES_NO_OPTION) {
+                if (comm.result()) {
+                    Messages.showMessageDialog("Producto eliminado con éxito", "Atención");
+                    stateInitial();
+                    cleanControls();
+                }
+            }
+        } catch (Exception ex) {
+            successMessage(ex.getMessage(), "Atención");
+        }
+    }
+    
+    private boolean validarId(javax.swing.JTextField caja) {
+        if (caja.getText().isEmpty()) {
+            Messages.showMessageDialog("Debe ingresar el codigo del producto", "Atención");
+            caja.requestFocus();
+            return false;
+        }
+        if (!validarNumeros(caja.getText().trim())) {
+            Messages.showMessageDialog("El codigo debe ser numeros", "Error");
+            caja.setText("");
+            caja.requestFocus();
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean validarCampos(){
+        System.err.println(selectedCategoryId);
+        List<MensajesError> errores = validarFormulario.validar(txtCodigoProducto, txtNombre, txtDescripcion,
+                txtPrecio, txtStock, txtDireccion, selectedCategoryId);
+
+        if (!errores.isEmpty()) {
+            String mensajeError = "Debe ingresar el/los siguiente(s) campo(s):\n";
+            for (MensajesError mensaje : errores) {
+                mensajeError += mensaje.getMensaje() + "\n";
+            }
+            Messages.showMessageDialog(mensajeError, "Atención");
+
+            // Coloca el foco en el primer campo con error
+            switch (errores.get(0)) {
+                case CODIGO_PRODUCTO:
+                    txtCodigoProducto.requestFocus();
+                    break;
+                case NOMBRE_PRODUCTO:
+                    txtNombre.requestFocus();
+                    break;
+                case DESCRIPCION_PRODUCTO:
+                    txtDescripcion.requestFocus();
+                    break;
+                case PRECIO_PRODUCTO:
+                    txtPrecio.requestFocus();
+                    break;
+                case STOCK_PRODUCTO:
+                    txtStock.requestFocus();
+                    break;
+                case CATEGORIA_PRODUCTO:
+                    cbxCodigoCategoria.requestFocus();
+                    break;
+                case DIRECCION_PRODUCTO:
+                    txtDireccion.requestFocus();
+                    break;
+                // Resto de los casos
+            }
+
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean validarNumeros(String datos) {
+        return datos.matches("[0-9]*");
     }
 
     private void Limpiar() {
