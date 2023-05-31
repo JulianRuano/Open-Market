@@ -26,6 +26,7 @@ public class Dashboard extends javax.swing.JFrame {
     private final ShoppingCar shoppingCart;
     private final UserService userService;
     private GUILogin instance;
+    private MisCompras misCompras;
     private final OMInvoker ominvokerCategorias;
     private final OMInvoker ominvokerProducts;
     
@@ -38,6 +39,7 @@ public class Dashboard extends javax.swing.JFrame {
          this.shoppingCart=shoppingCart;
          this.userService=userService;
          instance=new GUILogin(userService);
+         misCompras=new MisCompras();
          ominvokerCategorias = new OMInvoker();
          ominvokerProducts=new OMInvoker();
     }
@@ -69,6 +71,7 @@ public class Dashboard extends javax.swing.JFrame {
         btnProducto = new javax.swing.JButton();
         btnComprar = new javax.swing.JButton();
         btnUsuarios = new javax.swing.JButton();
+        btnCompras = new javax.swing.JButton();
         pnlHeader = new javax.swing.JPanel();
         lblTituloHeader = new javax.swing.JLabel();
         btnIniciarSesion = new javax.swing.JButton();
@@ -131,6 +134,13 @@ public class Dashboard extends javax.swing.JFrame {
         btnUsuarios.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnUsuarios.setIconTextGap(10);
 
+        btnCompras.setText("Mis Compras");
+        btnCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComprasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBarraLateralLayout = new javax.swing.GroupLayout(pnlBarraLateral);
         pnlBarraLateral.setLayout(pnlBarraLateralLayout);
         pnlBarraLateralLayout.setHorizontalGroup(
@@ -139,6 +149,10 @@ public class Dashboard extends javax.swing.JFrame {
             .addComponent(btnCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
             .addComponent(btnComprar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnUsuarios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlBarraLateralLayout.createSequentialGroup()
+                .addGap(97, 97, 97)
+                .addComponent(btnCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlBarraLateralLayout.setVerticalGroup(
             pnlBarraLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -151,6 +165,8 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59)
+                .addComponent(btnCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -260,6 +276,10 @@ public class Dashboard extends javax.swing.JFrame {
          instance.setVisible(true);
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
+    private void btnComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprasActionPerformed
+       misCompras.setVisible(true); 
+    }//GEN-LAST:event_btnComprasActionPerformed
+
 
    
 
@@ -267,6 +287,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel background;
     private javax.swing.JButton btnCategoria;
     private javax.swing.JButton btnComprar;
+    private javax.swing.JButton btnCompras;
     private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JButton btnProducto;
     private javax.swing.JButton btnUsuarios;
