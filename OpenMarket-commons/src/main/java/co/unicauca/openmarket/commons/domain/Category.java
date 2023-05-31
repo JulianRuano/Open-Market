@@ -10,7 +10,7 @@ package co.unicauca.openmarket.commons.domain;
  * @author brayan
  */
 public class Category {
-    private int categoryId;
+    private Integer categoryId;
     private String name;
     
     public Category(int categoryId, String name) {
@@ -20,11 +20,11 @@ public class Category {
     public Category() {
     }
 
-    public int getCategoryId() {
+    public Integer getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(int categoryId) {
+    public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
     }
 

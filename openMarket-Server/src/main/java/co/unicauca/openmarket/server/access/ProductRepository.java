@@ -1,6 +1,5 @@
 package co.unicauca.openmarket.server.access;
 
-
 import co.unicauca.openmarket.commons.domain.Product;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -16,11 +15,10 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public final class ProductRepository implements IProductRepository {
-    
+
     public ProductRepository() {
-        
+
     }
 
     private Connection conn;
@@ -28,22 +26,22 @@ public final class ProductRepository implements IProductRepository {
     private final String user = "codoslic_user";
     private final String password = "singlecode4";
 
-    
     public boolean connect() {
-         try {
+        try {
             String url = "jdbc:mysql://162.241.61.245:3306/codoslic_op?noAccessToProcedureBodies=true";
             Properties props = new Properties();
             props.setProperty("user", "codoslic_user");
             props.setProperty("password", "singlecode4");
-            this.conn = DriverManager.getConnection(url, props);         
-            
-             System.out.println("Conexion exitosa a la base de datos");
+            this.conn = DriverManager.getConnection(url, props);
+
+            System.out.println("Conexion exitosa a la base de datos");
             return conn != null;
         } catch (Exception e) {
-            System.out.println("Error"+e);
+            System.out.println("Error" + e);
             return false;
         }
     }
+
     public void disconnect() {
         try {
             if (conn != null) {
@@ -76,14 +74,14 @@ public final class ProductRepository implements IProductRepository {
                 pstmt.setBytes(7, newProduct.getImage());
                 pstmt.registerOutParameter(8, Types.INTEGER);
                 pstmt.executeUpdate();
-                
+
                 int productId = pstmt.getInt(8);
-                
+
                 pstmt.close();
                 this.disconnect();
-                return productId;  
+                return productId;
             }
-                          
+
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -121,7 +119,6 @@ public final class ProductRepository implements IProductRepository {
         return products;
     }
 
-    
     @Override
     public List<Object> findNamePrice(int idProduct) {
         List<Object> info = new ArrayList<>();
@@ -129,7 +126,7 @@ public final class ProductRepository implements IProductRepository {
             this.connect();
             String sql = "SELECT name,price FROM product"
                     + " WHERE productId = ?";
-            
+
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, idProduct);
 
@@ -140,22 +137,21 @@ public final class ProductRepository implements IProductRepository {
                 info.add(res.getString("name"));
                 info.add(price);
                 pstmt.close();
-                this.disconnect();             
+                this.disconnect();
                 return info;
-            }           
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.disconnect();
         return null;
     }
-    
 
     @Override
     public boolean edit(Product newProduct) {
         try {
             //Validate product
-            if (newProduct.getProductId()<= 0 || newProduct == null) {
+            if (newProduct.getProductId() <= 0 || newProduct == null) {
                 return false;
             }
             this.connect();
@@ -214,7 +210,7 @@ public final class ProductRepository implements IProductRepository {
             this.connect();
             String sql = "SELECT * FROM product  "
                     + "WHERE productId = ?";
-            
+
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setLong(1, id);
 
@@ -231,10 +227,9 @@ public final class ProductRepository implements IProductRepository {
                 newProduct.setStock(res.getInt("stock"));
                 newProduct.setImage(res.getBytes("image"));
                 pstmt.close();
-                this.disconnect();             
+                this.disconnect();
                 return newProduct;
-            } 
-            
+            }
 
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
@@ -242,7 +237,6 @@ public final class ProductRepository implements IProductRepository {
         this.disconnect();
         return null;
     }
-    
 
     @Override
     public List<Product> findByName(String pname) {
@@ -288,37 +282,89 @@ public final class ProductRepository implements IProductRepository {
         }
     }
 
-  
     @Override
     public List<Product> findByCategory(int categoryId) {
         List<Product> products = new ArrayList<>();
-        try {                  
-                this.connect();
+        try {
+            this.connect();
+            String productSql = "SELECT * FROM product WHERE categoryId = ?";
+            PreparedStatement pstmt = conn.prepareStatement(productSql);
+            pstmt.setLong(1, categoryId);
+            ResultSet res = pstmt.executeQuery();
 
-                String productSql = "SELECT * FROM product WHERE categoryId = ?";
-                PreparedStatement pstmt = conn.prepareStatement(productSql);
-                pstmt.setLong(1, categoryId);
-                ResultSet res = pstmt.executeQuery();
+            while (res.next()) {
+                Product newProduct = new Product();
+                newProduct.setProductId(res.getInt("productId"));
+                newProduct.setName(res.getString("name"));
+                newProduct.setDescription(res.getString("description"));
+                newProduct.setPrice(res.getDouble("price"));
+                newProduct.setAddress(res.getString("address"));
+                newProduct.setCategoryId(res.getInt("categoryId"));
+                newProduct.setStock(res.getInt("stock"));
+                newProduct.setImage(res.getBytes("image"));
+                products.add(newProduct);
+            }
+            pstmt.close();
 
-                while (res.next()) {
-                    Product newProduct = new Product();
-                    newProduct.setProductId(res.getInt("productId"));
-                    newProduct.setName(res.getString("name"));
-                    newProduct.setDescription(res.getString("description"));
-                    newProduct.setPrice(res.getDouble("price"));
-                    newProduct.setAddress(res.getString("address"));
-                    newProduct.setCategoryId(res.getInt("categoryId"));
-                    newProduct.setStock(res.getInt("stock"));
-                    newProduct.setImage(res.getBytes("image"));
-                    products.add(newProduct);
-                }   
-                pstmt.close();
-           
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.disconnect();
         return products;
     }
+
+    @Override
+    public List<Product> filterProducts(String prodName, Integer categoryId, Double minPrice, Double maxPrice) {
+    List<Product> products = new ArrayList<>();
+
+    try {
+        this.connect();
+        String sql = "{CALL FilterProducts(?,?,?,?)}";
+        CallableStatement cstmt = conn.prepareCall(sql);
+
+        if (prodName != null) {
+            cstmt.setString(1, prodName);
+        } else {
+            cstmt.setNull(1, Types.VARCHAR);
+        }
+
+        if (categoryId != null) {
+            cstmt.setInt(2, categoryId);
+        } else {
+            cstmt.setNull(2, Types.INTEGER);
+        }
+
+        if (minPrice != null) {
+            cstmt.setDouble(3, minPrice);
+        } else {
+            cstmt.setNull(3, Types.DOUBLE);
+        }
+
+        if (maxPrice != null) {
+            cstmt.setDouble(4, maxPrice);
+        } else {
+            cstmt.setNull(4, Types.DOUBLE);
+        }
+
+        ResultSet res = cstmt.executeQuery();
+        while (res.next()) {
+            Product newProduct = new Product();
+            newProduct.setProductId(res.getInt("productId"));
+            newProduct.setName(res.getString("name"));
+            newProduct.setDescription(res.getString("description"));
+            newProduct.setPrice(res.getDouble("price"));
+            newProduct.setAddress(res.getString("address"));
+            newProduct.setCategoryId(res.getInt("categoryId"));
+            newProduct.setStock(res.getInt("stock"));
+            newProduct.setImage(res.getBytes("image"));
+            products.add(newProduct);
+        }
+        cstmt.close();
+        this.disconnect();
+    } catch (SQLException ex) {
+        Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return products;
+}
 
 }

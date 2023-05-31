@@ -2,7 +2,7 @@ package co.unicauca.openmarket.commons.domain;
 
 
 public class Product {
-    private int productId;
+    private Integer productId;
     private String name;    
     private String description; 
     private double price;
@@ -12,7 +12,7 @@ public class Product {
     private byte [] image;
     
     
-    public Product(int productId, String name, String description, double price,String address ,int categoryId, int stock,byte [] image) {
+    public Product(Integer productId, String name, String description, double price,String address ,int categoryId, int stock,byte [] image) {
         this.productId = productId;
         this.name = name;
         this.description = description;
@@ -51,7 +51,7 @@ public class Product {
         this.image = image;
     }
     
-    public int getProductId() {
+    public Integer getProductId() {
         return productId;
     }
 

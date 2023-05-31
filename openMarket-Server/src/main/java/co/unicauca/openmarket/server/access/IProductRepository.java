@@ -23,6 +23,7 @@ public interface IProductRepository {
    List<Product> findByCategory(int categoryName);
    List<Product> findAll();
    List<Object> findNamePrice(int idProduct);
+   List<Product> filterProducts(String prodName,Integer categoryId,Double minPrice,Double maxPrice);
         
 
 }

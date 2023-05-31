@@ -15,6 +15,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -30,34 +32,30 @@ public class Tienda extends javax.swing.JPanel {
     /**
      * Creates new form Tienda
      */
-     DefaultTableModel mModeloTabla = new DefaultTableModel();
-    
-    
+    DefaultTableModel mModeloTabla = new DefaultTableModel();
+
     private final ProductService productService;
     private final GUIPaymet compra;
     private PresentacionHelpers presHelpers;
     private CategoryService categoryService;
- 
-    
-    public Tienda(ProductService productService,ShoppingCar shoppingCart,CategoryService categoryService) {
-       initComponents();
-       this.productService=productService;
-       this.categoryService=categoryService;
-        mModeloTabla.addColumn("ID");
+
+    public Tienda(ProductService productService, ShoppingCar shoppingCart, CategoryService categoryService) {
+        initComponents();
+        this.productService = productService;
+        this.categoryService = categoryService;
         mModeloTabla.addColumn("Nombre");
         mModeloTabla.addColumn("Descripcion");
         mModeloTabla.addColumn("Precio");
         mModeloTabla.addColumn("Direccion");
-        mModeloTabla.addColumn("ID categoria");
+        mModeloTabla.addColumn("Categoria");
         mModeloTabla.addColumn("Imagen");
-        presHelpers= new PresentacionHelpers();
+        presHelpers = new PresentacionHelpers();
         presHelpers.loadCategories(cbxCategories, categoryService);
-        tblProductos.setModel(mModeloTabla); 
+        tblProductos.setModel(mModeloTabla);
         compra = new GUIPaymet(shoppingCart);
 
     }
 
-   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -74,8 +72,8 @@ public class Tienda extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtNombre1 = new javax.swing.JTextField();
-        txtNombre2 = new javax.swing.JTextField();
+        txtMaxPrice = new javax.swing.JTextField();
+        txtMinPrice = new javax.swing.JTextField();
 
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -126,7 +124,7 @@ public class Tienda extends javax.swing.JPanel {
                                 .addGap(65, 65, 65)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel4)
-                                    .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtMinPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(82, 82, 82)
@@ -136,7 +134,7 @@ public class Tienda extends javax.swing.JPanel {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(67, 67, 67)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtMaxPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5)))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(191, 191, 191)
@@ -161,8 +159,8 @@ public class Tienda extends javax.swing.JPanel {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNombre2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMinPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMaxPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -205,35 +203,54 @@ public class Tienda extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-          try{
-              fillTable( productService.findProductsByName(this.txtBuscar.getText()));
-          }catch(NullPointerException ex){
-               JOptionPane.showMessageDialog(null,
-                "Envia la informacion correspondiente",
-                "Error tipo de dato",
+    DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
+    model.setRowCount(0);
+     String prodName = txtNombre.getText();
+    if ( txtNombre.getText().isEmpty()) {
+        prodName = null; 
+    }
+    Double minPrice = null;
+
+    if (!txtMinPrice.getText().isEmpty()) {
+        minPrice = Double.valueOf(  txtMinPrice.getText());
+    }
+    
+    Double maxPrice = null;
+
+    if (!txtMaxPrice.getText().isEmpty()) {
+        maxPrice = Double.valueOf(  txtMaxPrice.getText());
+    }
+    
+
+    
+    try {
+        fillTable(productService.filterProducts(prodName, presHelpers.selectedCategoryId, minPrice, maxPrice));
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null,
+                e.getMessage(),
+                "Ocurrió un error al buscar los productos",
                 JOptionPane.ERROR_MESSAGE);
-          }catch(Exception e){
-               successMessage(e.getMessage(), "Atención"); 
-              JOptionPane.showMessageDialog(null,
-                "Seleccione por el dato que quiere buscar",
-                "Error al introducir el dato",
-                JOptionPane.ERROR_MESSAGE);
-          }
-        
+    }
+
     }//GEN-LAST:event_btnBuscarActionPerformed
-     private void fillTable(List<Product> listProducts) {
+    private void fillTable(List<Product> listProducts) {
         tblProductos.setDefaultRenderer(Object.class, new RenderImagen());
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
 
-        Object rowData[] = new Object[8];//No columnas
+        Object rowData[] = new Object[6];//No columnas
         for (int i = 0; i < listProducts.size(); i++) {
-            rowData[0] = listProducts.get(i).getProductId();
-            rowData[1] = listProducts.get(i).getName();
-            rowData[2] = listProducts.get(i).getDescription();
-            rowData[3] = listProducts.get(i).getPrice();
-            rowData[4] = listProducts.get(i).getAddress();
-            rowData[5] = listProducts.get(i).getCategoryId();
-             rowData[6] = listProducts.get(i).getStock();
+            rowData[0] = listProducts.get(i).getName();
+            rowData[1] = listProducts.get(i).getDescription();
+            rowData[2] = listProducts.get(i).getPrice();
+            rowData[3] = listProducts.get(i).getAddress();
+            try {
+                String catName=categoryService.findCategoryById(listProducts.get(i).getCategoryId()).getName();
+                        rowData[4] = catName;
+            } catch (Exception ex) {
+                Logger.getLogger(Tienda.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    
+            
 
             try {
                 byte[] imagen = listProducts.get(i).getImage();
@@ -241,9 +258,9 @@ public class Tienda extends javax.swing.JPanel {
                 InputStream inputStream = new ByteArrayInputStream(imagen);
                 bufferedImage = ImageIO.read(inputStream);
                 ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(80, 80, 0));
-                rowData[7] = new JLabel(mIcono);
+                rowData[5] = new JLabel(mIcono);
             } catch (Exception e) {
-                rowData[7] = new JLabel("No imagen");
+                rowData[5] = new JLabel("No imagen");
             }
 
             model.addRow(rowData);
@@ -254,7 +271,7 @@ public class Tienda extends javax.swing.JPanel {
         tblProductos.getColumnModel().getColumn(1).setPreferredWidth(80);
         tblProductos.getColumnModel().getColumn(2).setPreferredWidth(80);
     }
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -268,8 +285,8 @@ public class Tienda extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlTienda;
     private javax.swing.JTable tblProductos;
+    private javax.swing.JTextField txtMaxPrice;
+    private javax.swing.JTextField txtMinPrice;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtNombre1;
-    private javax.swing.JTextField txtNombre2;
     // End of variables declaration//GEN-END:variables
 }

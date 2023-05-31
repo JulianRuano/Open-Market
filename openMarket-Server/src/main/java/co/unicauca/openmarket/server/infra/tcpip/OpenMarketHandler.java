@@ -11,6 +11,7 @@ import co.unicauca.openmarket.commons.application.creditCard;
 import co.unicauca.openmarket.commons.domain.Category;
 import co.unicauca.openmarket.commons.domain.Product;
 import co.unicauca.openmarket.commons.domain.User;
+import co.unicauca.openmarket.commons.infra.Parameter;
 import co.unicauca.openmarket.commons.infra.Protocol;
 import co.unicauca.openmarket.domain.services.CategoryService;
 import co.unicauca.strategyserver.infra.ServerHandler;
@@ -24,6 +25,7 @@ import co.unicauca.openmarket.server.infra.Helpers;
 import com.google.gson.Gson;
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -113,6 +115,10 @@ public class OpenMarketHandler extends ServerHandler {
                     // Editar un producto
                     response = processListAllProduct();
                 }
+
+                if (protocolRequest.getAction().equals("filterProducts")) {
+                    response = processFilterProducts(protocolRequest);
+                }
                 break;
             }
             case "shoppingCart" -> {
@@ -121,7 +127,7 @@ public class OpenMarketHandler extends ServerHandler {
                     response = processBuyProduct(protocolRequest);
                 }
             }
-            case "user"->{
+            case "user" -> {
                 if (protocolRequest.getAction().equals("get")) {
                     // Petecion de usuario
                     response = processUserLogin(protocolRequest);
@@ -207,7 +213,7 @@ public class OpenMarketHandler extends ServerHandler {
         int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         Product producto = productService.findById(id);
         if (producto == null) {
-           return helpers.generateNotFoundErrorJson(Context.PRODUCT);
+            return helpers.generateNotFoundErrorJson(Context.PRODUCT);
         } else {
             return objectToJSON(producto);
         }
@@ -258,12 +264,11 @@ public class OpenMarketHandler extends ServerHandler {
         String month = protocolRequest.getParameters().get(4).getValue();
         String year = protocolRequest.getParameters().get(5).getValue();
 
-        
         // Contruiomos los objectos      
-        PaymentHandler paymentHandler = new PaymentHandler();      
+        PaymentHandler paymentHandler = new PaymentHandler();
         creditCard paymentDetails = new creditCard(nameOnCard, cardNumber, CVC, month, year);
         String details = paymentDetails.getDetails();
-        CreditCardPayment creditCardPayment  = new CreditCardPayment();
+        CreditCardPayment creditCardPayment = new CreditCardPayment();
         paymentHandler.setPaymentStrategy(creditCardPayment);
 
         if (!paymentHandler.processPayment(details)) {
@@ -271,11 +276,11 @@ public class OpenMarketHandler extends ServerHandler {
         } else {
             List<Object> productNamePrice = productService.findNamePrice(idProduct);
             String productName = productNamePrice.get(0).toString();
-            double price = (double)productNamePrice.get(1);           
-            
+            double price = (double) productNamePrice.get(1);
+
             String reference = Reference.getReference();
-            paymentService.save(reference,details);            
-            paymentService.linkProduct(reference, idProduct);        
+            paymentService.save(reference, details);
+            paymentService.linkProduct(reference, idProduct);
             Invoice invoice = paymentService.findById(reference);
             return objectToJSON(invoice);
         }
@@ -302,7 +307,7 @@ public class OpenMarketHandler extends ServerHandler {
     public void setCategoryService(CategoryService service) {
         categoryService = service;
     }
-    
+
     public void setPaymentService(PaymentService service) {
         paymentService = service;
     }
@@ -311,10 +316,9 @@ public class OpenMarketHandler extends ServerHandler {
         return userService;
     }
 
-    public  void setUserService(UserService userService) {
+    public void setUserService(UserService userService) {
         this.userService = userService;
     }
-    
 
     private String processDeleteProduct(Protocol protocolRequest) {
         // Eliminar una categoria 
@@ -344,15 +348,36 @@ public class OpenMarketHandler extends ServerHandler {
         productos = productService.findAll();
         return objectToJSON(productos);
     }
+
     private String processUserLogin(Protocol protocolRequest) {
-     User user=new User();
-      user.setUsername(protocolRequest.getParameters().get(0).getValue());
-      user.setContrasenia(protocolRequest.getParameters().get(1).getValue());
-      
-        if(userService.login(user)==null){
-             return helpers.generateNotFoundErrorJson(Context.CATEGORY);
-        }else{
+        User user = new User();
+        user.setUsername(protocolRequest.getParameters().get(0).getValue());
+        user.setContrasenia(protocolRequest.getParameters().get(1).getValue());
+
+        if (userService.login(user) == null) {
+            return helpers.generateNotFoundErrorJson(Context.CATEGORY);
+        } else {
             return objectToJSON(userService.login(user));
         }
+    }
+
+    private String processFilterProducts(Protocol protocolRequest) {
+        Optional<Parameter> prodNameParam = protocolRequest.getParameters().stream().filter(p -> p.getName().equals("name")).findFirst();
+        Optional<Parameter> categoryIdParam = protocolRequest.getParameters().stream().filter(p -> p.getName().equals("categoryId")).findFirst();
+        Optional<Parameter> minPriceParam = protocolRequest.getParameters().stream().filter(p -> p.getName().equals("minPrice")).findFirst();
+        Optional<Parameter> maxPriceParam = protocolRequest.getParameters().stream().filter(p -> p.getName().equals("maxPrice")).findFirst();
+
+        String prodName = prodNameParam.isPresent() ? prodNameParam.get().getValue() : null;
+        Integer categoryId = categoryIdParam.isPresent() ? Integer.valueOf(categoryIdParam.get().getValue()) : null;
+        Double minPrice = minPriceParam.isPresent() ? Double.valueOf(minPriceParam.get().getValue()) : null;
+        Double maxPrice = maxPriceParam.isPresent() ? Double.valueOf(maxPriceParam.get().getValue()) : null;
+
+        System.out.println(prodName);
+        System.out.println(categoryId);
+        System.out.println(minPrice);
+        System.out.println(maxPrice);
+
+        List<Product> productos = productService.filterProducts(prodName, categoryId, minPrice, maxPrice);
+        return objectToJSON(productos);
     }
 }

@@ -100,7 +100,7 @@
                                       <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" attributes="0">
                                           <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                          <Component id="txtNombre2" min="-2" pref="87" max="-2" attributes="0"/>
+                                          <Component id="txtMinPrice" min="-2" pref="87" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -115,7 +115,7 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="67" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txtNombre1" min="-2" pref="89" max="-2" attributes="0"/>
+                                          <Component id="txtMaxPrice" min="-2" pref="89" max="-2" attributes="0"/>
                                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -151,8 +151,8 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtNombre2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtNombre1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtMinPrice" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtMaxPrice" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                       <Component id="btnBuscar" min="-2" pref="38" max="-2" attributes="0"/>
@@ -210,9 +210,9 @@
                 <Property name="text" type="java.lang.String" value="Precio m&#xe1;ximo"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtNombre1">
+            <Component class="javax.swing.JTextField" name="txtMaxPrice">
             </Component>
-            <Component class="javax.swing.JTextField" name="txtNombre2">
+            <Component class="javax.swing.JTextField" name="txtMinPrice">
             </Component>
           </SubComponents>
         </Container>
