@@ -3,15 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package co.unicauca.openmarket.server.access;
-
-import co.unicauca.openmarket.commons.domain.User;
+package co.unicauca.openmarket.domain.services;
 
 /**
  *
  * @author brayan
  */
-public interface IUserRepository {
-   User login(User user);
-   boolean  register(User user);
+public class DeliverService {
+    
 }

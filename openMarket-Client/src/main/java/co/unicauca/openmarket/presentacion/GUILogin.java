@@ -5,7 +5,12 @@
  */
 package co.unicauca.openmarket.presentacion;
 
+import co.unicauca.openmarket.client.domain.application.ShoppingCar;
+import co.unicauca.openmarket.client.domain.service.CategoryService;
+import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.domain.service.UserService;
+import static co.unicauca.openmarket.client.infra.Messages.successMessage;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,13 +18,17 @@ import co.unicauca.openmarket.client.domain.service.UserService;
  */
 public class GUILogin extends javax.swing.JFrame {
 
+   
+    private UserService userService;
     
-    private UserService login;
-    /**
-     * Creates new form GUILogin
-     */
-    public GUILogin() {
+    private GUIRegister instance;
+    
+    public GUILogin( UserService userService) {
         initComponents();
+        this.userService=userService;
+        instance=new GUIRegister(userService);
+         
+       
     }
 
     /**
@@ -53,6 +62,11 @@ public class GUILogin extends javax.swing.JFrame {
         });
 
         btnRegistrarse.setText("Registrarse");
+        btnRegistrarse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlLoginLayout = new javax.swing.GroupLayout(pnlLogin);
         pnlLogin.setLayout(pnlLoginLayout);
@@ -112,11 +126,35 @@ public class GUILogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-
-        String username=this.txtUsername.getText();
-        String contrasenia=this.txtContrasenia.getText();
-        login.loginService(username, contrasenia);
+      try{
+            String username=this.txtUsername.getText();
+            String contrasenia=this.txtContrasenia.getText();
+            
+            if(userService.loginService(username, contrasenia)!=null){
+                JOptionPane.showMessageDialog(null,
+                    "Se inicio sesion corrarctamente",
+                    "Inicicio de sesion",
+                    JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                    JOptionPane.showMessageDialog(null,
+                    "el usuario o el usuario son incorrectos",
+                    "Usuario o contraseña incorrecta",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+       }catch(Exception e){
+            successMessage(e.getMessage(), "Atención");
+             JOptionPane.showMessageDialog(null,
+                    "ERROR, no se pudo conectar al servidor",
+                    "Erroral conectar al servidor",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        
+        
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
+
+    private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
+        instance.setVisible(true);
+    }//GEN-LAST:event_btnRegistrarseActionPerformed
 
     /**
      * @param args the command line arguments

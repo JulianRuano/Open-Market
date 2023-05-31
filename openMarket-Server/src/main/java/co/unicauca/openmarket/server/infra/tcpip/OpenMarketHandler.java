@@ -129,9 +129,13 @@ public class OpenMarketHandler extends ServerHandler {
             }
             case "user" -> {
                 if (protocolRequest.getAction().equals("get")) {
-                    // Petecion de usuario
+                    // Peticion de usuario
                     response = processUserLogin(protocolRequest);
                 }
+                if(protocolRequest.getAction().equals("post")){
+                     response = processRegister(protocolRequest);
+                }
+                
             }
         }
         return response;
@@ -350,15 +354,32 @@ public class OpenMarketHandler extends ServerHandler {
     }
 
     private String processUserLogin(Protocol protocolRequest) {
-        User user = new User();
-        user.setUsername(protocolRequest.getParameters().get(0).getValue());
-        user.setContrasenia(protocolRequest.getParameters().get(1).getValue());
 
-        if (userService.login(user) == null) {
-            return helpers.generateNotFoundErrorJson(Context.CATEGORY);
-        } else {
-            return objectToJSON(userService.login(user));
+     User user=new User();
+      user.setUsername(protocolRequest.getParameters().get(0).getValue());
+      user.setContrasenia(protocolRequest.getParameters().get(1).getValue());
+      
+       if(userService.login(user)==null){
+             return helpers.generateNotFoundErrorJson(Context.CATEGORY);
+       }else{
+           return objectToJSON(userService.login(user));
         }
+         
+    }
+
+    private String processRegister(Protocol protocolRequest) {
+        User user=new User();
+        user.setFirstName(protocolRequest.getParameters().get(0).getValue());
+        user.setLastName(protocolRequest.getParameters().get(1).getValue());
+        user.setRol(protocolRequest.getParameters().get(2).getValue());
+        user.setEmail(protocolRequest.getParameters().get(3).getValue());
+        user.setUsername(protocolRequest.getParameters().get(4).getValue());
+        user.setContrasenia(protocolRequest.getParameters().get(5).getValue());
+        
+        boolean response=userService.register(user);
+        String respuesta=String.valueOf(response);
+        return respuesta;
+        
     }
 
     private String processFilterProducts(Protocol protocolRequest) {

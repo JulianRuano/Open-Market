@@ -34,7 +34,7 @@ public class OpenMarketServer {
         ICategoryRepository repository  = Factory.getInstance().getCatRepository("default");
         IProductRepository  repository2 = Factory.getInstance().getProdRepository("default");
         IPaymentRepository  repository3 = Factory.getInstance().getPayRepository("default");
-         IUserRepository  repository4 = Factory.getInstance().getUserRepository("default");
+        IUserRepository  repository4 = Factory.getInstance().getUserRepository("default");
         myHandler.setCategoryService(new CategoryService(repository));
         myHandler.setProductService(new ProductService(repository2));
         myHandler.setPaymentService(new PaymentService(repository3));
