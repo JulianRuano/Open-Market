@@ -99,7 +99,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         }
          stateInitial();
          //initStyles();
-         this.btnNuevo.putClientProperty("JButton.buttonType", "roundRect");
+        // this.btnNuevo.putClientProperty("JButton.buttonType", "roundRect");
       
     }
     private void initStyles(){

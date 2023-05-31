@@ -32,7 +32,7 @@ public class Main {
         ProductService productService = new ProductService(repository);
         CategoryService categoryService=new CategoryService(repository2);
         ShoppingCar shoppingCart = new ShoppingCar(repository3);
-        FlatMaterialLighterIJTheme.setup();   
+       // FlatMaterialLighterIJTheme.setup();   
         
 /*
         GUICategory instance1=new GUICategory(categoryService);
