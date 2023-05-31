@@ -54,4 +54,7 @@ public class ProductService {
     public synchronized List<Object> findNamePrice(int idProduct){
         return repo.findNamePrice(idProduct);
     }
+     public synchronized List<Product> filterProducts(String prodName,Integer categoryId,Double minPrice,Double maxPrice){
+        return repo.filterProducts(prodName,categoryId,minPrice,maxPrice);
+    }
 }
