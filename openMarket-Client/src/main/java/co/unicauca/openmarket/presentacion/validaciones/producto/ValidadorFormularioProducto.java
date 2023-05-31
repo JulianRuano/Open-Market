@@ -15,15 +15,11 @@ public class ValidadorFormularioProducto {
 
     }
 
-    public List<MensajesError> validar(JTextField txtCodigoProducto, JTextField txtNombre,
+    public List<MensajesError> validar( JTextField txtNombre,
             JTextField txtDescripcion, JTextField txtPrecio, JTextField txtStock,
             JTextField txtDireccion,Integer selectedCategoryId) {
         List<MensajesError> errores = new ArrayList<>();
-
-        if (validarCampos.validarCampoVacio(txtCodigoProducto.getText())) {
-            errores.add(MensajesError.CODIGO_PRODUCTO);
-        }
-
+    
         if (validarCampos.validarCampoVacio(txtNombre.getText())) {
             errores.add(MensajesError.NOMBRE_PRODUCTO);
         }
