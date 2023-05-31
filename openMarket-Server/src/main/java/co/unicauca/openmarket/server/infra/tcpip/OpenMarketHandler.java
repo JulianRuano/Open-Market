@@ -10,19 +10,18 @@ import co.unicauca.openmarket.server.infra.Context;
 import co.unicauca.openmarket.commons.application.creditCard;
 import co.unicauca.openmarket.commons.domain.Category;
 import co.unicauca.openmarket.commons.domain.Product;
+import co.unicauca.openmarket.commons.domain.User;
 import co.unicauca.openmarket.commons.infra.Protocol;
 import co.unicauca.openmarket.domain.services.CategoryService;
 import co.unicauca.strategyserver.infra.ServerHandler;
-import co.unicauca.openmarket.commons.infra.JsonError;
 import co.unicauca.openmarket.domain.services.PaymentService;
 import co.unicauca.openmarket.domain.services.ProductService;
+import co.unicauca.openmarket.domain.services.UserService;
 import co.unicauca.openmarket.server.application.GenerateReference.Reference;
 import co.unicauca.openmarket.server.application.CreditCardPayment;
 import co.unicauca.openmarket.server.application.PaymentHandler;
 import co.unicauca.openmarket.server.infra.Helpers;
 import com.google.gson.Gson;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -37,6 +36,7 @@ public class OpenMarketHandler extends ServerHandler {
      */
     private static ProductService productService;
     private static CategoryService categoryService;
+    private static UserService userService;
     private static PaymentService paymentService;
     private static Helpers helpers;
 
@@ -119,6 +119,12 @@ public class OpenMarketHandler extends ServerHandler {
                 if (protocolRequest.getAction().equals("buy")) {
                     // Petecion de compra
                     response = processBuyProduct(protocolRequest);
+                }
+            }
+            case "user"->{
+                if (protocolRequest.getAction().equals("get")) {
+                    // Petecion de usuario
+                    response = processUserLogin(protocolRequest);
                 }
             }
         }
@@ -301,6 +307,15 @@ public class OpenMarketHandler extends ServerHandler {
         paymentService = service;
     }
 
+    public static UserService getUserService() {
+        return userService;
+    }
+
+    public  void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+    
+
     private String processDeleteProduct(Protocol protocolRequest) {
         // Eliminar una categoria 
         int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
@@ -329,7 +344,15 @@ public class OpenMarketHandler extends ServerHandler {
         productos = productService.findAll();
         return objectToJSON(productos);
     }
-
-
-
+    private String processUserLogin(Protocol protocolRequest) {
+     User user=new User();
+      user.setUsername(protocolRequest.getParameters().get(0).getValue());
+      user.setContrasenia(protocolRequest.getParameters().get(1).getValue());
+      
+        if(userService.login(user)==null){
+             return helpers.generateNotFoundErrorJson(Context.CATEGORY);
+        }else{
+            return objectToJSON(userService.login(user));
+        }
+    }
 }

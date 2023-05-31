@@ -56,17 +56,26 @@ public class Factory {
         }
         return result;
     }
+     public IUserRepository getUserRepository(String type) {
+         IUserRepository result = null;
+        switch (type) {
+            case "default":
+                result = new UserRepositoryArrays();
+            break;
+
+    }
+
+        return result;
+
+    }
     
     public IPaymentRepository getPayRepository(String type) {
          IPaymentRepository result = null;
 
         switch (type) {
-            case "default" -> result = new PaymentRepository();
-    }
+            case "default" -> result = new PaymentRepository();      
+    }       
         return result;
     }
-    
-    
-    
-    
+
 }

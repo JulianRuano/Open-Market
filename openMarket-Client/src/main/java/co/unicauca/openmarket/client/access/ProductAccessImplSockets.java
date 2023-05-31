@@ -57,11 +57,7 @@ public class ProductAccessImplSockets implements IProductAccess {
                 Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
                 throw new Exception(extractMessages(jsonResponse));
             } else {
-
-                //Agregó correctamente, devuelve la cedula del customer 
-                //return customer.getId();
                 int idProduct = Integer.parseInt(jsonResponse);
-                System.out.println("Hola");
                 Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", idProduct);
                 id=idProduct;
 

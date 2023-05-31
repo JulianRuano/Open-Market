@@ -7,10 +7,12 @@ package co.unicauca.openmarket.server.infra.tcpip;
 import co.unicauca.openmarket.domain.services.CategoryService;
 import co.unicauca.openmarket.domain.services.PaymentService;
 import co.unicauca.openmarket.domain.services.ProductService;
+import co.unicauca.openmarket.domain.services.UserService;
 import co.unicauca.openmarket.server.access.Factory;
 import co.unicauca.openmarket.server.access.ICategoryRepository;
 import co.unicauca.openmarket.server.access.IPaymentRepository;
 import co.unicauca.openmarket.server.access.IProductRepository;
+import co.unicauca.openmarket.server.access.IUserRepository;
 import co.unicauca.strategyserver.infra.ServerSocketMultiThread;
 import java.util.Scanner;
 
@@ -27,15 +29,17 @@ public class OpenMarketServer {
         System.out.println("Ingrese el puerto de escucha");
         int port = teclado.nextInt();
         ServerSocketMultiThread myServer = new ServerSocketMultiThread(port);
+
         OpenMarketHandler myHandler = new OpenMarketHandler();  
         ICategoryRepository repository  = Factory.getInstance().getCatRepository("default");
         IProductRepository  repository2 = Factory.getInstance().getProdRepository("default");
         IPaymentRepository  repository3 = Factory.getInstance().getPayRepository("default");
-        
+         IUserRepository  repository4 = Factory.getInstance().getUserRepository("default");
         myHandler.setCategoryService(new CategoryService(repository));
         myHandler.setProductService(new ProductService(repository2));
         myHandler.setPaymentService(new PaymentService(repository3));
-        
+        myHandler.setUserService(new UserService(repository4));
+
         myServer.setServerHandler(myHandler);
         myServer.startServer();
     }

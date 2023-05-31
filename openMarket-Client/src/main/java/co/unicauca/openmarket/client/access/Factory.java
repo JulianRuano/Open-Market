@@ -69,6 +69,18 @@ public class Factory {
         }
         return result;
     }
+        
+    public ILoginAccess getLoginRepository(String type) {
+
+       ILoginAccess result = null;
+
+        switch (type) {
+            case "default":
+                result =new UserAccessImplSockets();
+                break;               
+        }
+        return result;
+    }
     
     
 }

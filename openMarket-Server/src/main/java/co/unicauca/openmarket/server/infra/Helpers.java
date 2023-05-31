@@ -33,8 +33,10 @@ public class Helpers {
                 message = "Error, un producto con ese id no existe";
             case CATEGORY ->
                 message = "Error, una categoria con ese id no existe";
-             case SHOPPING ->
+            case SHOPPING ->
                  message = "Error, La tarjeta de credito no existe";
+            case USER ->
+                 message = "Error, El usuario no existe";
             // Añade más casos aquí en el futuro
             default ->
                 throw new IllegalArgumentException("Contexto desconocido: " + context);

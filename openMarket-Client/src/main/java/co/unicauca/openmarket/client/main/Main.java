@@ -13,6 +13,7 @@ import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.presentacion.Dashboard;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
 
 /**
  *
@@ -31,7 +32,7 @@ public class Main {
         ProductService productService = new ProductService(repository);
         CategoryService categoryService=new CategoryService(repository2);
         ShoppingCar shoppingCart = new ShoppingCar(repository3);
-        
+       // FlatMaterialLighterIJTheme.setup();   
         
 /*
         GUICategory instance1=new GUICategory(categoryService);
@@ -53,6 +54,7 @@ public class Main {
        */
        Dashboard instance1=new  Dashboard(productService,categoryService,shoppingCart);
        instance1.setVisible(true);
+       
     }
     
 }

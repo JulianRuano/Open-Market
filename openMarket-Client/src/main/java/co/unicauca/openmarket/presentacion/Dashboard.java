@@ -37,7 +37,7 @@ public class Dashboard extends javax.swing.JFrame {
          ominvokerProducts=new OMInvoker();
     }
     private void initStyles(){
-      //btnPrimerBoton.putClientProperty("JButton.buttonType", "roundRect");
+      //.putClientProperty("JButton.buttonType", "roundRect");
       //para el diseño del titulo y el color de la letra
       lblTituloHeader.putClientProperty("FlatLaf.style", "font: 40 $light.font");
       lblTituloHeader.setForeground(Color.white);
@@ -75,7 +75,6 @@ public class Dashboard extends javax.swing.JFrame {
         pnlBarraLateral.setBackground(new java.awt.Color(38, 145, 205));
 
         btnCategoria.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
-        btnCategoria.setForeground(new java.awt.Color(0, 0, 0));
         btnCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/book-content-solid-48.png"))); // NOI18N
         btnCategoria.setText("Categoria");
         btnCategoria.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
