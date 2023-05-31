@@ -22,6 +22,7 @@ public interface IProductAccess {
    List<Product> findByName(String pname)throws Exception;
     List<Product> findByCategory(int categoryName)throws Exception;
     List<Product> findAll()throws Exception;
+    List<Product> filterProducts(String prodName,int categoryId,double minPrice, double maxPrice)throws Exception;
     
 
 }

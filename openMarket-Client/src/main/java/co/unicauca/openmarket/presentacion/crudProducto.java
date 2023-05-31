@@ -10,6 +10,7 @@ import co.unicauca.openmarket.client.presentation.commands.OMEditProductCommand;
 import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
 import co.unicauca.openmarket.commons.domain.Category;
 import co.unicauca.openmarket.commons.domain.Product;
+import co.unicauca.openmarket.presentacion.helpers.PresentacionHelpers;
 import co.unicauca.openmarket.presentacion.validaciones.ValidadorCampos;
 import co.unicauca.openmarket.presentacion.validaciones.producto.MensajesError;
 import co.unicauca.openmarket.presentacion.validaciones.producto.ValidadorFormularioProducto;
@@ -20,6 +21,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -52,7 +54,8 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
     private CategoryService categoryService;
     private ValidadorCampos validarCampos;
     private ValidadorFormularioProducto validarFormulario;
-    private Integer selectedCategoryId;
+//    private Integer selectedCategoryId;
+    private PresentacionHelpers presHelpers;
 
     public crudProducto(ProductService productService, OMInvoker ominvoker, CategoryService categoryService) {
         initComponents();
@@ -71,32 +74,9 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         mModeloTabla.addColumn("Stock");
         mModeloTabla.addColumn("Imagen");
         tblProductos.setModel(mModeloTabla);
-        List<Category> categories = this.categoryService.findAllCategories();
-        if (!(categories == null)) {
-            DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>();
-            modelo.addElement(""); // Agregar elemento vacío al inicio del modelo
-            Map<String, Integer> categoryMap = new HashMap<>();
-
-            for (Category category : categories) {
-                String categoryName = category.getName();
-                Integer categoryId = category.getCategoryId();
-                modelo.addElement(categoryName);
-                categoryMap.put(categoryName, categoryId);
-            }
-
-            cbxCodigoCategoria.setModel(modelo);
-            cbxCodigoCategoria.setSelectedItem(null);
-
-            cbxCodigoCategoria.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String selectedCategoryName = (String) cbxCodigoCategoria.getSelectedItem();
-                    selectedCategoryId = categoryMap.get(selectedCategoryName);
-
-                    // Aquí puedes utilizar el selectedCategoryId como necesites
-                }
-            });
-        }
+        presHelpers= new PresentacionHelpers();
+        
+        presHelpers.loadCategories(cbxCodigoCategoria, categoryService);
          stateInitial();
          //initStyles();
         // this.btnNuevo.putClientProperty("JButton.buttonType", "roundRect");
@@ -233,7 +213,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
                 bufferedImage = ImageIO.read(inputStream);
                 ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(80, 80, 0));
                 rowData[7] = new JLabel(mIcono);
-            } catch (Exception e) {
+            } catch (IOException e) {
                 rowData[7] = new JLabel("No imagen");
             }
 
@@ -834,7 +814,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
             int stock = Integer.parseInt(txtStock.getText());
             byte[] image = getImagen(Ruta);
 
-            Product OProduct = new Product(0, name, description, price, address, selectedCategoryId, stock, image);
+            Product OProduct = new Product(0, name, description, price, address, presHelpers.selectedCategoryId, stock, image);
             OMAddProductCommand comm = new OMAddProductCommand(OProduct, productService);
             ominvoker.addCommand(comm);
             ominvoker.execute();
@@ -866,7 +846,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         int stock = Integer.parseInt(txtStock.getText());
         byte[] image = getImagen(Ruta);
 
-        Product OProduct = new Product(productId, name, description, price, direccion, selectedCategoryId, stock, image);
+        Product OProduct = new Product(productId, name, description, price, direccion, presHelpers.selectedCategoryId, stock, image);
         OMEditProductCommand comm = new OMEditProductCommand(OProduct, productService);
         ominvoker.addCommand(comm);
         ominvoker.execute();
@@ -927,7 +907,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
     
     private boolean validarCampos(){
         List<MensajesError> errores = validarFormulario.validar( txtNombre, txtDescripcion,
-                txtPrecio, txtStock, txtDireccion, selectedCategoryId);
+                txtPrecio, txtStock, txtDireccion, presHelpers.selectedCategoryId);
      
         if (!errores.isEmpty()) {
             String mensajeError = "Debe ingresar el/los siguiente(s) campo(s):\n";

@@ -150,7 +150,7 @@ public class ProductAccessImplSockets implements IProductAccess {
             mySocket.disconnect();
 
         } catch (IOException ex) {
-            Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.SEVERE, "No hubo conexión con el servidor", ex);
+            Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.SEVERE, "No hubo conexión con el servidor", ex);
         }
         if (jsonResponse == null) {
            
@@ -159,13 +159,13 @@ public class ProductAccessImplSockets implements IProductAccess {
         } else {
             if (jsonResponse.contains("error")) {
                 //Devolvió algún error
-                Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
+                Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
                throw new Exception(extractMessages(jsonResponse));
                //return null;
             } else {
                 //Encontró el category
                 Product product = jsonToProduct(jsonResponse);
-                Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ("+jsonResponse.toString()+ ")");
+                Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ("+jsonResponse.toString()+ ")");
                 return product;
             }
         } 
@@ -192,7 +192,7 @@ public class ProductAccessImplSockets implements IProductAccess {
         } else {
             if (jsonResponse.contains("error")) {
                 //Devolvió algún error
-                Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
+                Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
                // throw new Exception(extractMessages(jsonResponse));
                return null;
             } else {
@@ -201,9 +201,9 @@ public class ProductAccessImplSockets implements IProductAccess {
                 try {
                     listProduct= jsonToListCategory(jsonResponse);
                 } catch (JsonProcessingException ex) {
-                    Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", jsonResponse);
+                Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", jsonResponse);
                 return listProduct;
             }
         }     
@@ -239,7 +239,7 @@ public class ProductAccessImplSockets implements IProductAccess {
                 } catch (JsonProcessingException ex) {
                     Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", jsonResponse);
+                Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", jsonResponse);
                 return listProduct;
             }
         }     
@@ -256,7 +256,7 @@ public class ProductAccessImplSockets implements IProductAccess {
             mySocket.disconnect();
 
         } catch (IOException ex) {
-            Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.SEVERE, "No hubo conexión con el servidor", ex);
+            Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.SEVERE, "No hubo conexión con el servidor", ex);
         }
         if (jsonResponse == null) {
             return null;
@@ -264,7 +264,7 @@ public class ProductAccessImplSockets implements IProductAccess {
         } else {
             if (jsonResponse.contains("error")) {
                 //Devolvió algún error
-                Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
+                Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
                // throw new Exception(extractMessages(jsonResponse));
                return null;
             } else {
@@ -273,9 +273,9 @@ public class ProductAccessImplSockets implements IProductAccess {
                 try {
                     listProduct= jsonToListCategory(jsonResponse);
                 } catch (JsonProcessingException ex) {
-                    Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", jsonResponse);
+                Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", jsonResponse);
                 return listProduct;
             }
         }     
@@ -446,6 +446,56 @@ public class ProductAccessImplSockets implements IProductAccess {
        protocol.setResource("product");
        protocol.setAction("listAllProduct");
 
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+        return requestJson;
+    }
+
+    @Override
+    public List<Product> filterProducts(String prodName,int categoryId,double minPrice, double maxPrice) throws Exception {
+        String jsonResponse = null;
+        String requestJson = doListFilterProductRequestJson(prodName,categoryId, minPrice,  maxPrice);
+        System.out.println(requestJson);
+        try {
+            mySocket.connect();
+            jsonResponse = mySocket.sendRequest(requestJson);
+            mySocket.disconnect();
+
+        } catch (IOException ex) {
+            Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.SEVERE, "No hubo conexión con el servidor", ex);
+        }
+        if (jsonResponse == null) {
+            return null;
+           // throw new Exception("No se pudo conectar con el servidor. Revise la red o que el servidor esté escuchando. ");
+        } else {
+            if (jsonResponse.contains("error")) {
+                //Devolvió algún error
+                Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
+               // throw new Exception(extractMessages(jsonResponse));
+               return null;
+            } else {
+                //Encontró el category           
+                List<Product> listProduct = null;
+                try {
+                    listProduct= jsonToListCategory(jsonResponse);
+                } catch (JsonProcessingException ex) {
+                    Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", jsonResponse);
+                return listProduct;
+            }
+        }     
+    }
+    
+      private String doListFilterProductRequestJson(String prodName, int categoryId,double minPrice,double maxPrice) {
+        Protocol protocol = new Protocol();
+        protocol.setResource("product");
+        protocol.setAction("filterProducts");
+
+        protocol.addParameter("name",prodName);
+        protocol.addParameter("CategoryId",  String.valueOf( categoryId));
+        protocol.addParameter("minPrice",  String.valueOf(minPrice) );
+        protocol.addParameter("maxPrice",String.valueOf(maxPrice));
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);
         return requestJson;
