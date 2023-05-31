@@ -13,9 +13,10 @@ import reloj.frameworkobsobs.Observado;
  * @author brayan,jorge,freider,julian
  */
 public class ProductService extends Observado {
+    
+    private int idProduct;
       
     
-   private int idProduct; 
     // Ahora hay una dependencia de una abstracción, no es algo concreto,
     // no sabe cómo está implementado.
    public ProductService(){
@@ -58,6 +59,7 @@ public class ProductService extends Observado {
         newProduct.setCategoryId(categoryId);
         newProduct.setStock(stock);
         newProduct.setImage(image);
+
             
         //Validate product
         if (newProduct.getName().isBlank() ) {

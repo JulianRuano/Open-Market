@@ -20,8 +20,9 @@ public interface IProductRepository {
     Product findById(int id);
     
    List<Product> findByName(String pname);
-    List<Product> findByCategory(int categoryName);
-    List<Product> findAll();
-    
+   List<Product> findByCategory(int categoryName);
+   List<Product> findAll();
+   List<Object> findNamePrice(int idProduct);
+        
 
 }

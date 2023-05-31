@@ -1,6 +1,6 @@
 package co.unicauca.openmarket.client.access;
 
-import co.unicauca.openmarket.commons.application.PaymentDetails;
+import co.unicauca.openmarket.commons.application.creditCard;
 import co.unicauca.openmarket.client.infra.OpenMarketSocket;
 import co.unicauca.openmarket.commons.application.Invoice;
 import co.unicauca.openmarket.commons.infra.JsonError;
@@ -16,9 +16,8 @@ public class ShoppingCartAccessImplSockets implements IShoppingCartAccess {
      public ShoppingCartAccessImplSockets() {
         mySocket = new OpenMarketSocket();
     }
-    @Override
-    
-    public Invoice buy(Long id, PaymentDetails paymentMethod) {
+    @Override 
+    public Invoice buy(int id, creditCard paymentMethod) {
         String jsonResponse = null;
         String requestJson = doBuyRequestJson(id,paymentMethod);
         try {
@@ -55,12 +54,12 @@ public class ShoppingCartAccessImplSockets implements IShoppingCartAccess {
         return null;
     }
     
-    private String doBuyRequestJson(Long id, PaymentDetails paymentMethod) {
+    private String doBuyRequestJson(int id, creditCard paymentMethod) {
 
         Protocol protocol = new Protocol();
         protocol.setResource("shoppingCart");
         protocol.setAction("buy");
-        protocol.addParameter("id", id.toString());
+        protocol.addParameter("id", Integer.toString(id));
         protocol.addParameter("nameOnCard",paymentMethod.getNameOnCard() );
         protocol.addParameter("cardNumber",paymentMethod.getCardNumber() );
         protocol.addParameter("CVC", paymentMethod.getCVC());

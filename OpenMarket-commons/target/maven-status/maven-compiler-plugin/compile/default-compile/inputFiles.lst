@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\application\PaymentDetails.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\Product.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\Category.java
@@ -8,3 +9,14 @@ C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\OpenMarket-comm
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\User.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\application\Invoice.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\Utilities.java
+=======
+D:\Universidad\Ingeniria de software 2\sprint\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\Product.java
+D:\Universidad\Ingeniria de software 2\sprint\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\JsonError.java
+D:\Universidad\Ingeniria de software 2\sprint\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\Protocol.java
+D:\Universidad\Ingeniria de software 2\sprint\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\application\Invoice.java
+D:\Universidad\Ingeniria de software 2\sprint\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\domain\Category.java
+D:\Universidad\Ingeniria de software 2\sprint\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\Utilities.java
+D:\Universidad\Ingeniria de software 2\sprint\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\application\creditCard.java
+D:\Universidad\Ingeniria de software 2\sprint\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\Parameters.java
+D:\Universidad\Ingeniria de software 2\sprint\Open-Market\OpenMarket-commons\src\main\java\co\unicauca\openmarket\commons\infra\Parameter.java
+>>>>>>> 706a3aa0e2ce51ef40c28724c2888a656aaf69eb

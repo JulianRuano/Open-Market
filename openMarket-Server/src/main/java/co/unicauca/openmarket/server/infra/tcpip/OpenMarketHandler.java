@@ -5,23 +5,23 @@
  */
 package co.unicauca.openmarket.server.infra.tcpip;
 
-import co.unicauca.openmarket.server.infra.Context;
 import co.unicauca.openmarket.commons.application.Invoice;
-import co.unicauca.openmarket.commons.application.PaymentDetails;
+import co.unicauca.openmarket.server.infra.Context;
+import co.unicauca.openmarket.commons.application.creditCard;
 import co.unicauca.openmarket.commons.domain.Category;
 import co.unicauca.openmarket.commons.domain.Product;
 import co.unicauca.openmarket.commons.domain.User;
 import co.unicauca.openmarket.commons.infra.Protocol;
 import co.unicauca.openmarket.domain.services.CategoryService;
 import co.unicauca.strategyserver.infra.ServerHandler;
-import co.unicauca.openmarket.commons.infra.JsonError;
+import co.unicauca.openmarket.domain.services.PaymentService;
 import co.unicauca.openmarket.domain.services.ProductService;
 import co.unicauca.openmarket.domain.services.UserService;
-import co.unicauca.openmarket.server.application.PurchaseGenerator;
+import co.unicauca.openmarket.server.application.GenerateReference.Reference;
+import co.unicauca.openmarket.server.application.CreditCardPayment;
+import co.unicauca.openmarket.server.application.PaymentHandler;
 import co.unicauca.openmarket.server.infra.Helpers;
 import com.google.gson.Gson;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -37,6 +37,7 @@ public class OpenMarketHandler extends ServerHandler {
     private static ProductService productService;
     private static CategoryService categoryService;
     private static UserService userService;
+    private static PaymentService paymentService;
     private static Helpers helpers;
 
     public OpenMarketHandler() {
@@ -140,8 +141,7 @@ public class OpenMarketHandler extends ServerHandler {
         int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         Category category = categoryService.findById(id);
         if (category == null) {
-            String errorJson = generateNotFoundErrorJson();
-            return errorJson;
+            return helpers.generateNotFoundErrorJson(Context.CATEGORY);
         } else {
             return objectToJSON(category);
         }
@@ -207,8 +207,7 @@ public class OpenMarketHandler extends ServerHandler {
         int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         Product producto = productService.findById(id);
         if (producto == null) {
-            String errorJson = generateNotFoundErrorJson();
-            return errorJson;
+           return helpers.generateNotFoundErrorJson(Context.PRODUCT);
         } else {
             return objectToJSON(producto);
         }
@@ -242,7 +241,8 @@ public class OpenMarketHandler extends ServerHandler {
         producto.setAddress(protocolRequest.getParameters().get(4).getValue());
         producto.setCategoryId(Integer.parseInt(protocolRequest.getParameters().get(5).getValue()));
         producto.setStock(Integer.parseInt(protocolRequest.getParameters().get(6).getValue()));
-        producto.setImage(protocolRequest.getParameters().get(7).getValue().getBytes(StandardCharsets.UTF_8));
+        byte[] decodedImage = Base64.getDecoder().decode(protocolRequest.getParameters().get(7).getValue());
+        producto.setImage(decodedImage);
 
         boolean response = productService.edit(producto);
         String respuesta = String.valueOf(response);
@@ -251,60 +251,34 @@ public class OpenMarketHandler extends ServerHandler {
 
     private String processBuyProduct(Protocol protocolRequest) {
         // Petecion de compra
-        int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        int idProduct = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         String nameOnCard = protocolRequest.getParameters().get(1).getValue();
         String cardNumber = protocolRequest.getParameters().get(2).getValue();
         String CVC = protocolRequest.getParameters().get(3).getValue();
         String month = protocolRequest.getParameters().get(4).getValue();
         String year = protocolRequest.getParameters().get(5).getValue();
 
-        // Contruiomos los objectos
-        Product producto = productService.findById(id);
-        PaymentDetails paymentDetails = new PaymentDetails(nameOnCard, cardNumber, CVC, month, year);
-        PurchaseGenerator purchaseGenerator = new PurchaseGenerator();
+        
+        // Contruiomos los objectos      
+        PaymentHandler paymentHandler = new PaymentHandler();      
+        creditCard paymentDetails = new creditCard(nameOnCard, cardNumber, CVC, month, year);
+        String details = paymentDetails.getDetails();
+        CreditCardPayment creditCardPayment  = new CreditCardPayment();
+        paymentHandler.setPaymentStrategy(creditCardPayment);
 
-        if (!purchaseGenerator.validator(paymentDetails)) {
-            String errorJson = generateCardNotFoundErrorJson();
-            return errorJson;
+        if (!paymentHandler.processPayment(details)) {
+            return helpers.generateBadRequestJson(Context.SHOPPING);
         } else {
-            // Implementar logica       
-            String reference = purchaseGenerator.generateCode();
-            Invoice invoice = new Invoice(reference, producto.getName());
+            List<Object> productNamePrice = productService.findNamePrice(idProduct);
+            String productName = productNamePrice.get(0).toString();
+            double price = (double)productNamePrice.get(1);           
+            
+            String reference = Reference.getReference();
+            paymentService.save(reference,details);            
+            paymentService.linkProduct(reference, idProduct);        
+            Invoice invoice = paymentService.findById(reference);
             return objectToJSON(invoice);
         }
-    }
-
-    /**
-     * Genera un ErrorJson
-     *
-     * @return error en formato json
-     */
-    private String generateCardNotFoundErrorJson() {
-        List<JsonError> errors = new ArrayList<>();
-        JsonError error = new JsonError();
-        error.setCode("000");
-        error.setError("Failed_Card");
-        error.setMessage("Ha ocurrido un error con la tarjeta");
-        errors.add(error);
-
-        Gson gson = new Gson();
-        String errorsJson = gson.toJson(errors);
-
-        return errorsJson;
-    }
-
-    private String generateNotFoundErrorJson() {
-        List<JsonError> errors = new ArrayList<>();
-        JsonError error = new JsonError();
-        error.setCode("404");
-        error.setError("NOT_FOUND");
-        error.setMessage("Clase no encontrada. ID no existe");
-        errors.add(error);
-
-        Gson gson = new Gson();
-        String errorsJson = gson.toJson(errors);
-
-        return errorsJson;
     }
 
     /**
@@ -327,6 +301,10 @@ public class OpenMarketHandler extends ServerHandler {
 
     public void setCategoryService(CategoryService service) {
         categoryService = service;
+    }
+    
+    public void setPaymentService(PaymentService service) {
+        paymentService = service;
     }
 
     public static UserService getUserService() {
@@ -366,18 +344,15 @@ public class OpenMarketHandler extends ServerHandler {
         productos = productService.findAll();
         return objectToJSON(productos);
     }
-
     private String processUserLogin(Protocol protocolRequest) {
      User user=new User();
       user.setUsername(protocolRequest.getParameters().get(0).getValue());
       user.setContrasenia(protocolRequest.getParameters().get(1).getValue());
       
         if(userService.login(user)==null){
-            String errorJson=generateNotFoundErrorJson();
-            return errorJson;
+             return helpers.generateNotFoundErrorJson(Context.CATEGORY);
         }else{
             return objectToJSON(userService.login(user));
         }
     }
-
 }

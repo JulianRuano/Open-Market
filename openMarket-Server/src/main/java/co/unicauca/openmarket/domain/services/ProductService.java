@@ -51,4 +51,7 @@ public class ProductService {
     public synchronized List<Product> findByCategory(int categoryId){
         return repo.findByCategory(categoryId);
     };
+    public synchronized List<Object> findNamePrice(int idProduct){
+        return repo.findNamePrice(idProduct);
+    }
 }

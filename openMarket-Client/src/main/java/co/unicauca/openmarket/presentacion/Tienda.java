@@ -31,25 +31,24 @@ public class Tienda extends javax.swing.JPanel {
      DefaultTableModel mModeloTabla = new DefaultTableModel();
     
     
-    private ProductService productService;
-    private ShoppingCar shoppingCart;
-    private GUIPaymet compra;
-   Long id;
+    private final ProductService productService;
+    private final GUIPaymet compra;
+ 
+    
     public Tienda(ProductService productService,ShoppingCar shoppingCart) {
        initComponents();
-      // this.compra=new GUIPaymet(id,shoppingCart);
-        this.productService=productService;
-       //his.shoppingCart=shoppingCart;
-         mModeloTabla.addColumn("ID");
+       this.productService=productService;
+        mModeloTabla.addColumn("ID");
         mModeloTabla.addColumn("Nombre");
         mModeloTabla.addColumn("Descripcion");
         mModeloTabla.addColumn("Precio");
         mModeloTabla.addColumn("Direccion");
         mModeloTabla.addColumn("ID categoria");
         mModeloTabla.addColumn("Imagen");
-        tblProductos.setModel(mModeloTabla);
-         compra=new GUIPaymet(shoppingCart);
-       
+
+        tblProductos.setModel(mModeloTabla); 
+        compra = new GUIPaymet(shoppingCart);
+
     }
 
    
@@ -158,9 +157,9 @@ public class Tienda extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnComprar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprar2ActionPerformed
-       
+     
         try{
-            int idProducto=Integer.parseInt(this.txtComprar.getText());
+            int idProducto=Integer.parseInt(this.txtComprar.getText());          
             compra.obtenerProducto(productService.findProductById(idProducto));
             compra.setVisible(true);
         }catch(Exception e){
@@ -170,6 +169,7 @@ public class Tienda extends javax.swing.JPanel {
                 "Error al introducir el dato",
                 JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnComprar2ActionPerformed
      private void fillTable(List<Product> listProducts) {
         tblProductos.setDefaultRenderer(Object.class, new RenderImagen());

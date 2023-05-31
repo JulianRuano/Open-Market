@@ -297,7 +297,16 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
                 if (!validarId(txtBuscar)) {
                     return;
                 }
-                fillTableId(categoryService.findCategoryById(Integer.parseInt(this.txtBuscar.getText())));
+                int catId=Integer.parseInt(this.txtBuscar.getText());
+                Category cat = categoryService.findCategoryById(catId);
+                 if(cat==null){
+                        JOptionPane.showMessageDialog(null,
+                    "No se encontró una categoria por ese id",
+                    "Error",
+                    JOptionPane.INFORMATION_MESSAGE);
+                        return;
+                 }
+                fillTableId(categoryService.findCategoryById(catId));
             } else {
                 if (txtBuscar.getText().isEmpty()) {
                     Messages.showMessageDialog("Debe ingresar el nombre de la categoria", "Atención");
@@ -306,17 +315,11 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
                 }
                 fillTableName(categoryService.findCategoriesByName(this.txtBuscar.getText()));
             }
-        } catch (NullPointerException ex) {
-            JOptionPane.showMessageDialog(null,
-                    "Envia la informacion correspondiente",
-                    "Error tipo de dato",
-                    JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null,
-                    "Seleccione por el dato que quiere buscar",
-                    "Error al introducir el dato",
+                    "Ocurrio un error inesperado",
+                    "Error",
                     JOptionPane.ERROR_MESSAGE);
-            successMessage(e.getMessage(), "Atención");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
@@ -327,20 +330,22 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
     }//GEN-LAST:event_btnNuevaActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (addOption == 1) {
-            //Agregar
-            addCategory();
-        } else if (addOption == 2) {
-            //Editar
-            if (!validarIdNombre()) {
-                return;
-            }
-            editCategory();
-        } else {
-            if (!validarId(txtCodCategoria)) {
-                return;
-            }
-            deleteCategory();
+        switch (addOption) {
+            case 1:
+                //Agregar
+                addCategory();
+                break;
+            case 2:
+                //Editar
+                if (!validarIdNombre()) {
+                    return;
+                }   editCategory();
+                break;
+            default:
+                if (!validarId(txtCodCategoria)) {
+                    return;
+                }   deleteCategory();
+                break;
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -543,7 +548,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
             return false;
         }
         if (!validarNumeros(txtCodCategoria.getText().trim())) {
-            Messages.showMessageDialog("El ID debe ser numeros", "Error");
+            Messages.showMessageDialog("El ID debe ser numérico", "Error");
             txtCodCategoria.setText("");
             txtCodCategoria.requestFocus();
             return false;
@@ -558,7 +563,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
             return false;
         }
         if (!validarNumeros(caja.getText().trim())) {
-            Messages.showMessageDialog("El ID debe ser numeros", "Error");
+            Messages.showMessageDialog("El ID debe ser numérico", "Error");
             caja.setText("");
             caja.requestFocus();
             return false;

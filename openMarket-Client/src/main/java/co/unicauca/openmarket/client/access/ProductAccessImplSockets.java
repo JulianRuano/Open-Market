@@ -35,7 +35,9 @@ public class ProductAccessImplSockets implements IProductAccess {
 
     @Override
     public int save(Product newProduct)throws Exception {
+
         int id=0;
+
         String jsonResponse = null;
         String requestJson = doSaveProductRequestJson(newProduct);
         try {
@@ -55,11 +57,10 @@ public class ProductAccessImplSockets implements IProductAccess {
                 Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
                 throw new Exception(extractMessages(jsonResponse));
             } else {
-                //Agregó correctamente, devuelve la cedula del customer 
-                //return customer.getId();
-                int idProduct =Integer.parseInt(requestJson);
+                int idProduct = Integer.parseInt(jsonResponse);
                 Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", idProduct);
                 id=idProduct;
+
             }
         }
         return id;
@@ -384,7 +385,12 @@ public class ProductAccessImplSockets implements IProductAccess {
         protocol.addParameter("address", product.getAddress());
         protocol.addParameter("CategoryId",Integer.toString(product.getCategoryId()));
         protocol.addParameter("stock", Integer.toString(product.getStock()));
-        protocol.addParameter("image", Arrays.toString(product.getImage()));
+        
+        byte[] byteArray = product.getImage()/* Tu arreglo de bytes de la imagen */;
+        String encodedImage = Base64.getEncoder().encodeToString(byteArray);      
+        protocol.addParameter("image", encodedImage);
+        
+
         
         Gson gson=new Gson();
         String requestJson = gson.toJson(protocol);

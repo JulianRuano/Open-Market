@@ -7,6 +7,7 @@ package co.unicauca.openmarket.server.access;
 
 import co.unicauca.openmarket.commons.domain.Category;
 import java.sql.CallableStatement;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -39,7 +40,7 @@ public class CategoryRepository implements ICategoryRepository {
     
     public boolean connect() {
          try {
-            String url = "jdbc:mysql://162.241.61.245:3306/codoslic_op";
+            String url = "jdbc:mysql://162.241.61.245:3306/codoslic_op?noAccessToProcedureBodies=true";
             Properties props = new Properties();
             props.setProperty("user", "codoslic_user");
             props.setProperty("password", "singlecode4");
@@ -66,28 +67,28 @@ public class CategoryRepository implements ICategoryRepository {
 
     @Override
     public int save(Category newCategory) {
+        int categoryId = 0;
         try {
             if (newCategory == null) {
-                return 0;
+                return categoryId;
             }
             this.connect();
+            
             String sql = "{CALL InsertCategory(?, ?)}";
-                  
-            CallableStatement  pstmt = conn.prepareCall(sql);
-            pstmt.setString(1, newCategory.getName());
-            pstmt.registerOutParameter(2, Types.INTEGER);
-            pstmt.executeUpdate();
+            CallableStatement cstmt = conn.prepareCall(sql);
+            cstmt.setString(1, newCategory.getName());
+            cstmt.registerOutParameter(2, Types.INTEGER); 
+                
+            cstmt.executeUpdate();         
+            categoryId = cstmt.getInt(2);
             
-            int categoryId = pstmt.getInt(2);
-            
-            pstmt.close();
-            
+            cstmt.close();      
             this.disconnect();
             return categoryId;
         } catch (SQLException ex) {
             Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return 0;       
+        return categoryId;       
     }
 
 
@@ -110,8 +111,6 @@ public class CategoryRepository implements ICategoryRepository {
     return false;
 }
 
-
-
     @Override
     public boolean edit(int id, Category category) {
         try {
@@ -124,7 +123,7 @@ public class CategoryRepository implements ICategoryRepository {
                     + "WHERE categoryId=? ";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, category.getName());
-            pstmt.setLong(2, id);
+            pstmt.setInt(2, id);
             pstmt.executeUpdate();
             this.disconnect();
             return true;
@@ -144,8 +143,9 @@ public class CategoryRepository implements ICategoryRepository {
              String sql = "DELETE FROM category "
                     + "WHERE categoryId = ?";
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setLong(1, id);
+            pstmt.setInt(1, id);
             pstmt.executeUpdate();
+            pstmt.close();
             this.disconnect();
             return true;
         } catch (SQLException e) {
@@ -153,32 +153,36 @@ public class CategoryRepository implements ICategoryRepository {
         }
         return false;
     }
-
+ 
     @Override
     public Category findById(int id) {
-        try {
-            this.connect();
-            String sql = "SELECT * FROM category "
-                    + "WHERE categoryId = ?";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setLong(1, id);
-            ResultSet res = pstmt.executeQuery();
-
-            if (res.next()) {
-                Category cat = new Category();
-                cat.setCategoryId(res.getInt("categoryId"));
-                cat.setName(res.getString("name"));                 
-                this.disconnect();
-                return cat;
-            } else {
-                return null;
-            }
-
-        } catch (SQLException ex) {
-             Logger.getLogger(CategoryRepository.class.getName()).log(Level.SEVERE, "Error al consultar Customer de la base de datos", ex);
+    try {
+        this.connect();
+        String sql = "{CALL GetCategory(?)}";
+        CallableStatement cstmt = conn.prepareCall(sql);
+        cstmt.setInt(1, id); // Reemplaza el valor 2 con el valor deseado para el parámetro del procedimiento almacenado
+        ResultSet res = cstmt.executeQuery();
+        
+        if (res.next()) {
+            int categoryId = res.getInt("categoryId");
+            String categoryName = res.getString("name");
+            
+            Category cat = new Category();
+            cat.setCategoryId(categoryId);
+            cat.setName(categoryName);
+            
+            this.disconnect();
+            return cat;
+        } else {
+            return null;
         }
-        return null;
+    } catch (SQLException ex) {
+        Logger.getLogger(CategoryRepository.class.getName()).log(Level.SEVERE, "Error al consultar la categoría en la base de datos", ex);
     }
+    return null;
+}
+
+
 
     @Override
     public List<Category> findAll() {

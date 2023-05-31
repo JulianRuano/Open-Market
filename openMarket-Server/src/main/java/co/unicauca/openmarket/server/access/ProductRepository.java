@@ -31,7 +31,7 @@ public final class ProductRepository implements IProductRepository {
     
     public boolean connect() {
          try {
-            String url = "jdbc:mysql://162.241.61.245:3306/codoslic_op";
+            String url = "jdbc:mysql://162.241.61.245:3306/codoslic_op?noAccessToProcedureBodies=true";
             Properties props = new Properties();
             props.setProperty("user", "codoslic_user");
             props.setProperty("password", "singlecode4");
@@ -52,7 +52,6 @@ public final class ProductRepository implements IProductRepository {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
-
     }
 
     @Override
@@ -72,8 +71,8 @@ public final class ProductRepository implements IProductRepository {
                 pstmt.setString(2, newProduct.getDescription());
                 pstmt.setDouble(3, newProduct.getPrice());
                 pstmt.setString(4, newProduct.getAddress());
-                pstmt.setLong(5, newProduct.getCategoryId());
-                pstmt.setLong(6, newProduct.getStock());
+                pstmt.setInt(5, newProduct.getCategoryId());
+                pstmt.setInt(6, newProduct.getStock());
                 pstmt.setBytes(7, newProduct.getImage());
                 pstmt.registerOutParameter(8, Types.INTEGER);
                 pstmt.executeUpdate();
@@ -123,7 +122,33 @@ public final class ProductRepository implements IProductRepository {
     }
 
     
+    @Override
+    public List<Object> findNamePrice(int idProduct) {
+        List<Object> info = new ArrayList<>();
+        try {
+            this.connect();
+            String sql = "SELECT name,price FROM product"
+                    + " WHERE productId = ?";
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, idProduct);
 
+            ResultSet res = pstmt.executeQuery();
+
+            if (res.next()) {
+                double price = res.getBigDecimal("price").doubleValue();
+                info.add(res.getString("name"));
+                info.add(price);
+                pstmt.close();
+                this.disconnect();             
+                return info;
+            }           
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.disconnect();
+        return null;
+    }
     
 
     @Override
@@ -136,18 +161,18 @@ public final class ProductRepository implements IProductRepository {
             this.connect();
 
             String sql = "UPDATE  product "
-                    + "SET name=?, description=?, price=?, address=?, categoryId=?, image=?  "
+                    + "SET name=?, description=?, price=?, address=?, categoryId=?, stock=?, image=?  "
                     + "WHERE productId = ?";
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-                pstmt.setLong(1, newProduct.getProductId());
-                pstmt.setString(2, newProduct.getName());
-                pstmt.setString(3, newProduct.getDescription());
-                pstmt.setDouble(4, newProduct.getPrice());
-                pstmt.setString(5, newProduct.getAddress());
-                pstmt.setLong(6, newProduct.getCategoryId());
-                pstmt.setLong(7, newProduct.getStock());
-                pstmt.setBytes(8, newProduct.getImage());
+                pstmt.setString(1, newProduct.getName());
+                pstmt.setString(2, newProduct.getDescription());
+                pstmt.setDouble(3, newProduct.getPrice());
+                pstmt.setString(4, newProduct.getAddress());
+                pstmt.setInt(5, newProduct.getCategoryId());
+                pstmt.setInt(6, newProduct.getStock());
+                pstmt.setBytes(7, newProduct.getImage());
+                pstmt.setInt(8, newProduct.getProductId());
                 pstmt.executeUpdate();
             }
             this.disconnect();
@@ -217,6 +242,7 @@ public final class ProductRepository implements IProductRepository {
         this.disconnect();
         return null;
     }
+    
 
     @Override
     public List<Product> findByName(String pname) {

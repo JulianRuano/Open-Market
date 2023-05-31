@@ -1,9 +1,9 @@
 
 package co.unicauca.openmarket.client.domain.application;
 
-import co.unicauca.openmarket.commons.application.PaymentDetails;
 import co.unicauca.openmarket.client.access.IShoppingCartAccess;
 import co.unicauca.openmarket.commons.application.Invoice;
+import co.unicauca.openmarket.commons.application.creditCard;
 
 
 public class ShoppingCar {
@@ -17,8 +17,8 @@ public class ShoppingCar {
     public ShoppingCar(){
        
     }
-    public Invoice buy(Long id,PaymentDetails paymentMethod){
-        return repository.buy(id,paymentMethod);
+    public Invoice buy(int id,creditCard paymentMethod){
+        return repository.buy(id,  paymentMethod);
     }
     
 }

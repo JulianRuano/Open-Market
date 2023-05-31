@@ -1,7 +1,7 @@
 package co.unicauca.openmarket.commons.application;
 
 
-public class PaymentDetails {
+public class creditCard {
     
     private String nameOnCard;
     private String cardNumber;
@@ -9,7 +9,7 @@ public class PaymentDetails {
     private String month;
     private String year;
     
-    public PaymentDetails(String nameOnCard, String numTarjeta, String CVC, String mes,String anio){
+    public creditCard(String nameOnCard, String numTarjeta, String CVC, String mes,String anio){
         this.nameOnCard = nameOnCard;
         this.cardNumber = numTarjeta;
         this.CVC = CVC;
@@ -57,7 +57,8 @@ public class PaymentDetails {
         this.year = year;
     }
     
-    public String Details(){
+
+    public String getDetails(){
         return nameOnCard + cardNumber + CVC + month + year;   
     }
 }

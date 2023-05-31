@@ -6,7 +6,6 @@ import co.unicauca.openmarket.commons.domain.Category;
 
 
 import java.util.List;
-import javax.swing.JOptionPane;
 import reloj.frameworkobsobs.Observado;
 
 /**
