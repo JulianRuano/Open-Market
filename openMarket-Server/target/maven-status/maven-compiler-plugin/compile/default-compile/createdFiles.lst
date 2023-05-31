@@ -7,8 +7,12 @@ co\unicauca\openmarket\server\application\CreditCardPayment.class
 co\unicauca\openmarket\server\access\IProductRepository.class
 co\unicauca\openmarket\server\access\IPaymentRepository.class
 co\unicauca\openmarket\server\access\ICategoryRepository.class
+co\unicauca\openmarket\server\access\IUserRepository.class
+co\unicauca\openmarket\domain\services\UserService.class
 co\unicauca\openmarket\server\domain\Location.class
+co\unicauca\openmarket\server\infra\tcpip\OpenMarketServer.class
 co\unicauca\openmarket\server\infra\Context.class
+co\unicauca\openmarket\server\access\UserRepository.class
 co\unicauca\openmarket\server\infra\ErrorResponse.class
 co\unicauca\openmarket\server\access\PaymentRepository.class
 co\unicauca\openmarket\server\application\GenerateReference.class
@@ -16,6 +20,7 @@ co\unicauca\openmarket\server\application\GenerateReference$Reference.class
 co\unicauca\openmarket\server\application\IPaymentStrategy.class
 co\unicauca\openmarket\server\application\Calculator.class
 co\unicauca\openmarket\domain\services\ProductService.class
+co\unicauca\openmarket\server\access\Factory.class
 co\unicauca\openmarket\server\access\CategoryRepository.class
 co\unicauca\openmarket\server\application\PaymentHandler.class
 co\unicauca\openmarket\server\infra\Helpers.class

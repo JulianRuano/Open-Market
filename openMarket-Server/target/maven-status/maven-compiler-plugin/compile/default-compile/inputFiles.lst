@@ -2,7 +2,6 @@ C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Serv
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\ProductRepository.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\application\GenerateReference.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\Factory.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\UserRepositoryArrays.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\IPaymentRepository.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\infra\tcpip\OpenMarketHandler.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\application\Calculator.java
@@ -19,6 +18,7 @@ C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Serv
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\IUserRepository.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\CategoryRepository.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\application\PaymentHandler.java
+C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\access\UserRepository.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\domain\Location.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\application\CreditCardPayment.java
 C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Server\src\main\java\co\unicauca\openmarket\server\infra\Context.java

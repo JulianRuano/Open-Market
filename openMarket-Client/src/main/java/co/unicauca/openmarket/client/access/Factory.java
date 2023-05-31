@@ -70,9 +70,9 @@ public class Factory {
         return result;
     }
         
-    public ILoginAccess getLoginRepository(String type) {
+    public IUserAccess getUserRepository(String type) {
 
-       ILoginAccess result = null;
+       IUserAccess result = null;
 
         switch (type) {
             case "default":
