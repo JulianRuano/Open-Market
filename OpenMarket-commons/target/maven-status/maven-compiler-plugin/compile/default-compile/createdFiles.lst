@@ -1,5 +1,6 @@
 co\unicauca\openmarket\commons\application\Invoice.class
 co\unicauca\openmarket\commons\infra\Utilities.class
+co\unicauca\openmarket\commons\domain\User.class
 co\unicauca\openmarket\commons\infra\Parameter.class
 co\unicauca\openmarket\commons\domain\Product.class
 co\unicauca\openmarket\commons\application\PaymentDetails.class

@@ -58,7 +58,7 @@ public class ProductAccessImplSockets implements IProductAccess {
                 //Agregó correctamente, devuelve la cedula del customer 
                 //return customer.getId();
                 int idProduct =Integer.parseInt(requestJson);
-                Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", idProduct);
+                Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", idProduct);
                 id=idProduct;
             }
         }

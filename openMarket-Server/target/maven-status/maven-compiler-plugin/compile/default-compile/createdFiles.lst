@@ -1,14 +1,10 @@
 co\unicauca\openmarket\domain\services\CategoryService.class
 co\unicauca\openmarket\server\domain\Location.class
-co\unicauca\openmarket\server\infra\tcpip\OpenMarketServer.class
 co\unicauca\openmarket\server\infra\Context.class
 co\unicauca\openmarket\server\application\PurchaseGenerator.class
 co\unicauca\openmarket\server\infra\ErrorResponse.class
 co\unicauca\openmarket\server\access\ProductRepository.class
-co\unicauca\openmarket\server\infra\tcpip\OpenMarketHandler.class
 co\unicauca\openmarket\domain\services\ProductService.class
-co\unicauca\openmarket\server\access\Factory.class
-co\unicauca\openmarket\server\domain\User.class
 co\unicauca\openmarket\server\infra\Helpers$1.class
 co\unicauca\openmarket\server\access\CategoryRepository.class
 co\unicauca\openmarket\server\access\IProductRepository.class

@@ -78,4 +78,18 @@ public class Factory {
         return result;
 
     }
+     public IUserRepository getUserRepository() {
+        String type=Utilities.loadProperty("user.repository");
+         IUserRepository result = null;
+
+        switch (type) {
+            case "default":
+                result = new UserRepositoryArrays();
+            break;
+
+    }
+
+        return result;
+
+    }
 }

@@ -56,6 +56,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
 
     public crudProducto(ProductService productService, OMInvoker ominvoker, CategoryService categoryService) {
         initComponents();
+         
         this.productService = productService;
         this.categoryService = categoryService;
         this.ominvoker = ominvoker;
@@ -96,10 +97,15 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
                 }
             });
         }
-
-        stateInitial();
+         stateInitial();
+         //initStyles();
+         this.btnNuevo.putClientProperty("JButton.buttonType", "roundRect");
+      
     }
-
+    private void initStyles(){
+     // this.btnEliminar.putClientProperty("JButton.buttonType", "roundRect");
+      //para el diseño del titulo y el color de la letra
+     }
     private void initializeTable() {
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},

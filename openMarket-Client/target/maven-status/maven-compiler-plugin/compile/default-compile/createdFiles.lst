@@ -1,11 +1,14 @@
 co\unicauca\openmarket\client\access\CategoryAccessImplSockets.class
 co\unicauca\openmarket\presentacion\crudCategoria$4.class
+co\unicauca\openmarket\presentacion\validaciones\producto\MensajesError.class
 co\unicauca\openmarket\presentacion\Dashboard.class
+co\unicauca\openmarket\presentacion\crudProducto$12.class
 co\unicauca\openmarket\presentacion\crudProducto$5.class
 co\unicauca\openmarket\presentacion\crudCategoria$7.class
 co\unicauca\openmarket\presentacion\crudCategoria$1.class
 co\unicauca\openmarket\client\access\IShoppingCartAccess.class
 co\unicauca\openmarket\presentacion\crudProducto$8.class
+co\unicauca\openmarket\presentacion\GUILogin$1.class
 co\unicauca\openmarket\client\infra\OpenMarketSocket.class
 co\unicauca\openmarket\presentacion\GUIPaymet$4.class
 co\unicauca\openmarket\presentacion\crudProducto.class
@@ -14,6 +17,7 @@ co\unicauca\openmarket\presentacion\crudProducto$1.class
 co\unicauca\openmarket\client\access\IProductAccess.class
 co\unicauca\openmarket\client\domain\application\ShoppingCar.class
 co\unicauca\openmarket\client\presentation\commands\OMAddProductCommand.class
+co\unicauca\openmarket\presentacion\GUILogin.class
 co\unicauca\openmarket\client\presentation\commands\OMCommand.class
 co\unicauca\openmarket\presentacion\Dashboard$2.class
 co\unicauca\openmarket\presentacion\crudProducto$4.class
@@ -23,8 +27,10 @@ co\unicauca\openmarket\presentacion\crudCategoria$8.class
 co\unicauca\openmarket\client\presentation\commands\OMEditProductCommand.class
 co\unicauca\openmarket\presentacion\crudCategoria$5.class
 co\unicauca\openmarket\presentacion\crudProducto$7.class
+co\unicauca\openmarket\client\access\ILoginAccess.class
 co\unicauca\openmarket\presentacion\GUIPaymet$2.class
 co\unicauca\openmarket\presentacion\GUIPaymet$5.class
+co\unicauca\openmarket\presentacion\validaciones\ValidadorCampos.class
 co\unicauca\openmarket\client\domain\User.class
 co\unicauca\openmarket\presentacion\crudCategoria$2.class
 co\unicauca\openmarket\presentacion\Tienda.class
@@ -45,6 +51,7 @@ co\unicauca\openmarket\presentacion\crudProducto$6.class
 co\unicauca\openmarket\presentacion\Tienda$1.class
 co\unicauca\openmarket\client\presentation\commands\OMDeleteProductCommand.class
 co\unicauca\openmarket\client\main\Main.class
+co\unicauca\openmarket\presentacion\validaciones\producto\ValidadorFormularioProducto.class
 co\unicauca\openmarket\client\domain\service\ProductService.class
 co\unicauca\openmarket\presentacion\crudCategoria$3.class
 co\unicauca\openmarket\client\access\ProductAccessImplSockets.class
@@ -56,6 +63,7 @@ co\unicauca\openmarket\presentacion\crudProducto$9.class
 co\unicauca\openmarket\client\domain\Location.class
 co\unicauca\openmarket\client\access\CategoryAccessImplSockets$1.class
 co\unicauca\openmarket\presentacion\crudProducto$10.class
+co\unicauca\openmarket\presentacion\crudProducto$13.class
 co\unicauca\openmarket\presentacion\crudProducto$2.class
 co\unicauca\openmarket\client\presentation\commands\OMInvoker.class
 co\unicauca\openmarket\client\presentation\commands\OMAddCategoryCommand.class
