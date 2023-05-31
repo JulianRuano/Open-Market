@@ -616,25 +616,25 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
 
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (addOption == 1) {
-            //Agregar
-            if(!validarCampos()){
-                return;
-            }
-            addProduct();
-
-        } else if(addOption == 2){
-            //Editar
-            if(!validarCampos()){
-                return;
-            }
-            editProduct();
-        }else{
-            //Eliminar
-            if (!validarId(txtCodigoProducto)) {
-                return;
-            }
-            deleteProduct();
+        switch (addOption) {
+            case 1:
+                //Agregar
+                if(!validarCampos()){
+                    return;
+                }   addProduct();
+                break;
+            case 2:
+                //Editar
+                if(!validarCampos()){
+                    return;
+                }   editProduct();
+                break;
+            default:
+                //Eliminar
+                if (!validarId(txtCodigoProducto)) {
+                    return;
+                }   deleteProduct();
+                break;
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -767,16 +767,14 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
 
     private void addProduct() {
         try {
-            int productId = Integer.parseInt(this.txtCodigoProducto.getText());
             String name = txtNombre.getText().trim();
             String description = txtDescripcion.getText().trim();
             double price = Double.parseDouble(this.txtPrecio.getText());
             String address = this.txtDireccion.getText();
             int stock = Integer.parseInt(txtStock.getText());
-
             byte[] image = getImagen(Ruta);
-// public Product(int productId, String name, String description, double price,String address ,int categoryId, int stock,byte [] image) {
-            Product OProduct = new Product(productId, name, description, price, address, selectedCategoryId, stock, image);
+
+            Product OProduct = new Product(0, name, description, price, address, selectedCategoryId, stock, image);
             OMAddProductCommand comm = new OMAddProductCommand(OProduct, productService);
             ominvoker.addCommand(comm);
             ominvoker.execute();
@@ -868,10 +866,9 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
     }
     
     private boolean validarCampos(){
-        System.err.println(selectedCategoryId);
-        List<MensajesError> errores = validarFormulario.validar(txtCodigoProducto, txtNombre, txtDescripcion,
+        List<MensajesError> errores = validarFormulario.validar( txtNombre, txtDescripcion,
                 txtPrecio, txtStock, txtDireccion, selectedCategoryId);
-
+     
         if (!errores.isEmpty()) {
             String mensajeError = "Debe ingresar el/los siguiente(s) campo(s):\n";
             for (MensajesError mensaje : errores) {
@@ -881,9 +878,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
 
             // Coloca el foco en el primer campo con error
             switch (errores.get(0)) {
-                case CODIGO_PRODUCTO:
-                    txtCodigoProducto.requestFocus();
-                    break;
                 case NOMBRE_PRODUCTO:
                     txtNombre.requestFocus();
                     break;
