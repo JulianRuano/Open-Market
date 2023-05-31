@@ -263,7 +263,7 @@ public class Dashboard extends javax.swing.JFrame {
 
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
-        ShowJPanel(new Tienda(productService,shoppingCart) );
+        ShowJPanel(new Tienda(productService,shoppingCart,this.categoryService) );
     }//GEN-LAST:event_btnComprarActionPerformed
 
     private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed
