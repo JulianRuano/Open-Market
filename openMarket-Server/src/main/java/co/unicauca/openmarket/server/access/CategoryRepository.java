@@ -111,8 +111,6 @@ public class CategoryRepository implements ICategoryRepository {
     return false;
 }
 
-
-
     @Override
     public boolean edit(int id, Category category) {
         try {
@@ -155,30 +153,36 @@ public class CategoryRepository implements ICategoryRepository {
         }
         return false;
     }
-
+ 
     @Override
     public Category findById(int id) {
-        try {
-            this.connect();
-            String sql = "{CALL obtener_categoria(?)}";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, id);
-            ResultSet res = pstmt.executeQuery();
-            if (res.next()) {
-                Category cat = new Category();
-                cat.setCategoryId(res.getInt("id"));
-                cat.setName(res.getString("nombre"));                 
-                this.disconnect();
-                return cat;
-            } else {
-                return null;
-            }
-
-        } catch (SQLException ex) {
-             Logger.getLogger(CategoryRepository.class.getName()).log(Level.SEVERE, "Error al consultar Customer de la base de datos", ex);
+    try {
+        this.connect();
+        String sql = "{CALL GetCategory(?)}";
+        CallableStatement cstmt = conn.prepareCall(sql);
+        cstmt.setInt(1, id); // Reemplaza el valor 2 con el valor deseado para el parámetro del procedimiento almacenado
+        ResultSet res = cstmt.executeQuery();
+        
+        if (res.next()) {
+            int categoryId = res.getInt("categoryId");
+            String categoryName = res.getString("name");
+            
+            Category cat = new Category();
+            cat.setCategoryId(categoryId);
+            cat.setName(categoryName);
+            
+            this.disconnect();
+            return cat;
+        } else {
+            return null;
         }
-        return null;
+    } catch (SQLException ex) {
+        Logger.getLogger(CategoryRepository.class.getName()).log(Level.SEVERE, "Error al consultar la categoría en la base de datos", ex);
     }
+    return null;
+}
+
+
 
     @Override
     public List<Category> findAll() {

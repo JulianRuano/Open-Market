@@ -853,7 +853,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
             return false;
         }
         if (!validarNumeros(caja.getText().trim())) {
-            Messages.showMessageDialog("El codigo debe ser numeros", "Error");
+            Messages.showMessageDialog("El codigo debe ser numérico", "Error");
             caja.setText("");
             caja.requestFocus();
             return false;
