@@ -135,8 +135,7 @@ public class OpenMarketHandler extends ServerHandler {
         int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         Category category = categoryService.findById(id);
         if (category == null) {
-            String errorJson = generateNotFoundErrorJson();
-            return errorJson;
+            return helpers.generateNotFoundErrorJson(Context.CATEGORY);
         } else {
             return objectToJSON(category);
         }
@@ -202,8 +201,7 @@ public class OpenMarketHandler extends ServerHandler {
         int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         Product producto = productService.findById(id);
         if (producto == null) {
-            String errorJson = generateNotFoundErrorJson();
-            return errorJson;
+           return helpers.generateNotFoundErrorJson(Context.PRODUCT);
         } else {
             return objectToJSON(producto);
         }
@@ -263,8 +261,7 @@ public class OpenMarketHandler extends ServerHandler {
         paymentHandler.setPaymentStrategy(creditCardPayment);
 
         if (!paymentHandler.processPayment(details)) {
-            String errorJson = generateCardNotFoundErrorJson();
-            return errorJson;
+            return helpers.generateBadRequestJson(Context.SHOPPING);
         } else {
             List<Object> productNamePrice = productService.findNamePrice(idProduct);
             String productName = productNamePrice.get(0).toString();
@@ -276,39 +273,6 @@ public class OpenMarketHandler extends ServerHandler {
             Invoice invoice = paymentService.findById(reference);
             return objectToJSON(invoice);
         }
-    }
-
-    /**
-     * Genera un ErrorJson
-     *
-     * @return error en formato json
-     */
-    private String generateCardNotFoundErrorJson() {
-        List<JsonError> errors = new ArrayList<>();
-        JsonError error = new JsonError();
-        error.setCode("000");
-        error.setError("Failed_Card");
-        error.setMessage("Ha ocurrido un error con la tarjeta");
-        errors.add(error);
-
-        Gson gson = new Gson();
-        String errorsJson = gson.toJson(errors);
-
-        return errorsJson;
-    }
-
-    private String generateNotFoundErrorJson() {
-        List<JsonError> errors = new ArrayList<>();
-        JsonError error = new JsonError();
-        error.setCode("404");
-        error.setError("NOT_FOUND");
-        error.setMessage("Clase no encontrada. ID no existe");
-        errors.add(error);
-
-        Gson gson = new Gson();
-        String errorsJson = gson.toJson(errors);
-
-        return errorsJson;
     }
 
     /**
