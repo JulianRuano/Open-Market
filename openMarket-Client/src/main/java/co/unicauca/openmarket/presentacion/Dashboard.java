@@ -8,6 +8,7 @@ package co.unicauca.openmarket.presentacion;
 import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
+import co.unicauca.openmarket.client.domain.service.UserService;
 import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -23,16 +24,20 @@ public class Dashboard extends javax.swing.JFrame {
      private final ProductService productService;
      private final CategoryService categoryService;
     private final ShoppingCar shoppingCart;
+    private final UserService userService;
+    private GUILogin instance;
     private final OMInvoker ominvokerCategorias;
     private final OMInvoker ominvokerProducts;
     
-    public Dashboard(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart) {
+    public Dashboard(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart,UserService userService) {
         initComponents();
         initStyles();
          setExtendedState(MAXIMIZED_BOTH);
          this.productService=productService;
          this.categoryService=categoryService;
          this.shoppingCart=shoppingCart;
+         this.userService=userService;
+         instance=new GUILogin(userService);
          ominvokerCategorias = new OMInvoker();
          ominvokerProducts=new OMInvoker();
     }
@@ -66,6 +71,7 @@ public class Dashboard extends javax.swing.JFrame {
         btnUsuarios = new javax.swing.JButton();
         pnlHeader = new javax.swing.JPanel();
         lblTituloHeader = new javax.swing.JLabel();
+        btnIniciarSesion = new javax.swing.JButton();
         pnlContenidoIzquierdo = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -152,6 +158,13 @@ public class Dashboard extends javax.swing.JFrame {
 
         lblTituloHeader.setText("Open Market");
 
+        btnIniciarSesion.setText("Iniciar Sesion");
+        btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarSesionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
         pnlHeaderLayout.setHorizontalGroup(
@@ -159,14 +172,18 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(pnlHeaderLayout.createSequentialGroup()
                 .addGap(355, 355, 355)
                 .addComponent(lblTituloHeader)
-                .addContainerGap(767, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 578, Short.MAX_VALUE)
+                .addComponent(btnIniciarSesion)
+                .addGap(177, 177, 177))
         );
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlHeaderLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lblTituloHeader)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnIniciarSesion)
+                    .addComponent(lblTituloHeader))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlContenidoIzquierdoLayout = new javax.swing.GroupLayout(pnlContenidoIzquierdo);
@@ -239,6 +256,10 @@ public class Dashboard extends javax.swing.JFrame {
         this.categoryService.addObservador(instance);
     }//GEN-LAST:event_btnCategoriaActionPerformed
 
+    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+         instance.setVisible(true);
+    }//GEN-LAST:event_btnIniciarSesionActionPerformed
+
 
    
 
@@ -246,6 +267,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel background;
     private javax.swing.JButton btnCategoria;
     private javax.swing.JButton btnComprar;
+    private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JButton btnProducto;
     private javax.swing.JButton btnUsuarios;
     private javax.swing.JLabel lblTituloHeader;

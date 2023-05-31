@@ -5,6 +5,7 @@ import co.unicauca.openmarket.commons.domain.User;
  *
  * @author brayan
  */
-public interface ILoginAccess {
-    boolean login(User user);
+public interface IUserAccess {
+    String login(User user)throws Exception;
+     boolean register(User user)throws Exception;
 }

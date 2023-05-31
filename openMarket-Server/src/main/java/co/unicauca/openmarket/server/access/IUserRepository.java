@@ -12,5 +12,6 @@ import co.unicauca.openmarket.commons.domain.User;
  * @author brayan
  */
 public interface IUserRepository {
-   User login(User user); 
+   User login(User user);
+   boolean  register(User user);
 }

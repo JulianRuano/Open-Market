@@ -60,7 +60,7 @@ public class Factory {
          IUserRepository result = null;
         switch (type) {
             case "default":
-                result = new UserRepositoryArrays();
+                result = new UserRepository();
             break;
 
     }
