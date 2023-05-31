@@ -61,7 +61,6 @@ public class Tienda extends javax.swing.JPanel {
         tblProductos = new javax.swing.JTable();
         txtComprar = new javax.swing.JTextField();
         btnComprar2 = new javax.swing.JButton();
-        txtBuscar = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
 
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
@@ -104,26 +103,22 @@ public class Tienda extends javax.swing.JPanel {
                         .addGap(32, 32, 32)
                         .addComponent(btnComprar2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlTiendaLayout.createSequentialGroup()
-                        .addGap(89, 89, 89)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(364, 364, 364)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(343, Short.MAX_VALUE))
         );
         pnlTiendaLayout.setVerticalGroup(
             pnlTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTiendaLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(pnlTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnComprar2, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -212,7 +207,6 @@ public class Tienda extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlTienda;
     private javax.swing.JTable tblProductos;
-    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtComprar;
     // End of variables declaration//GEN-END:variables
 }
