@@ -48,7 +48,7 @@ public class PaymentRepository implements IPaymentRepository{
     }
 
     @Override
-    public boolean save(String receiptId, String details) {
+    public boolean save(String receiptId, String details, int userID) {
         try {
             this.connect();
             String sql = "INSERT INTO receipt (receiptId,details) " +
