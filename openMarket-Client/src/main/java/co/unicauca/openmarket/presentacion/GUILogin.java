@@ -10,6 +10,7 @@ import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.domain.service.UserService;
 import static co.unicauca.openmarket.client.infra.Messages.successMessage;
+import co.unicauca.openmarket.commons.domain.User;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,7 +21,7 @@ public class GUILogin extends javax.swing.JFrame {
 
    
     private UserService userService;
-    
+    private Dashboard   frameDasboard;
     private GUIRegister instance;
     
     public GUILogin( UserService userService) {
@@ -129,8 +130,11 @@ public class GUILogin extends javax.swing.JFrame {
       try{
             String username=this.txtUsername.getText();
             String contrasenia=this.txtContrasenia.getText();
+           
             
-            if(userService.loginService(username, contrasenia)!=null){
+            if( userService.loginService(username,contrasenia)!=null){
+                
+                
                 JOptionPane.showMessageDialog(null,
                     "Se inicio sesion corrarctamente",
                     "Inicicio de sesion",

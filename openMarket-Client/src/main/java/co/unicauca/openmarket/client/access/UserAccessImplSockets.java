@@ -27,8 +27,8 @@ public class UserAccessImplSockets implements IUserAccess {
     
     
     @Override
-    public String login(User user)throws Exception {
-       String usuario=null;
+    public User login(User user)throws Exception {
+       
         String jsonResponse = null;
         String requestJson = doLoginRequestJson(user);
          try {
@@ -40,29 +40,20 @@ public class UserAccessImplSockets implements IUserAccess {
             Logger.getLogger(UserAccessImplSockets.class.getName()).log(Level.SEVERE, "No hubo conexión con el servidor", ex);
         }
         if (jsonResponse == null) {
-             try {
-                 throw new Exception("No se pudo conectar con el servidor. Revise la red o que el servidor esté escuchando. ");
-             } catch (Exception ex) {
-                 Logger.getLogger(UserAccessImplSockets.class.getName()).log(Level.SEVERE, null, ex);
-             }
+               throw new Exception("No se pudo conectar con el servidor. Revise la red o que el servidor esté escuchando. ");
         } else {
             if (jsonResponse.contains("error")) {
                 //Devolvió algún error
                 Logger.getLogger(UserAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse+"aqi estoy");
-                try {
                     throw new Exception(extractMessages(jsonResponse));
-                } catch (Exception ex) {
-                    Logger.getLogger(UserAccessImplSockets.class.getName()).log(Level.SEVERE, null, ex);
-                }
-               
+ 
             } else {
                 
-                String aux=requestJson;
-                Logger.getLogger(UserAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: {0}", aux);
-               usuario=aux;
+              User newUser= jsonToUser(jsonResponse);
+                Logger.getLogger(UserAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: {0}", jsonResponse );
+                return newUser;
             }
         }
-       return usuario;
     } 
      @Override
     public boolean register(User user)throws Exception {

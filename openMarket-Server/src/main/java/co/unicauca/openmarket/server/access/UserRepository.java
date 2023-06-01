@@ -51,7 +51,7 @@ public class UserRepository implements IUserRepository{
     public User login(User user) {
       try{
           this.connect();
-          String sql = "SELECT userName FROM user "
+          String sql = "SELECT userID,userName FROM user "
            + "WHERE userName LIKE ? AND password LIKE ?";
           PreparedStatement pstmt = conn.prepareStatement(sql);
           pstmt.setString(1,user.getUsername());
@@ -60,6 +60,7 @@ public class UserRepository implements IUserRepository{
           if (res.next()){
               User newUser=new User();
               newUser.setUsername(res.getString("userName"));
+              newUser.setUserId(res.getInt("userID"));
               pstmt.close();
               this.disconnect(); 
               return newUser;

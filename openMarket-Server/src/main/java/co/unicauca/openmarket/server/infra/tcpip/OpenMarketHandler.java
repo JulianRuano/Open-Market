@@ -360,7 +360,7 @@ public class OpenMarketHandler extends ServerHandler {
       user.setContrasenia(protocolRequest.getParameters().get(1).getValue());
       
        if(userService.login(user)==null){
-             return helpers.generateNotFoundErrorJson(Context.CATEGORY);
+             return helpers.generateNotFoundErrorJson(Context.USER);
        }else{
            return objectToJSON(userService.login(user));
         }
