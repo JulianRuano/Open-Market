@@ -17,7 +17,7 @@ public class ShoppingCartAccessImplSockets implements IShoppingCartAccess {
         mySocket = new OpenMarketSocket();
     }
     @Override 
-    public Invoice buy(int id, creditCard paymentMethod) {
+    public Invoice buy(int id, creditCard paymentMethod, int userId) {
         String jsonResponse = null;
         String requestJson = doBuyRequestJson(id,paymentMethod);
         try {

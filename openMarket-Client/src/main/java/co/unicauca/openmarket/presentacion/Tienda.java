@@ -74,6 +74,9 @@ public class Tienda extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         txtMaxPrice = new javax.swing.JTextField();
         txtMinPrice = new javax.swing.JTextField();
+        txtCodProduct = new javax.swing.JTextField();
+        btnComprar = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -166,6 +169,15 @@ public class Tienda extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnComprar.setText("Comprar");
+        btnComprar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComprarActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Ingrese el id del producto a comprar: ");
+
         javax.swing.GroupLayout pnlTiendaLayout = new javax.swing.GroupLayout(pnlTienda);
         pnlTienda.setLayout(pnlTiendaLayout);
         pnlTiendaLayout.setHorizontalGroup(
@@ -173,11 +185,18 @@ public class Tienda extends javax.swing.JPanel {
             .addGroup(pnlTiendaLayout.createSequentialGroup()
                 .addGroup(pnlTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTiendaLayout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlTiendaLayout.createSequentialGroup()
                         .addGap(143, 143, 143)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlTiendaLayout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addGroup(pnlTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlTiendaLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtCodProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(240, Short.MAX_VALUE))
         );
         pnlTiendaLayout.setVerticalGroup(
@@ -187,7 +206,12 @@ public class Tienda extends javax.swing.JPanel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 43, Short.MAX_VALUE))
+                .addGap(22, 22, 22)
+                .addGroup(pnlTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtCodProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 96, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -198,7 +222,9 @@ public class Tienda extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlTienda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnlTienda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -233,6 +259,20 @@ public class Tienda extends javax.swing.JPanel {
     }
 
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
+        try{
+            int idProducto=Integer.parseInt(this.txtCodProduct.getText());          
+            compra.obtenerProducto(productService.findProductById(idProducto));
+            compra.setVisible(true);
+        }catch(Exception e){
+            successMessage(e.getMessage(), "Atención"); 
+            JOptionPane.showMessageDialog(null,
+              "Seleccione por el dato que quiere buscar",
+              "Error al introducir el dato",
+              JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnComprarActionPerformed
     private void fillTable(List<Product> listProducts) {
         tblProductos.setDefaultRenderer(Object.class, new RenderImagen());
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
@@ -275,16 +315,19 @@ public class Tienda extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
+    private javax.swing.JButton btnComprar;
     private javax.swing.JComboBox<String> cbxCategories;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlTienda;
     private javax.swing.JTable tblProductos;
+    private javax.swing.JTextField txtCodProduct;
     private javax.swing.JTextField txtMaxPrice;
     private javax.swing.JTextField txtMinPrice;
     private javax.swing.JTextField txtNombre;
