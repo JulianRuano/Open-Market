@@ -38,8 +38,9 @@ public class Tienda extends javax.swing.JPanel {
     private final GUIPaymet compra;
     private PresentacionHelpers presHelpers;
     private CategoryService categoryService;
+    private int idUser; 
 
-    public Tienda(ProductService productService, ShoppingCar shoppingCart, CategoryService categoryService) {
+    public Tienda(ProductService productService, ShoppingCar shoppingCart, CategoryService categoryService,int idUser) {
         initComponents();
         this.productService = productService;
         this.categoryService = categoryService;
@@ -49,6 +50,7 @@ public class Tienda extends javax.swing.JPanel {
         mModeloTabla.addColumn("Direccion");
         mModeloTabla.addColumn("Categoria");
         mModeloTabla.addColumn("Imagen");
+        this.idUser = idUser;
         presHelpers = new PresentacionHelpers();
         presHelpers.loadCategories(cbxCategories, categoryService);
         tblProductos.setModel(mModeloTabla);
@@ -263,7 +265,7 @@ public class Tienda extends javax.swing.JPanel {
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
         try{
             int idProducto=Integer.parseInt(this.txtCodProduct.getText());          
-            compra.obtenerProducto(productService.findProductById(idProducto));
+            compra.obtenerProducto(productService.findProductById(idProducto),idUser);
             compra.setVisible(true);
         }catch(Exception e){
             successMessage(e.getMessage(), "Atención"); 

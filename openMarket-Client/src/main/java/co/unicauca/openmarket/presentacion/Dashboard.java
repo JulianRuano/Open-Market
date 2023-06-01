@@ -28,6 +28,7 @@ public class Dashboard extends javax.swing.JFrame {
     private GUILogin instance;
     private final OMInvoker ominvokerCategorias;
     private final OMInvoker ominvokerProducts;
+    private  int idUser;
     
     public Dashboard(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart,GUILogin login) {
         initComponents();
@@ -44,8 +45,8 @@ public class Dashboard extends javax.swing.JFrame {
         this.btnProducto.setVisible(false);
         this.btnCategoria.setVisible(false);
 
-
-        if (login.idLogin() != 0){
+        this.idUser = login.idLogin();
+        if (idUser != 0){
             this.btnProducto.setVisible(true);
             this.btnCategoria.setVisible(true);
 
@@ -273,7 +274,7 @@ public class Dashboard extends javax.swing.JFrame {
 
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
-        ShowJPanel(new Tienda(productService,shoppingCart,this.categoryService) );
+        ShowJPanel(new Tienda(productService,shoppingCart,this.categoryService,idUser) );
     }//GEN-LAST:event_btnComprarActionPerformed
 
     private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed

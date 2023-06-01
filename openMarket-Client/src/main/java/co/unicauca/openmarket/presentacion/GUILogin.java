@@ -26,7 +26,7 @@ public class GUILogin extends javax.swing.JFrame {
     private  ProductService productService ;
     private  CategoryService categoryService ;
     private  ShoppingCar shoppingCart;
-    private int idUSer;
+    private int idUSer = 0;
     
     public GUILogin( UserService userService) {
         initComponents();

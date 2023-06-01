@@ -43,6 +43,7 @@ co\unicauca\openmarket\presentacion\GUILogin$2.class
 co\unicauca\openmarket\client\domain\User.class
 co\unicauca\openmarket\presentacion\crudCategoria$2.class
 co\unicauca\openmarket\presentacion\Tienda.class
+co\unicauca\openmarket\presentacion\Tienda$2.class
 co\unicauca\openmarket\client\infra\Messages.class
 co\unicauca\openmarket\presentacion\MisCompras.class
 co\unicauca\openmarket\presentacion\crudProducto$3.class
