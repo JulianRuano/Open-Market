@@ -267,6 +267,7 @@ public class OpenMarketHandler extends ServerHandler {
         String CVC = protocolRequest.getParameters().get(3).getValue();
         String month = protocolRequest.getParameters().get(4).getValue();
         String year = protocolRequest.getParameters().get(5).getValue();
+        int userID = Integer.parseInt(protocolRequest.getParameters().get(6).getValue());
 
         // Contruiomos los objectos      
         PaymentHandler paymentHandler = new PaymentHandler();
@@ -283,7 +284,7 @@ public class OpenMarketHandler extends ServerHandler {
             double price = (double) productNamePrice.get(1);
 
             String reference = Reference.getReference();
-            paymentService.save(reference, details);
+            paymentService.save(reference, details,userID);
             paymentService.linkProduct(reference, idProduct);
             Invoice invoice = paymentService.findById(reference);
             return objectToJSON(invoice);

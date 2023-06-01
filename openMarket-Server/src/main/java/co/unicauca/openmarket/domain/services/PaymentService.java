@@ -17,8 +17,8 @@ public class PaymentService {
         this.repo = repo;
     }
     
-    public synchronized boolean save (String receiptId, String details){
-        return repo.save(receiptId, details);
+    public synchronized boolean save (String receiptId, String details, int userID){
+        return repo.save(receiptId, details,userID);
     }
     public synchronized Invoice findById(String reference){
         return repo.findById(reference);
