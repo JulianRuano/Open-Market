@@ -26,7 +26,6 @@ public class Dashboard extends javax.swing.JFrame {
     private final ShoppingCar shoppingCart;
     private final UserService userService;
     private GUILogin instance;
-    private MisCompras misCompras;
     private final OMInvoker ominvokerCategorias;
     private final OMInvoker ominvokerProducts;
     
@@ -39,7 +38,6 @@ public class Dashboard extends javax.swing.JFrame {
          this.shoppingCart=shoppingCart;
          this.userService=userService;
          instance=new GUILogin(userService);
-         misCompras=new MisCompras();
          ominvokerCategorias = new OMInvoker();
          ominvokerProducts=new OMInvoker();
     }
@@ -112,7 +110,7 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         btnComprar.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
-        btnComprar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/cart-regular-36.png"))); // NOI18N
+        btnComprar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tienda.png"))); // NOI18N
         btnComprar.setText("Tienda");
         btnComprar.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
         btnComprar.setBorderPainted(false);
@@ -134,7 +132,14 @@ public class Dashboard extends javax.swing.JFrame {
         btnUsuarios.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnUsuarios.setIconTextGap(10);
 
+        btnCompras.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
+        btnCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shopping-cart_icon-icons.com_72552.png"))); // NOI18N
         btnCompras.setText("Mis Compras");
+        btnCompras.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
+        btnCompras.setBorderPainted(false);
+        btnCompras.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnCompras.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnCompras.setIconTextGap(10);
         btnCompras.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnComprasActionPerformed(evt);
@@ -148,11 +153,8 @@ public class Dashboard extends javax.swing.JFrame {
             .addComponent(btnProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
             .addComponent(btnComprar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnUsuarios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(pnlBarraLateralLayout.createSequentialGroup()
-                .addGap(97, 97, 97)
-                .addComponent(btnCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(btnCompras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlBarraLateralLayout.setVerticalGroup(
             pnlBarraLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,9 +166,9 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(btnCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(59, 59, 59)
-                .addComponent(btnCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -277,7 +279,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void btnComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprasActionPerformed
-       misCompras.setVisible(true); 
+       ShowJPanel(new MisCompras() );
     }//GEN-LAST:event_btnComprasActionPerformed
 
 
