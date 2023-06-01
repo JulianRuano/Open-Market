@@ -20,7 +20,7 @@ public class UserService {
     }
     
     
-    public String loginService(String username,String contrasenia)throws Exception{
+    public User loginService(String username,String contrasenia)throws Exception{
         User user=new User();
         user.setUsername(username);
         user.setContrasenia(contrasenia);
