@@ -28,9 +28,7 @@ public class GUIPaymet extends javax.swing.JFrame {
 
      private int idProduct;
      private ShoppingCar shoppingCart;
-  
-      
-      
+
      
     public GUIPaymet(ShoppingCar shoppingCart) {
         initComponents();
@@ -472,7 +470,7 @@ public class GUIPaymet extends javax.swing.JFrame {
         }   
         creditCard paymentMethod = new creditCard(nombreTitular, numTarjeta, CVC, mes, anio);  
         Invoice result = new Invoice();
-        result = shoppingCart.buy(idProduct,paymentMethod);  
+        result = shoppingCart.buy(idProduct,paymentMethod,0);  
         
         if(!result.getNameProduct().isEmpty()) {
             String message = ("Producto comprado con éxito "
