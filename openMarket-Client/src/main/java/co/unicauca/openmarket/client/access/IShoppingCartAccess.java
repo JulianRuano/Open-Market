@@ -5,5 +5,5 @@ import co.unicauca.openmarket.commons.application.creditCard;
 
 
 public interface IShoppingCartAccess {
-    Invoice buy(int id, creditCard paymentMethod);
+    Invoice buy(int id, creditCard paymentMethod, int idUser);
 }

@@ -17,8 +17,8 @@ public class ShoppingCar {
     public ShoppingCar(){
        
     }
-    public Invoice buy(int id,creditCard paymentMethod){
-        return repository.buy(id,  paymentMethod);
+    public Invoice buy(int id,creditCard paymentMethod, int idUser){
+        return repository.buy(id,  paymentMethod, idUser);
     }
     
 }
