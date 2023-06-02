@@ -77,5 +77,14 @@ public class Factory {
     }       
         return result;
     }
+    
+    public IDeliverRepository getDeliverRepository(String type) {
+         IDeliverRepository result = null;
+
+        switch (type) {
+            case "default" -> result = new DeliverRepository();      
+    }       
+        return result;
+    }
 
 }

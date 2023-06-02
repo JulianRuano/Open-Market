@@ -47,7 +47,7 @@ public class ShoppingCartAccessImplSockets implements IShoppingCartAccess {
                  
             } else {
                 Invoice invoice = jsonToInvoice(jsonResponse);
-                Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", jsonResponse);
+                Logger.getLogger(ShoppingCartAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", jsonResponse);
                 return invoice;               
             }
         } 

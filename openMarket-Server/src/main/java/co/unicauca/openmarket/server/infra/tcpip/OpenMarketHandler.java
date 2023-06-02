@@ -14,6 +14,7 @@ import co.unicauca.openmarket.commons.domain.User;
 import co.unicauca.openmarket.commons.infra.Parameter;
 import co.unicauca.openmarket.commons.infra.Protocol;
 import co.unicauca.openmarket.domain.services.CategoryService;
+import co.unicauca.openmarket.domain.services.DeliverService;
 import co.unicauca.strategyserver.infra.ServerHandler;
 import co.unicauca.openmarket.domain.services.PaymentService;
 import co.unicauca.openmarket.domain.services.ProductService;
@@ -40,6 +41,7 @@ public class OpenMarketHandler extends ServerHandler {
     private static CategoryService categoryService;
     private static UserService userService;
     private static PaymentService paymentService;
+    private static DeliverService deliverRepository;
     private static Helpers helpers;
 
     public OpenMarketHandler() {
@@ -125,6 +127,14 @@ public class OpenMarketHandler extends ServerHandler {
                 if (protocolRequest.getAction().equals("buy")) {
                     // Petecion de compra
                     response = processBuyProduct(protocolRequest);
+                }
+                if (protocolRequest.getAction().equals("confirm")) {
+                    // Confrimar recibido
+                    response = processConfirmPurchase(protocolRequest);
+                }               
+                if (protocolRequest.getAction().equals("billList")) {
+                    // Lista de compras
+                    response = processBillList(protocolRequest);
                 }
             }
             case "user" -> {
@@ -279,9 +289,9 @@ public class OpenMarketHandler extends ServerHandler {
         if (!paymentHandler.processPayment(details)) {
             return helpers.generateBadRequestJson(Context.SHOPPING);
         } else {
-            List<Object> productNamePrice = productService.findNamePrice(idProduct);
-            String productName = productNamePrice.get(0).toString();
-            double price = (double) productNamePrice.get(1);
+            //List<Object> productNamePrice = productService.findNamePrice(idProduct);
+            //String productName = productNamePrice.get(0).toString();
+            //double price = (double) productNamePrice.get(1);
 
             String reference = Reference.getReference();
             paymentService.save(reference, details,userID);
@@ -290,6 +300,28 @@ public class OpenMarketHandler extends ServerHandler {
             return objectToJSON(invoice);
         }
     }
+    
+    
+    private String processConfirmPurchase(Protocol protocolRequest) {
+        String idCompra = protocolRequest.getParameters().get(0).getValue();
+        int puntacion = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        int userID = Integer.parseInt(protocolRequest.getParameters().get(2).getValue());
+        
+        deliverRepository.priceToPay(idCompra,userID);
+        
+        double qualification = deliverRepository.qualification(idCompra,puntacion,userID);       
+        return String.valueOf(qualification);
+    }
+    
+    
+             
+    private String processBillList(Protocol protocolRequest) {
+        int userID = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        List<Invoice> invoice = deliverRepository.billList(userID);
+        return objectToJSON(invoice);
+    }
+    
+    
 
     /**
      * @return the service
@@ -321,8 +353,12 @@ public class OpenMarketHandler extends ServerHandler {
         return userService;
     }
 
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setUserService(UserService service) {
+        this.userService = service;
+    }
+    
+    public void setDeliverService(DeliverService service) {
+        deliverRepository = service;
     }
 
     private String processDeleteProduct(Protocol protocolRequest) {
@@ -402,4 +438,6 @@ public class OpenMarketHandler extends ServerHandler {
         List<Product> productos = productService.filterProducts(prodName, categoryId, minPrice, maxPrice);
         return objectToJSON(productos);
     }
+
+    
 }
