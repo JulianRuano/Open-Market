@@ -37,7 +37,7 @@ public class Main {
         CategoryService categoryService=new CategoryService(repository2);
         ShoppingCar shoppingCart = new ShoppingCar(repository3);
         UserService userService=new UserService( repository4);
-       // FlatMaterialLighterIJTheme.setup();   
+        FlatMaterialLighterIJTheme.setup();   
         
        
        Dashboard instance=new  Dashboard(productService,categoryService,shoppingCart,userService);
