@@ -5,11 +5,13 @@
  */
 package co.unicauca.openmarket.server.infra.tcpip;
 import co.unicauca.openmarket.domain.services.CategoryService;
+import co.unicauca.openmarket.domain.services.DeliverService;
 import co.unicauca.openmarket.domain.services.PaymentService;
 import co.unicauca.openmarket.domain.services.ProductService;
 import co.unicauca.openmarket.domain.services.UserService;
 import co.unicauca.openmarket.server.access.Factory;
 import co.unicauca.openmarket.server.access.ICategoryRepository;
+import co.unicauca.openmarket.server.access.IDeliverRepository;
 import co.unicauca.openmarket.server.access.IPaymentRepository;
 import co.unicauca.openmarket.server.access.IProductRepository;
 import co.unicauca.openmarket.server.access.IUserRepository;
@@ -35,10 +37,13 @@ public class OpenMarketServer {
         IProductRepository  repository2 = Factory.getInstance().getProdRepository("default");
         IPaymentRepository  repository3 = Factory.getInstance().getPayRepository("default");
         IUserRepository  repository4 = Factory.getInstance().getUserRepository("default");
+        IDeliverRepository repository5 = Factory.getInstance().getDeliverRepository("default");
+        
         myHandler.setCategoryService(new CategoryService(repository));
         myHandler.setProductService(new ProductService(repository2));
         myHandler.setPaymentService(new PaymentService(repository3));
         myHandler.setUserService(new UserService(repository4));
+        myHandler.setDeliverService(new DeliverService(repository5));
 
         myServer.setServerHandler(myHandler);
         myServer.startServer();

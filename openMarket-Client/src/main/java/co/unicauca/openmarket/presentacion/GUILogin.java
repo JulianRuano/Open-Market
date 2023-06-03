@@ -23,13 +23,15 @@ public class GUILogin extends javax.swing.JFrame {
     private UserService userService;
     private Dashboard   frameDasboard;
     private GUIRegister instance;
+    private  ProductService productService ;
+    private  CategoryService categoryService ;
+    private  ShoppingCar shoppingCart;
+    private int idUSer = 0;
     
     public GUILogin( UserService userService) {
         initComponents();
         this.userService=userService;
-        instance=new GUIRegister(userService);
-         
-       
+        instance=new GUIRegister(userService);  
     }
 
     /**
@@ -130,15 +132,19 @@ public class GUILogin extends javax.swing.JFrame {
       try{
             String username=this.txtUsername.getText();
             String contrasenia=this.txtContrasenia.getText();
-           
             
-            if( userService.loginService(username,contrasenia)!=null){
-                
-                
+            User user = userService.loginService(username,contrasenia);
+            
+            if(user != null){
                 JOptionPane.showMessageDialog(null,
                     "Se inicio sesion corrarctamente",
                     "Inicicio de sesion",
                     JOptionPane.INFORMATION_MESSAGE);
+                this.idUSer = user.getUserId();
+                Dashboard dashboard = new Dashboard(productService, categoryService, shoppingCart, this);
+                dashboard.setVisible(true);
+                this.frameDasboard.dispose();
+                this.dispose();
             }else{
                     JOptionPane.showMessageDialog(null,
                     "el usuario o el usuario son incorrectos",
@@ -151,11 +157,23 @@ public class GUILogin extends javax.swing.JFrame {
                     "ERROR, no se pudo conectar al servidor",
                     "Erroral conectar al servidor",
                     JOptionPane.ERROR_MESSAGE);
-        }
-        
-        
+        }   
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
+    public int idLogin(){
+        return idUSer;
+    }
+    
+    public void setDasboard (Dashboard dashboard){
+        this.frameDasboard = dashboard;
+    }
+    
+    public void setService(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart){
+        this.productService = productService;
+        this.categoryService = categoryService;
+        this.shoppingCart = shoppingCart;
+    }
+    
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
         instance.setVisible(true);
     }//GEN-LAST:event_btnRegistrarseActionPerformed

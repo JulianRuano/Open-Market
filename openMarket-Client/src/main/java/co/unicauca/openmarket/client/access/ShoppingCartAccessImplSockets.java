@@ -19,7 +19,7 @@ public class ShoppingCartAccessImplSockets implements IShoppingCartAccess {
     @Override 
     public Invoice buy(int id, creditCard paymentMethod, int userId) {
         String jsonResponse = null;
-        String requestJson = doBuyRequestJson(id,paymentMethod);
+        String requestJson = doBuyRequestJson(id,paymentMethod,userId);
         try {
             mySocket.connect();
             jsonResponse = mySocket.sendRequest(requestJson);
@@ -47,14 +47,14 @@ public class ShoppingCartAccessImplSockets implements IShoppingCartAccess {
                  
             } else {
                 Invoice invoice = jsonToInvoice(jsonResponse);
-                Logger.getLogger(CategoryAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", jsonResponse);
+                Logger.getLogger(ShoppingCartAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})", jsonResponse);
                 return invoice;               
             }
         } 
         return null;
     }
     
-    private String doBuyRequestJson(int id, creditCard paymentMethod) {
+    private String doBuyRequestJson(int id, creditCard paymentMethod,int userId) {
 
         Protocol protocol = new Protocol();
         protocol.setResource("shoppingCart");
@@ -65,6 +65,7 @@ public class ShoppingCartAccessImplSockets implements IShoppingCartAccess {
         protocol.addParameter("CVC", paymentMethod.getCVC());
         protocol.addParameter("month",paymentMethod.getMonth() );
         protocol.addParameter("year", paymentMethod.getYear());
+        protocol.addParameter("userID",Integer.toString(userId));
        
         Gson gson = new Gson();
         String requestJson = gson.toJson(protocol);

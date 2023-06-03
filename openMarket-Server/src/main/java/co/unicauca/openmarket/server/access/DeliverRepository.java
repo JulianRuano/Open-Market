@@ -5,10 +5,154 @@
  */
 package co.unicauca.openmarket.server.access;
 
+import co.unicauca.openmarket.commons.application.Invoice;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author brayan
  */
 public class DeliverRepository implements IDeliverRepository{
+    private Connection conn;
+    public boolean connect() {
+         try {
+            String url = "jdbc:mysql://162.241.61.245:3306/codoslic_op?noAccessToProcedureBodies=true";
+            Properties props = new Properties();
+            props.setProperty("user", "codoslic_user");
+            props.setProperty("password", "singlecode4");
+            this.conn = DriverManager.getConnection(url, props);         
+            
+             System.out.println("Conexion exitosa a la base de datos");
+            return conn != null;
+        } catch (Exception e) {
+            System.out.println("Error"+e);
+            return false;
+        }
+    }
+    public void disconnect() {
+        try {
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    @Override
+    public double qualification(String idCompra, int puntuacion,int userID) {
+            double average = 0;
+            try {
+            
+
+            this.connect();
+
+            String sql = "UPDATE receipt "
+                    + "SET qualification=? "
+                    + "WHERE receiptId = ?";
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, puntuacion);
+                pstmt.setString(2, idCompra);
+
+                pstmt.executeUpdate();
+                pstmt.close();
+            }
+            
+            sql = "SELECT AVG(qualification) AS promedio_qualification" +
+                   " FROM receipt" +
+                   " WHERE userID = ?";
+            try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+                pstmt.setInt(1,userID);
+                
+                ResultSet res = pstmt.executeQuery();
+                if (res.next()) {
+                    average = res.getDouble("promedio_qualification");                  
+                }
+                pstmt.close();
+                this.disconnect();          
+            }
+            return average;
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DeliverRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.disconnect();
+        return average;
+    }
+    
+    @Override
+    public List<Invoice> billList(int userID) {
+        List<Invoice> invoce = new ArrayList<>();
+        try{
+                this.connect();
+                String sql = "SELECT receipt.receiptID, product.name, product.price, receipt.creationDate, receipt.state " +
+                            " FROM receipt" +
+                            " JOIN tiene ON receipt.receiptID = tiene.receiptId" +
+                            " JOIN product ON tiene.productId = product.productId" +
+                            " WHERE receipt.state <> 'confirmado' AND receipt.userID = ?";
+               PreparedStatement pstmt = conn.prepareStatement(sql);
+               pstmt.setInt(1, userID);
+               ResultSet res = pstmt.executeQuery();
+                
+               while (res.next()){
+                   Invoice inv = new Invoice();
+                    inv.setReference(res.getString("receipt.receiptID"));
+                    inv.setNameProduct(res.getString("product.name"));
+                    inv.setPrice(res.getDouble("product.price"));
+                    inv.setFecha(res.getString("receipt.creationDate"));
+                    inv.setStatus(res.getString("receipt.state"));
+                    invoce.add(inv);                  
+               }
+                
+                pstmt.close();
+                this.disconnect();
+                return invoce;
+                        
+        }
+        catch (SQLException ex) {
+           Logger.getLogger(DeliverRepository.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        this.disconnect();
+        return null;
+    }
+
+    @Override          
+    public boolean priceToPay(String idCompra,int userID){
+        try {
+           this.connect();
+           String resetSql = "UPDATE user " +
+                                " SET money = money + (" +
+                                "    SELECT SUM(price)" +
+                                "    FROM receipt " +
+                                "    INNER JOIN tiene ON receipt.receiptId = tiene.receiptId" +
+                                "    INNER JOIN product ON tiene.productId = product.productId " +
+                                "    WHERE receipt.receiptId = ?)*0.95" +
+                                " WHERE userID = ?";
+
+           PreparedStatement pstmtReset = conn.prepareStatement(resetSql);
+           pstmtReset.setString(1, idCompra);
+           pstmtReset.setInt(2, userID);
+           pstmtReset.executeUpdate();
+           pstmtReset.close();
+           this.disconnect();
+           return true;
+       } catch (SQLException ex) {
+           Logger.getLogger(DeliverRepository.class.getName()).log(Level.SEVERE, null, ex);
+       }
+        this.disconnect();
+       return false;
+    }
+    
     
 }

@@ -7,7 +7,7 @@ import java.util.List;
  * @author Julian Ruano
  */
 public interface IPaymentRepository {  
-    boolean save (String receiptId, String details);
+    boolean save (String receiptId, String details, int userID);
     Invoice findById(String reference);
     Double findPrice(String reference);
     boolean linkProduct(String receiptId, int productId );

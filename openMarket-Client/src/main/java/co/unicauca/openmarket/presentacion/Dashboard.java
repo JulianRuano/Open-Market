@@ -8,7 +8,6 @@ package co.unicauca.openmarket.presentacion;
 import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
-import co.unicauca.openmarket.client.domain.service.UserService;
 import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,22 +23,33 @@ public class Dashboard extends javax.swing.JFrame {
      private final ProductService productService;
      private final CategoryService categoryService;
     private final ShoppingCar shoppingCart;
-    private final UserService userService;
+    //private final UserService userService;
     private GUILogin instance;
     private final OMInvoker ominvokerCategorias;
     private final OMInvoker ominvokerProducts;
+    private  int idUser;
     
-    public Dashboard(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart,UserService userService) {
+    public Dashboard(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart,GUILogin login) {
         initComponents();
         initStyles();
-         setExtendedState(MAXIMIZED_BOTH);
-         this.productService=productService;
-         this.categoryService=categoryService;
-         this.shoppingCart=shoppingCart;
-         this.userService=userService;
-         instance=new GUILogin(userService);
-         ominvokerCategorias = new OMInvoker();
-         ominvokerProducts=new OMInvoker();
+        setExtendedState(MAXIMIZED_BOTH);
+        this.productService=productService;
+        this.categoryService=categoryService;
+        this.shoppingCart=shoppingCart;
+        //this.userService=userService;
+        instance = login;       
+        ominvokerCategorias = new OMInvoker();
+        ominvokerProducts=new OMInvoker();
+
+        this.btnProducto.setVisible(false);
+        this.btnCategoria.setVisible(false);
+
+        this.idUser = login.idLogin();
+        if (idUser != 0){
+            this.btnProducto.setVisible(true);
+            this.btnCategoria.setVisible(true);
+
+        }
     }
     private void initStyles(){
       //.putClientProperty("JButton.buttonType", "roundRect");
@@ -244,7 +254,7 @@ public class Dashboard extends javax.swing.JFrame {
         pnlContenidoIzquierdo.setLayout(pnlContenidoIzquierdoLayout);
         pnlContenidoIzquierdoLayout.setHorizontalGroup(
             pnlContenidoIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 1253, Short.MAX_VALUE)
         );
         pnlContenidoIzquierdoLayout.setVerticalGroup(
             pnlContenidoIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,7 +306,7 @@ public class Dashboard extends javax.swing.JFrame {
 
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
-        ShowJPanel(new Tienda(productService,shoppingCart,this.categoryService) );
+        ShowJPanel(new Tienda(productService,shoppingCart,this.categoryService,idUser) );
     }//GEN-LAST:event_btnComprarActionPerformed
 
     private void btnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaActionPerformed

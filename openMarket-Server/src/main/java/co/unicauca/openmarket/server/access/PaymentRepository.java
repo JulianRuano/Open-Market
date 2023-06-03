@@ -1,16 +1,11 @@
 package co.unicauca.openmarket.server.access;
 
 import co.unicauca.openmarket.commons.application.Invoice;
-import co.unicauca.openmarket.commons.domain.Category;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.sql.Types;
-import java.text.SimpleDateFormat;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,15 +43,16 @@ public class PaymentRepository implements IPaymentRepository{
     }
 
     @Override
-    public boolean save(String receiptId, String details) {
+    public boolean save(String receiptId, String details, int userID) {
         try {
             this.connect();
             String sql = "INSERT INTO receipt (receiptId,details) " +
-                         "VALUES (?,?)";
+                         "VALUES (?,?,?)";
                   
             PreparedStatement  pstmt = conn.prepareCall(sql);
             pstmt.setString(1, receiptId);
             pstmt.setString(2, details);
+            pstmt.setInt(2, userID);
 
             pstmt.executeUpdate();
             pstmt.close();           
@@ -114,12 +110,11 @@ public class PaymentRepository implements IPaymentRepository{
     public boolean linkProduct(String receiptId, int productId) {
        try {
             this.connect();
-            String sql = "INSERT INTO tiene (receiptId, productId, state)" +
+            String sql = "INSERT INTO tiene (receiptId, productId)" +
                             "VALUES (?, ?,?)" ;
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, receiptId);
             pstmt.setInt(2, productId);
-            pstmt.setString(3, "validando pago");
             pstmt.executeUpdate();
             pstmt.close();
             this.disconnect();

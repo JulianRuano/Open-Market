@@ -40,7 +40,10 @@ public class Main {
         FlatMaterialLighterIJTheme.setup();   
         
        
-       Dashboard instance=new  Dashboard(productService,categoryService,shoppingCart,userService);
+       GUILogin login = new GUILogin(userService);
+       Dashboard instance=new  Dashboard(productService,categoryService,shoppingCart,login);      
+       login.setDasboard(instance);
+       login.setService(productService, categoryService, shoppingCart);
        instance.setVisible(true);
        
     }
