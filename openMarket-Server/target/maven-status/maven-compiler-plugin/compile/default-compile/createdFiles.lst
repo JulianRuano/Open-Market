@@ -1,14 +1,17 @@
 co\unicauca\openmarket\domain\services\CategoryService.class
 co\unicauca\openmarket\server\access\ProductRepository.class
 co\unicauca\openmarket\server\infra\tcpip\OpenMarketHandler.class
+co\unicauca\openmarket\domain\services\DeliverService.class
 co\unicauca\openmarket\domain\services\PaymentService.class
 co\unicauca\openmarket\server\infra\Helpers$1.class
 co\unicauca\openmarket\server\application\CreditCardPayment.class
 co\unicauca\openmarket\server\access\IProductRepository.class
 co\unicauca\openmarket\server\access\IPaymentRepository.class
+co\unicauca\openmarket\server\access\DeliverRepository.class
 co\unicauca\openmarket\server\access\ICategoryRepository.class
 co\unicauca\openmarket\server\access\IUserRepository.class
 co\unicauca\openmarket\domain\services\UserService.class
+co\unicauca\openmarket\server\access\IDeliverRepository.class
 co\unicauca\openmarket\server\domain\Location.class
 co\unicauca\openmarket\server\infra\tcpip\OpenMarketServer.class
 co\unicauca\openmarket\server\infra\Context.class
