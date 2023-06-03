@@ -39,8 +39,23 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         this.ominvoker = ominvoker;
         initializeTable();
         stateInitial();
+        initStyles();
     }
-
+    
+     private void initStyles(){
+        
+        this.btnEliminar.putClientProperty("JButton.buttonType", "roundRect");
+        this.btnCancelar.putClientProperty("JButton.buttonType", "roundRect");
+        this.btnNueva.putClientProperty("JButton.buttonType", "roundRect");
+        this.btnGuardar.putClientProperty("JButton.buttonType", "roundRect");
+        this.btnEditar.putClientProperty("JButton.buttonType", "roundRect");
+        this.btnRehacer.putClientProperty("JButton.buttonType", "roundRect");
+        this.btnDeshacer.putClientProperty("JButton.buttonType", "roundRect");
+        this.btnListarTodo.putClientProperty("JButton.buttonType", "roundRect");
+        this.btnBuscar.putClientProperty("JButton.buttonType", "roundRect");
+        this.txtNameCategoria.putClientProperty ( "JComponent.roundRect", true );
+        this.txtBuscar.putClientProperty ( "JComponent.roundRect", true );
+    }
     private void initializeTable() {
         tablaCategorias.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},
@@ -122,7 +137,8 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
 
         setLayout(new java.awt.BorderLayout());
 
-        btnNueva.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnNueva.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnNueva.setForeground(new java.awt.Color(0, 0, 0));
         btnNueva.setText("Nueva");
         btnNueva.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNueva.addActionListener(new java.awt.event.ActionListener() {
@@ -131,7 +147,8 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
             }
         });
 
-        btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnEditar.setForeground(new java.awt.Color(0, 0, 0));
         btnEditar.setText("Editar");
         btnEditar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -140,7 +157,8 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(0, 0, 0));
         btnCancelar.setText("Cancelar");
         btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -149,7 +167,8 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
             }
         });
 
-        btnEliminar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnEliminar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
         btnEliminar.setText("Eliminar");
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -158,7 +177,8 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
             }
         });
 
-        btnDeshacer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnDeshacer.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnDeshacer.setForeground(new java.awt.Color(0, 0, 0));
         btnDeshacer.setText("Deshacer");
         btnDeshacer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDeshacer.addActionListener(new java.awt.event.ActionListener() {
@@ -167,7 +187,8 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
             }
         });
 
-        btnRehacer.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnRehacer.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnRehacer.setForeground(new java.awt.Color(0, 0, 0));
         btnRehacer.setText("Rehacer");
         btnRehacer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnRehacer.addActionListener(new java.awt.event.ActionListener() {
@@ -176,7 +197,8 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
             }
         });
 
-        btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(0, 0, 0));
         btnGuardar.setText("Confirmar");
         btnGuardar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -191,20 +213,20 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
             pnlSeccionBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSeccionBotonesLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(btnNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnDeshacer)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRehacer)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnCancelar)
-                .addContainerGap(320, Short.MAX_VALUE))
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDeshacer, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRehacer, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(136, Short.MAX_VALUE))
         );
         pnlSeccionBotonesLayout.setVerticalGroup(
             pnlSeccionBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,8 +251,13 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         pnlCrudCategoria.add(lblCodCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, -1, -1));
         pnlCrudCategoria.add(txtCodCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 230, 40));
 
+        lblNameCategory.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblNameCategory.setForeground(new java.awt.Color(0, 0, 0));
         lblNameCategory.setText("Nombre");
         pnlCrudCategoria.add(lblNameCategory, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 160, -1, -1));
+
+        txtNameCategoria.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtNameCategoria.setForeground(new java.awt.Color(0, 0, 0));
         pnlCrudCategoria.add(txtNameCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 230, 40));
 
         tablaCategorias.setModel(new javax.swing.table.DefaultTableModel(
@@ -248,15 +275,24 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
 
         pnlCrudCategoria.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, 580, 410));
 
+        lblBuscar.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblBuscar.setForeground(new java.awt.Color(0, 0, 0));
         lblBuscar.setText("Buscar por:");
-        pnlCrudCategoria.add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 60, -1, -1));
-        pnlCrudCategoria.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 50, 100, 30));
+        pnlCrudCategoria.add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 66, -1, 20));
+
+        txtBuscar.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
+        pnlCrudCategoria.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 50, 150, 30));
 
         btngGrupo1.add(rdBuscarId);
+        rdBuscarId.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        rdBuscarId.setForeground(new java.awt.Color(0, 0, 0));
         rdBuscarId.setText("ID");
         rdBuscarId.setToolTipText("");
         pnlCrudCategoria.add(rdBuscarId, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, -1, -1));
 
+        btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("Buscar");
         btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -264,8 +300,10 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
                 btnBuscarActionPerformed(evt);
             }
         });
-        pnlCrudCategoria.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 50, -1, 30));
+        pnlCrudCategoria.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 50, -1, 30));
 
+        btnListarTodo.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnListarTodo.setForeground(new java.awt.Color(0, 0, 0));
         btnListarTodo.setText("Listar Todo");
         btnListarTodo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnListarTodo.addActionListener(new java.awt.event.ActionListener() {
@@ -273,9 +311,11 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
                 btnListarTodoActionPerformed(evt);
             }
         });
-        pnlCrudCategoria.add(btnListarTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 50, 120, 30));
+        pnlCrudCategoria.add(btnListarTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 50, 120, 30));
 
         btngGrupo1.add(rdBuscarNombre);
+        rdBuscarNombre.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        rdBuscarNombre.setForeground(new java.awt.Color(0, 0, 0));
         rdBuscarNombre.setText("Nombre");
         pnlCrudCategoria.add(rdBuscarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, -1, -1));
 

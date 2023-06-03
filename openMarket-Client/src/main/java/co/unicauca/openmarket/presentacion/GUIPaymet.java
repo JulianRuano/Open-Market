@@ -38,11 +38,23 @@ public class GUIPaymet extends javax.swing.JFrame {
          SetImageLabel();
                
         this.shoppingCart = shoppingCart;
+        initStyles();
     }
-
-   public  GUIPaymet() {
-         initComponents();        
+    private void initStyles(){
+        
+        this.btnConfirm.putClientProperty("JButton.buttonType", "roundRect");
+        this.btnCancel.putClientProperty("JButton.buttonType", "roundRect");
+        this.btnClose.putClientProperty("JButton.buttonType", "roundRect");
+        
+        this.txtCVC.putClientProperty ( "JComponent.roundRect", true );
+        this.txtCardNumber.putClientProperty ( "JComponent.roundRect", true );
+        this.txtMonth.putClientProperty ( "JComponent.roundRect", true );
+        this.txtNameOnCard.putClientProperty ( "JComponent.roundRect", true );
+         this.txtYear.putClientProperty ( "JComponent.roundRect", true );
     }
+   //public  GUIPaymet() {
+   //      initComponents();        
+    //}
     public void obtenerProducto(Product product, int idUser){
         this.lblName.setText(product.getName());
         this.lblPrice.setText(String.valueOf(product.getPrice()));
@@ -120,11 +132,12 @@ public class GUIPaymet extends javax.swing.JFrame {
 
         jLabel1.setText("Año");
 
+        lblCardNumber.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
         lblCardNumber.setForeground(new java.awt.Color(255, 255, 255));
         lblCardNumber.setText("Numero de tarjeta");
 
         txtNameOnCard.setBackground(new java.awt.Color(86, 148, 223));
-        txtNameOnCard.setFont(new java.awt.Font("MS PGothic", 1, 14)); // NOI18N
+        txtNameOnCard.setFont(new java.awt.Font("MS PGothic", 1, 15)); // NOI18N
         txtNameOnCard.setForeground(new java.awt.Color(255, 255, 255));
         txtNameOnCard.setBorder(null);
         txtNameOnCard.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +147,7 @@ public class GUIPaymet extends javax.swing.JFrame {
         });
 
         txtYear.setBackground(new java.awt.Color(86, 148, 223));
-        txtYear.setFont(new java.awt.Font("MS UI Gothic", 1, 14)); // NOI18N
+        txtYear.setFont(new java.awt.Font("MS UI Gothic", 1, 15)); // NOI18N
         txtYear.setForeground(new java.awt.Color(255, 255, 255));
         txtYear.setBorder(null);
         txtYear.addActionListener(new java.awt.event.ActionListener() {
@@ -143,19 +156,21 @@ public class GUIPaymet extends javax.swing.JFrame {
             }
         });
 
+        lblHolderName.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
         lblHolderName.setForeground(new java.awt.Color(255, 255, 255));
         lblHolderName.setText("Nombre del titular:");
 
         txtCardNumber.setBackground(new java.awt.Color(86, 148, 223));
-        txtCardNumber.setFont(new java.awt.Font("MS UI Gothic", 1, 14)); // NOI18N
+        txtCardNumber.setFont(new java.awt.Font("MS UI Gothic", 1, 15)); // NOI18N
         txtCardNumber.setForeground(new java.awt.Color(255, 255, 255));
         txtCardNumber.setBorder(null);
 
+        lblSecurityCode.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
         lblSecurityCode.setForeground(new java.awt.Color(255, 255, 255));
         lblSecurityCode.setText("Codigo de seguridad:");
 
         txtCVC.setBackground(new java.awt.Color(86, 148, 223));
-        txtCVC.setFont(new java.awt.Font("MS UI Gothic", 1, 14)); // NOI18N
+        txtCVC.setFont(new java.awt.Font("MS UI Gothic", 1, 15)); // NOI18N
         txtCVC.setForeground(new java.awt.Color(255, 255, 255));
         txtCVC.setBorder(null);
         txtCVC.addActionListener(new java.awt.event.ActionListener() {
@@ -165,7 +180,7 @@ public class GUIPaymet extends javax.swing.JFrame {
         });
 
         txtMonth.setBackground(new java.awt.Color(86, 148, 223));
-        txtMonth.setFont(new java.awt.Font("MS UI Gothic", 1, 14)); // NOI18N
+        txtMonth.setFont(new java.awt.Font("MS UI Gothic", 1, 15)); // NOI18N
         txtMonth.setForeground(new java.awt.Color(255, 255, 255));
         txtMonth.setBorder(null);
         txtMonth.addActionListener(new java.awt.event.ActionListener() {
@@ -174,12 +189,15 @@ public class GUIPaymet extends javax.swing.JFrame {
             }
         });
 
+        lblExpitarionDate.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
         lblExpitarionDate.setForeground(new java.awt.Color(255, 255, 255));
         lblExpitarionDate.setText("Fecha de expiracion:");
 
+        lblMoth.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
         lblMoth.setForeground(new java.awt.Color(255, 255, 255));
         lblMoth.setText("Mes");
 
+        lblYear.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
         lblYear.setForeground(new java.awt.Color(255, 255, 255));
         lblYear.setText("Año");
 
@@ -194,24 +212,25 @@ public class GUIPaymet extends javax.swing.JFrame {
                     .addGroup(pnlDerechoLayout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addGroup(pnlDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlDerechoLayout.createSequentialGroup()
-                                .addComponent(txtCVC, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(496, 496, 496)
-                                .addComponent(jLabel1))
                             .addComponent(lblHolderName)
                             .addComponent(txtNameOnCard, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblCardNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCardNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblSecurityCode)
                             .addComponent(lblExpitarionDate)
                             .addGroup(pnlDerechoLayout.createSequentialGroup()
                                 .addGroup(pnlDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblYear))
-                                .addGap(31, 31, 31)
+                                    .addComponent(lblYear)
+                                    .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(pnlDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblMoth)
-                                    .addComponent(txtMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(txtMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(pnlDerechoLayout.createSequentialGroup()
+                                .addGroup(pnlDerechoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtCVC)
+                                    .addComponent(txtCardNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE))
+                                .addGap(371, 371, 371)
+                                .addComponent(jLabel1))))
                     .addGroup(pnlDerechoLayout.createSequentialGroup()
                         .addGap(83, 83, 83)
                         .addComponent(lblvisa, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -256,7 +275,7 @@ public class GUIPaymet extends javax.swing.JFrame {
         pnlSouth.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnConfirm.setBackground(new java.awt.Color(0, 204, 0));
-        btnConfirm.setFont(new java.awt.Font("Maiandra GD", 1, 14)); // NOI18N
+        btnConfirm.setFont(new java.awt.Font("Maiandra GD", 1, 16)); // NOI18N
         btnConfirm.setForeground(new java.awt.Color(255, 255, 255));
         btnConfirm.setText("Confirmar");
         btnConfirm.setBorder(null);
@@ -268,7 +287,8 @@ public class GUIPaymet extends javax.swing.JFrame {
         });
 
         btnCancel.setBackground(new java.awt.Color(204, 204, 204));
-        btnCancel.setFont(new java.awt.Font("Maiandra GD", 1, 14)); // NOI18N
+        btnCancel.setFont(new java.awt.Font("Maiandra GD", 1, 16)); // NOI18N
+        btnCancel.setForeground(new java.awt.Color(255, 255, 255));
         btnCancel.setText("Cancelar");
         btnCancel.setBorder(null);
         btnCancel.setPreferredSize(new java.awt.Dimension(57, 25));
@@ -279,7 +299,7 @@ public class GUIPaymet extends javax.swing.JFrame {
         });
 
         btnClose.setBackground(new java.awt.Color(204, 0, 0));
-        btnClose.setFont(new java.awt.Font("Maiandra GD", 1, 14)); // NOI18N
+        btnClose.setFont(new java.awt.Font("Maiandra GD", 1, 16)); // NOI18N
         btnClose.setForeground(new java.awt.Color(255, 255, 255));
         btnClose.setText("Cerrar");
         btnClose.setBorder(null);
@@ -295,13 +315,13 @@ public class GUIPaymet extends javax.swing.JFrame {
         pnlSouthLayout.setHorizontalGroup(
             pnlSouthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSouthLayout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addComponent(btnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnClose, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         pnlSouthLayout.setVerticalGroup(
             pnlSouthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -321,36 +341,47 @@ public class GUIPaymet extends javax.swing.JFrame {
         lblImage.setBorder(new javax.swing.border.MatteBorder(null));
 
         lblTitle.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        lblTitle.setForeground(new java.awt.Color(0, 0, 0));
         lblTitle.setText("Producto a Comprar");
 
         lblName.setFont(new java.awt.Font("Malgun Gothic", 0, 18)); // NOI18N
+        lblName.setForeground(new java.awt.Color(0, 0, 0));
         lblName.setText("Name");
 
         lblTotal.setFont(new java.awt.Font("Malgun Gothic", 0, 24)); // NOI18N
+        lblTotal.setForeground(new java.awt.Color(0, 0, 0));
         lblTotal.setText("Total");
 
         lblSymbol.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lblSymbol.setForeground(new java.awt.Color(0, 0, 0));
         lblSymbol.setText("$");
 
         lblPrice.setFont(new java.awt.Font("Malgun Gothic", 0, 18)); // NOI18N
+        lblPrice.setForeground(new java.awt.Color(0, 0, 0));
         lblPrice.setText("price");
 
         lblSymbol1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lblSymbol1.setForeground(new java.awt.Color(0, 0, 0));
         lblSymbol1.setText("$");
 
         jLabel3.setFont(new java.awt.Font("Malgun Gothic", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("$0");
 
         jLabel4.setFont(new java.awt.Font("Malgun Gothic", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Iva");
 
         jLabel5.setFont(new java.awt.Font("Malgun Gothic", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Total");
 
         jLabel6.setFont(new java.awt.Font("Malgun Gothic", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Precio");
 
         jLabel7.setFont(new java.awt.Font("Malgun Gothic", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Producto:");
 
         javax.swing.GroupLayout pnlIzquierdoLayout = new javax.swing.GroupLayout(pnlIzquierdo);
@@ -397,7 +428,7 @@ public class GUIPaymet extends javax.swing.JFrame {
         pnlIzquierdoLayout.setVerticalGroup(
             pnlIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlIzquierdoLayout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(32, Short.MAX_VALUE)
                 .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addGroup(pnlIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

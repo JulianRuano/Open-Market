@@ -43,7 +43,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         this.btnProducto.setVisible(false);
         this.btnCategoria.setVisible(false);
-
+        this.lblUsername.setText(login.UserName());
         this.idUser = login.idLogin();
         if (idUser != 0){
             this.btnProducto.setVisible(true);
@@ -97,6 +97,7 @@ public class Dashboard extends javax.swing.JFrame {
         pnlBarraLateral.setBackground(new java.awt.Color(63, 132, 171));
 
         btnCategoria.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
+        btnCategoria.setForeground(new java.awt.Color(0, 0, 0));
         btnCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/book-content-solid-48.png"))); // NOI18N
         btnCategoria.setText("Categoria");
         btnCategoria.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -111,6 +112,7 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         btnProducto.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
+        btnProducto.setForeground(new java.awt.Color(0, 0, 0));
         btnProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/product_delivery_icon_152013.png"))); // NOI18N
         btnProducto.setText("Producto");
         btnProducto.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -125,6 +127,7 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         btnComprar.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
+        btnComprar.setForeground(new java.awt.Color(0, 0, 0));
         btnComprar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tienda.png"))); // NOI18N
         btnComprar.setText("Tienda");
         btnComprar.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -139,15 +142,17 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         btnUsuarios.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
+        btnUsuarios.setForeground(new java.awt.Color(0, 0, 0));
         btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user-solid-48.png"))); // NOI18N
         btnUsuarios.setText("Usuarios");
-        btnUsuarios.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
+        btnUsuarios.setBorder(null);
         btnUsuarios.setBorderPainted(false);
-        btnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUsuarios.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
         btnUsuarios.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btnUsuarios.setIconTextGap(10);
 
         btnCompras.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
+        btnCompras.setForeground(new java.awt.Color(0, 0, 0));
         btnCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shopping-cart_icon-icons.com_72552.png"))); // NOI18N
         btnCompras.setText("Mis Compras");
         btnCompras.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -174,16 +179,16 @@ public class Dashboard extends javax.swing.JFrame {
             .addComponent(btnProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnComprar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnCompras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+            .addComponent(btnCompras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlBarraLateralLayout.createSequentialGroup()
-                .addGap(66, 66, 66)
+                .addGap(94, 94, 94)
                 .addComponent(lblIconFacebook)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblIconWhatssap)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblIconTwitter)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         pnlBarraLateralLayout.setVerticalGroup(
             pnlBarraLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,7 +207,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addGroup(pnlBarraLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblIconFacebook, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblIconWhatssap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblIconTwitter, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblIconTwitter, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(75, 75, 75))
         );
 
@@ -210,14 +215,18 @@ public class Dashboard extends javax.swing.JFrame {
 
         lblTituloHeader.setText("Open Market");
 
+        btnIniciarSesion.setBackground(new java.awt.Color(153, 153, 153));
         btnIniciarSesion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        btnIniciarSesion.setForeground(new java.awt.Color(0, 0, 0));
         btnIniciarSesion.setText("Iniciar Sesion");
+        btnIniciarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
         btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIniciarSesionActionPerformed(evt);
             }
         });
 
+        lblUsername.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
         lblUsername.setText("jLabel1");
 
         lblUsernameIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user-circle-regular-36.png"))); // NOI18N
@@ -231,11 +240,11 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(lblTituloHeader)
                 .addGap(142, 142, 142)
                 .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(95, 95, 95)
                 .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(27, 27, 27)
                 .addComponent(lblUsernameIcon)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addContainerGap(420, Short.MAX_VALUE))
         );
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,7 +263,7 @@ public class Dashboard extends javax.swing.JFrame {
         pnlContenidoIzquierdo.setLayout(pnlContenidoIzquierdoLayout);
         pnlContenidoIzquierdoLayout.setHorizontalGroup(
             pnlContenidoIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1253, Short.MAX_VALUE)
+            .addGap(0, 1381, Short.MAX_VALUE)
         );
         pnlContenidoIzquierdoLayout.setVerticalGroup(
             pnlContenidoIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,10 +276,10 @@ public class Dashboard extends javax.swing.JFrame {
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addComponent(pnlBarraLateral, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlContenidoIzquierdo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(pnlHeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlContenidoIzquierdo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         backgroundLayout.setVerticalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

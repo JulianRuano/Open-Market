@@ -59,7 +59,7 @@ public class DeliverAccessImplSockets implements IDeliverAccess{
         }
         return avg;
     }
-
+    
     @Override
     public double priceToPay(String reference, int userID)throws Exception {
          double valor= 0;
