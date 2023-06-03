@@ -131,6 +131,8 @@ public class OpenMarketHandler extends ServerHandler {
                         response = processBillList(protocolRequest);
                     case "get" -> // Devuelve el saldo actual
                         response = processBalance(protocolRequest);
+                    case "getQualification" -> // Devuelve el promedio de las calificaiones del usuario
+                        response = processqualification(protocolRequest);
                     default -> {
                         response = accessDenied();
                     }
@@ -305,14 +307,18 @@ public class OpenMarketHandler extends ServerHandler {
     
     
     private String processConfirmPurchase(Protocol protocolRequest) {
-        String idCompra = protocolRequest.getParameters().get(0).getValue();
+        String reference = protocolRequest.getParameters().get(0).getValue();
         int puntacion = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
-        int userID = Integer.parseInt(protocolRequest.getParameters().get(2).getValue());
-        
-        deliverRepository.balance(userID);
-        
-        double qualification = deliverRepository.qualification(idCompra,puntacion,userID);       
-        return String.valueOf(qualification);
+        int userID = Integer.parseInt(protocolRequest.getParameters().get(2).getValue());     
+        deliverRepository.balance(userID);     
+        boolean resp = deliverRepository.confirm(reference,puntacion,userID);       
+        return String.valueOf(resp);
+    }
+    
+    private String processqualification(Protocol protocolRequest){
+        int userID = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        double qual = deliverRepository.qualification(userID);
+        return String.valueOf(qual);
     }
           
     private String processBillList(Protocol protocolRequest) {

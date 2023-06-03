@@ -22,8 +22,11 @@ public class DeliverService {
     
     }
     
-    public synchronized double qualification(String idCompra, int puntuacion,int userID){
-         return repo.qualification(idCompra, puntuacion, userID);
+    public synchronized boolean confirm(String idCompra, int puntuacion,int userID){
+         return repo.confirm(idCompra, puntuacion, userID);
+    }
+    public synchronized double qualification(int userID){
+        return repo.qualification(userID);
     }
     
     public synchronized List<Invoice> billList(int userID){
