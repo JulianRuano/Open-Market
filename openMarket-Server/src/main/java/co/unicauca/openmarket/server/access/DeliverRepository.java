@@ -52,7 +52,7 @@ public class DeliverRepository implements IDeliverRepository{
     
 
     @Override
-    public boolean qualification(String reference, int puntuacion,int userID) {
+    public boolean confirm(String reference, int puntuacion,int userID) {
         try {        
             this.connect();
             String sql = "UPDATE receipt "
@@ -76,7 +76,8 @@ public class DeliverRepository implements IDeliverRepository{
     }
 
     
-    public double confirm(int userID){
+    @Override
+    public double qualification(int userID){
         double average = 0;
         try {
             String sql = "SELECT AVG(qualification) AS promedio_qualification" +
