@@ -50,7 +50,7 @@ public class DeliverRepository implements IDeliverRepository{
     }
 
     @Override
-    public double qualification(String idCompra, int puntuacion,int userID) {
+    public double qualification(String reference, int puntuacion,int userID) {
             double average = 0;
             try {
             
@@ -63,7 +63,7 @@ public class DeliverRepository implements IDeliverRepository{
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setInt(1, puntuacion);
-                pstmt.setString(2, idCompra);
+                pstmt.setString(2, reference);
 
                 pstmt.executeUpdate();
                 pstmt.close();
@@ -128,7 +128,7 @@ public class DeliverRepository implements IDeliverRepository{
     }
 
     @Override          
-    public boolean priceToPay(String idCompra,int userID){
+    public boolean UpdateBalance(String reference,int userID){
         try {
            this.connect();
            String resetSql = "UPDATE user " +
@@ -141,7 +141,7 @@ public class DeliverRepository implements IDeliverRepository{
                                 " WHERE userID = ?";
 
            PreparedStatement pstmtReset = conn.prepareStatement(resetSql);
-           pstmtReset.setString(1, idCompra);
+           pstmtReset.setString(1, reference);
            pstmtReset.setInt(2, userID);
            pstmtReset.executeUpdate();
            pstmtReset.close();
@@ -154,5 +154,29 @@ public class DeliverRepository implements IDeliverRepository{
        return false;
     }
     
-    
+    @Override
+    public double balance(int userID){
+        double money = 0;
+        try{           
+            this.connect();
+             String sql ="SELECT money FROM user " +
+                         "where userID = ?";
+            PreparedStatement pstmt = conn.prepareStatement(sql); 
+            pstmt.setInt(1, userID);
+            ResultSet res = pstmt.executeQuery();
+            
+            if (res.next()) {
+                 money = res.getDouble("money");
+            }
+            
+            pstmt.close();           
+            this.disconnect();
+            return money;           
+        }
+         catch (SQLException ex) {
+           Logger.getLogger(DeliverRepository.class.getName()).log(Level.SEVERE, null, ex);
+       }
+       this.disconnect();
+       return money; 
+    }  
 }

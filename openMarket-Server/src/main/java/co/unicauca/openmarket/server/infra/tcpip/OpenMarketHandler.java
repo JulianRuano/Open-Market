@@ -22,6 +22,7 @@ import co.unicauca.openmarket.domain.services.UserService;
 import co.unicauca.openmarket.server.application.GenerateReference.Reference;
 import co.unicauca.openmarket.server.application.CreditCardPayment;
 import co.unicauca.openmarket.server.application.PaymentHandler;
+import co.unicauca.openmarket.server.infra.ErrorResponse;
 import co.unicauca.openmarket.server.infra.Helpers;
 import com.google.gson.Gson;
 import java.util.Base64;
@@ -124,18 +125,23 @@ public class OpenMarketHandler extends ServerHandler {
                 break;
             }
             case "shoppingCart" -> {
-                if (protocolRequest.getAction().equals("buy")) {
-                    // Petecion de compra
-                    response = processBuyProduct(protocolRequest);
+                switch (protocolRequest.getAction())
+                {
+                    case "buy" -> // Petición de compra
+                        response = processBuyProduct(protocolRequest);
+                    case "confirm" -> // Confirmar recibido
+                        response = processConfirmPurchase(protocolRequest);
+                    case "billList" -> // Lista de compras
+                        response = processBillList(protocolRequest);
+                    case "get" -> // Devuelve el saldo actual
+                        response = processBalance(protocolRequest);
+                    default -> {
+                        response = accessDenied();
+                    }
                 }
-                if (protocolRequest.getAction().equals("confirm")) {
-                    // Confrimar recibido
-                    response = processConfirmPurchase(protocolRequest);
-                }               
-                if (protocolRequest.getAction().equals("billList")) {
-                    // Lista de compras
-                    response = processBillList(protocolRequest);
-                }
+            // Acción no reconocida
+            // Agrega el código correspondiente o lanza una excepción si es necesario
+            
             }
             case "user" -> {
                 if (protocolRequest.getAction().equals("get")) {
@@ -307,18 +313,29 @@ public class OpenMarketHandler extends ServerHandler {
         int puntacion = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
         int userID = Integer.parseInt(protocolRequest.getParameters().get(2).getValue());
         
-        deliverRepository.priceToPay(idCompra,userID);
+        deliverRepository.balance(idCompra,userID);
         
         double qualification = deliverRepository.qualification(idCompra,puntacion,userID);       
         return String.valueOf(qualification);
     }
-    
-    
-             
+          
     private String processBillList(Protocol protocolRequest) {
         int userID = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         List<Invoice> invoice = deliverRepository.billList(userID);
         return objectToJSON(invoice);
+    }
+    private String processBalance(Protocol protocolRequest) {
+        String reference =  protocolRequest.getParameters().get(0).getValue();
+        int userID = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
+        deliverRepository.updateBalance(reference, userID);
+        double balance = deliverRepository.balance(reference, userID);
+        return String.valueOf(balance);
+    }
+    
+    
+    private String accessDenied(){
+        String error = new ErrorResponse("1020", "access denied", "error").toJson();
+        return error;
     }
     
     
