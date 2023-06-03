@@ -1,43 +1,43 @@
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\IDeliverAccess.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMDeleteProductCommand.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMEditCategoryCommand.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\RenderImagen.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\service\UserService.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\GUIPaymet.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\application\ShoppingCar.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\crudCategoria.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\Tienda.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\infra\Messages.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\service\ProductService.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\service\CategoryService.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMDeleteCategoryCommand.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\test.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\MisCompras.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\ProductAccessImplSockets.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\User.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMAddCategoryCommand.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMInvoker.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\ShoppingCartAccessImplSockets.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\Dashboard.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\DeliverAccessImplSockets.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\ICategoryAccess.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\IUserAccess.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\CategoryAccessImplSockets.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\Factory.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\service\DeliverService.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\crudProducto.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\GUILogin.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\UserAccessImplSockets.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\helpers\PresentacionHelpers.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\IShoppingCartAccess.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\Location.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\IProductAccess.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\infra\OpenMarketSocket.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\GUIRegister.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\validaciones\ValidadorCampos.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\validaciones\producto\MensajesError.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMCommand.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\validaciones\producto\ValidadorFormularioProducto.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMEditProductCommand.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\main\Main.java
-C:\Users\brayan\Desktop\Semestre Seis\Lab Software 2\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMAddProductCommand.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\IUserAccess.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\infra\OpenMarketSocket.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMEditCategoryCommand.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\CategoryAccessImplSockets.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\validaciones\producto\MensajesError.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMCommand.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\ProductAccessImplSockets.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\crudProducto.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMAddCategoryCommand.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\application\ShoppingCar.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\User.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\MisCompras.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\service\DeliverService.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMDeleteProductCommand.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\service\ProductService.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\crudCategoria.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\Tienda.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\IShoppingCartAccess.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMInvoker.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\Location.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\service\CategoryService.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\infra\Messages.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\ICategoryAccess.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\IProductAccess.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\GUILogin.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\DeliverAccessImplSockets.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\Factory.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\helpers\PresentacionHelpers.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\Dashboard.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\RenderImagen.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\domain\service\UserService.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\test.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\ShoppingCartAccessImplSockets.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\main\Main.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\UserAccessImplSockets.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMDeleteCategoryCommand.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMAddProductCommand.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\presentation\commands\OMEditProductCommand.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\GUIRegister.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\client\access\IDeliverAccess.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\validaciones\ValidadorCampos.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\validaciones\producto\ValidadorFormularioProducto.java
+C:\Users\Jorge\Desktop\PROYECTO OPEN-MARKET\Open-Market\openMarket-Client\src\main\java\co\unicauca\openmarket\presentacion\GUIPaymet.java
