@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package co.unicauca.openmarket.server.infra.tcpip;
 
 import co.unicauca.openmarket.commons.application.Invoice;
@@ -323,7 +319,6 @@ public class OpenMarketHandler extends ServerHandler {
         int userID = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
         double qual = deliverRepository.qualification(userID);
         return String.valueOf(qual);
-        
     }
           
     private String processBillList(Protocol protocolRequest) {

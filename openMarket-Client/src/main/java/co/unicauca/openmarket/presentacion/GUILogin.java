@@ -7,11 +7,13 @@ package co.unicauca.openmarket.presentacion;
 
 import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
+import co.unicauca.openmarket.client.domain.service.DeliverService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.domain.service.UserService;
 import static co.unicauca.openmarket.client.infra.Messages.successMessage;
 import co.unicauca.openmarket.commons.domain.User;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  *
@@ -26,14 +28,24 @@ public class GUILogin extends javax.swing.JFrame {
     private  ProductService productService ;
     private  CategoryService categoryService ;
     private  ShoppingCar shoppingCart;
+    private  DeliverService deliverService;
     private int idUSer = 0;
+    private String name="";
     
     public GUILogin( UserService userService) {
         initComponents();
+        initStyles();
         this.userService=userService;
         instance=new GUIRegister(userService);  
     }
 
+    private void initStyles(){
+        this.btnIniciarSesion.putClientProperty("JButton.buttonType", "roundRect");
+        this.btnRegistrarse.putClientProperty("JButton.buttonType", "roundRect");
+        this.txtUsername.putClientProperty ( "JComponent.roundRect", true );
+        this.txtContrasenia.putClientProperty ( "JComponent.roundRect", true );
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -50,13 +62,29 @@ public class GUILogin extends javax.swing.JFrame {
         txtContrasenia = new javax.swing.JTextField();
         btnIniciarSesion = new javax.swing.JButton();
         btnRegistrarse = new javax.swing.JButton();
+        lblImage = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        pnlLogin.setBackground(new java.awt.Color(122, 154, 171));
+
+        lblUsername.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblUsername.setForeground(new java.awt.Color(0, 0, 0));
         lblUsername.setText("Username");
 
+        txtUsername.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtUsername.setForeground(new java.awt.Color(0, 0, 0));
+
+        lblContrasenia.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblContrasenia.setForeground(new java.awt.Color(0, 0, 0));
         lblContrasenia.setText("Contraseña");
 
+        txtContrasenia.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtContrasenia.setForeground(new java.awt.Color(0, 0, 0));
+
+        btnIniciarSesion.setBackground(new java.awt.Color(102, 102, 255));
+        btnIniciarSesion.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        btnIniciarSesion.setForeground(new java.awt.Color(0, 0, 0));
         btnIniciarSesion.setText("Iniciar sesion");
         btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,6 +92,9 @@ public class GUILogin extends javax.swing.JFrame {
             }
         });
 
+        btnRegistrarse.setBackground(new java.awt.Color(102, 102, 255));
+        btnRegistrarse.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        btnRegistrarse.setForeground(new java.awt.Color(0, 0, 0));
         btnRegistrarse.setText("Registrarse");
         btnRegistrarse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,13 +102,15 @@ public class GUILogin extends javax.swing.JFrame {
             }
         });
 
+        lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user-solid-96.png"))); // NOI18N
+
         javax.swing.GroupLayout pnlLoginLayout = new javax.swing.GroupLayout(pnlLogin);
         pnlLogin.setLayout(pnlLoginLayout);
         pnlLoginLayout.setHorizontalGroup(
             pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLoginLayout.createSequentialGroup()
-                .addGap(0, 182, Short.MAX_VALUE)
-                .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(182, 182, 182)
+                .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addGap(180, 180, 180))
             .addGroup(pnlLoginLayout.createSequentialGroup()
                 .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -87,19 +120,25 @@ public class GUILogin extends javax.swing.JFrame {
                             .addComponent(txtUsername)
                             .addComponent(txtContrasenia, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)))
                     .addGroup(pnlLoginLayout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnRegistrarse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnIniciarSesion, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)))
-                    .addGroup(pnlLoginLayout.createSequentialGroup()
                         .addGap(187, 187, 187)
-                        .addComponent(lblContrasenia)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblContrasenia))
+                    .addGroup(pnlLoginLayout.createSequentialGroup()
+                        .addGap(170, 170, 170)
+                        .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(70, 70, 70))
+                    .addGroup(pnlLoginLayout.createSequentialGroup()
+                        .addGap(156, 156, 156)
+                        .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(127, 127, 127))
         );
         pnlLoginLayout.setVerticalGroup(
             pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlLoginLayout.createSequentialGroup()
-                .addGap(126, 126, 126)
+                .addGap(27, 27, 27)
+                .addComponent(lblImage, javax.swing.GroupLayout.PREFERRED_SIZE, 87, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -108,10 +147,10 @@ public class GUILogin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(txtContrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addComponent(btnRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -141,7 +180,8 @@ public class GUILogin extends javax.swing.JFrame {
                     "Inicicio de sesion",
                     JOptionPane.INFORMATION_MESSAGE);
                 this.idUSer = user.getUserId();
-                Dashboard dashboard = new Dashboard(productService, categoryService, shoppingCart, this);
+                this.name=user.getUsername();
+                Dashboard dashboard = new Dashboard(productService, categoryService, shoppingCart, this,deliverService);
                 dashboard.setVisible(true);
                 this.frameDasboard.dispose();
                 this.dispose();
@@ -163,21 +203,28 @@ public class GUILogin extends javax.swing.JFrame {
     public int idLogin(){
         return idUSer;
     }
+    public String UserName(){
+        return name; 
+    }
     
     public void setDasboard (Dashboard dashboard){
         this.frameDasboard = dashboard;
     }
     
-    public void setService(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart){
+    public void setService(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart,DeliverService deliverService){
         this.productService = productService;
         this.categoryService = categoryService;
         this.shoppingCart = shoppingCart;
+        this.deliverService=deliverService;
     }
     
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
         instance.setVisible(true);
+        this.txtContrasenia.setText("");
+        this.txtUsername.setText("");
     }//GEN-LAST:event_btnRegistrarseActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */
@@ -187,6 +234,7 @@ public class GUILogin extends javax.swing.JFrame {
     private javax.swing.JButton btnIniciarSesion;
     private javax.swing.JButton btnRegistrarse;
     private javax.swing.JLabel lblContrasenia;
+    private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblUsername;
     private javax.swing.JPanel pnlLogin;
     private javax.swing.JTextField txtContrasenia;

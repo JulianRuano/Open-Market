@@ -81,6 +81,17 @@ public class Factory {
         }
         return result;
     }
+     public IDeliverAccess getDeliverRepository(String type) {
+
+       IDeliverAccess result = null;
+
+        switch (type) {
+            case "default":
+                result =new DeliverAccessImplSockets();
+                break;               
+        }
+        return result;
+    }
     
     
 }

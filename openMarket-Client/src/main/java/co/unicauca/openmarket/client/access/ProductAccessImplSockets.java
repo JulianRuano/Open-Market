@@ -85,7 +85,7 @@ public class ProductAccessImplSockets implements IProductAccess {
                 throw new Exception(extractMessages(jsonResponse));
 
             } else {
-                //Encontró el customer
+                //Encontró el product
 
                 Logger.getLogger(ProductAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: (" + producto.getName());
                 bandera = true;

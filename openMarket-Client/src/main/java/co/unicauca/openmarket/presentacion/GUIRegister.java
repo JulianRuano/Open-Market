@@ -14,9 +14,19 @@ public class GUIRegister extends javax.swing.JFrame {
     private UserService userService;
     public GUIRegister(UserService userService) {
         initComponents();
+        initStyles();
         this.userService=userService;
     }
-
+    private void initStyles(){
+        this.btnRegistrarse.putClientProperty("JButton.buttonType", "roundRect");
+        
+        this.txtName.putClientProperty ( "JComponent.roundRect", true );
+        this.txtLastName.putClientProperty ( "JComponent.roundRect", true );
+        this.txtmail.putClientProperty ( "JComponent.roundRect", true );
+        this.txtUsername.putClientProperty ( "JComponent.roundRect", true );
+       this.cbxRol.putClientProperty ( "JComponent.roundRect", true );
+        this.txtPassword.putClientProperty ( "JComponent.roundRect", true );
+    }
   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -40,22 +50,55 @@ public class GUIRegister extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        pnlRegister.setBackground(new java.awt.Color(122, 154, 171));
+
+        lblName.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblName.setForeground(new java.awt.Color(0, 0, 0));
         lblName.setText("Nombre");
 
+        lblLastName.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblLastName.setForeground(new java.awt.Color(0, 0, 0));
         lblLastName.setText("Apellido");
 
+        txtName.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtName.setForeground(new java.awt.Color(0, 0, 0));
+
+        txtLastName.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtLastName.setForeground(new java.awt.Color(0, 0, 0));
+
+        lblRole.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblRole.setForeground(new java.awt.Color(0, 0, 0));
         lblRole.setText("Rol");
 
+        txtmail.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtmail.setForeground(new java.awt.Color(0, 0, 0));
+
+        lblMail.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblMail.setForeground(new java.awt.Color(0, 0, 0));
         lblMail.setText("Correo");
 
+        txtUsername.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtUsername.setForeground(new java.awt.Color(0, 0, 0));
+
+        lblUsername.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblUsername.setForeground(new java.awt.Color(0, 0, 0));
         lblUsername.setText("Usuario");
 
+        lblTitulo.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(0, 0, 0));
         lblTitulo.setText("Registrate");
 
+        cbxRol.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        cbxRol.setForeground(new java.awt.Color(0, 0, 0));
         cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vendedor", "Comprador", " " }));
 
+        lblPassword.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblPassword.setForeground(new java.awt.Color(0, 0, 0));
         lblPassword.setText("Contraseña");
 
+        btnRegistrarse.setBackground(new java.awt.Color(102, 102, 255));
+        btnRegistrarse.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        btnRegistrarse.setForeground(new java.awt.Color(0, 0, 0));
         btnRegistrarse.setText("Registrarse");
         btnRegistrarse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,15 +106,15 @@ public class GUIRegister extends javax.swing.JFrame {
             }
         });
 
+        txtPassword.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtPassword.setForeground(new java.awt.Color(0, 0, 0));
+
         javax.swing.GroupLayout pnlRegisterLayout = new javax.swing.GroupLayout(pnlRegister);
         pnlRegister.setLayout(pnlRegisterLayout);
         pnlRegisterLayout.setHorizontalGroup(
             pnlRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRegisterLayout.createSequentialGroup()
                 .addGroup(pnlRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlRegisterLayout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(lblTitulo))
                     .addGroup(pnlRegisterLayout.createSequentialGroup()
                         .addGap(93, 93, 93)
                         .addGroup(pnlRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -90,16 +133,19 @@ public class GUIRegister extends javax.swing.JFrame {
                             .addComponent(txtUsername)
                             .addComponent(txtPassword)))
                     .addGroup(pnlRegisterLayout.createSequentialGroup()
-                        .addGap(160, 160, 160)
-                        .addComponent(btnRegistrarse)))
+                        .addGap(130, 130, 130)
+                        .addComponent(btnRegistrarse, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlRegisterLayout.createSequentialGroup()
+                        .addGap(155, 155, 155)
+                        .addComponent(lblTitulo)))
                 .addContainerGap(139, Short.MAX_VALUE))
         );
         pnlRegisterLayout.setVerticalGroup(
             pnlRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlRegisterLayout.createSequentialGroup()
-                .addGap(29, 29, 29)
+                .addGap(17, 17, 17)
                 .addComponent(lblTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblName)
                 .addGap(5, 5, 5)
                 .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -123,9 +169,9 @@ public class GUIRegister extends javax.swing.JFrame {
                 .addComponent(lblPassword)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnRegistrarse)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRegistrarse, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
