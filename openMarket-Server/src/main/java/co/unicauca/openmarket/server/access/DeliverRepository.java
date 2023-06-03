@@ -56,7 +56,7 @@ public class DeliverRepository implements IDeliverRepository{
         try {        
             this.connect();
             String sql = "UPDATE receipt "
-                    + "SET qualification=? "
+                    + "SET qualification=?, state='confirmado' "
                     + "WHERE receiptId = ?";
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {

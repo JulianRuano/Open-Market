@@ -46,13 +46,13 @@ public class PaymentRepository implements IPaymentRepository{
     public boolean save(String receiptId, String details, int userID) {
         try {
             this.connect();
-            String sql = "INSERT INTO receipt (receiptId,details) " +
-                         "VALUES (?,?,?)";
+            String sql = "INSERT INTO receipt (receiptId,details,userID,state) " +
+                         "VALUES (?,?,?,'Pendiente')";
                   
             PreparedStatement  pstmt = conn.prepareCall(sql);
             pstmt.setString(1, receiptId);
             pstmt.setString(2, details);
-            pstmt.setInt(2, userID);
+            pstmt.setInt(3, userID);
 
             pstmt.executeUpdate();
             pstmt.close();           

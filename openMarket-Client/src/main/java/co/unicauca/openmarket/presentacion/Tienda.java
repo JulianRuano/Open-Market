@@ -44,13 +44,21 @@ public class Tienda extends javax.swing.JPanel {
         mModeloTabla.addColumn("Descripcion");
         mModeloTabla.addColumn("Precio");
         mModeloTabla.addColumn("Direccion");
-        mModeloTabla.addColumn("Categoria");
+        mModeloTabla.addColumn("Categoria");        
         mModeloTabla.addColumn("Imagen");
+        mModeloTabla.addColumn("Calificacion");  
         this.idUser = idUser;
         presHelpers = new PresentacionHelpers();
         presHelpers.loadCategories(cbxCategories, categoryService);
         tblProductos.setModel(mModeloTabla);
         compra = new GUIPaymet(shoppingCart);
+        
+        try {
+            fillTable(productService.findAllProducts());
+        } catch (Exception ex) {
+            successMessage(ex.getMessage(), "Atención");
+        }
+        
         initStyles();
     }
      private void initStyles(){
@@ -312,6 +320,8 @@ public class Tienda extends javax.swing.JPanel {
     private void fillTable(List<Product> listProducts) {
         tblProductos.setDefaultRenderer(Object.class, new RenderImagen());
         DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
+        
+        
 
         Object rowData[] = new Object[6];//No columnas
         for (int i = 0; i < listProducts.size(); i++) {
