@@ -12,4 +12,5 @@ public interface IDeliverAccess {
     double qualification(String reference, int punctuation,int userID)throws Exception; 
     List<Invoice> billList(int userID)throws Exception ;
     double priceToPay(String reference,int userID)throws Exception;
+    boolean confirm(String reference, int punctuation,int userID)throws Exception;
 }

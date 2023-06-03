@@ -29,6 +29,12 @@ public class DeliverService {
         }
         return repository.qualification(reference,punctuation, userID);
     }
+    public boolean  confirmService(String reference,int punctuation, int userID)throws Exception{
+        if(reference==null || (punctuation<1 && punctuation>5)||userID<=0){
+            return false;
+        }
+        return repository.confirm(reference,punctuation, userID);
+    }
     public List<Invoice> billListService(int userID)throws Exception{
         if(userID<=0){
             return null;

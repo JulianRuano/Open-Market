@@ -18,6 +18,8 @@ co\unicauca\openmarket\presentacion\crudCategoria$8.class
 co\unicauca\openmarket\client\presentation\commands\OMEditProductCommand.class
 co\unicauca\openmarket\presentacion\crudCategoria$5.class
 co\unicauca\openmarket\presentacion\crudProducto$7.class
+co\unicauca\openmarket\client\access\DeliverAccessImplSockets$1.class
+co\unicauca\openmarket\presentacion\MisCompras$1.class
 co\unicauca\openmarket\presentacion\GUIPaymet$2.class
 co\unicauca\openmarket\presentacion\validaciones\ValidadorCampos.class
 co\unicauca\openmarket\presentacion\Tienda.class
@@ -52,6 +54,7 @@ co\unicauca\openmarket\presentacion\Dashboard$2.class
 co\unicauca\openmarket\presentacion\GUIPaymet$3.class
 co\unicauca\openmarket\presentacion\Dashboard$5.class
 co\unicauca\openmarket\client\access\IUserAccess.class
+co\unicauca\openmarket\client\access\DeliverAccessImplSockets.class
 co\unicauca\openmarket\presentacion\Dashboard$4.class
 co\unicauca\openmarket\presentacion\GUIPaymet$5.class
 co\unicauca\openmarket\presentacion\GUILogin$2.class

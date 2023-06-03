@@ -107,9 +107,9 @@ public class DeliverAccessImplSockets implements IDeliverAccess{
         return requestJson;
     }
     private String doQualificationRequestJson(String reference, int punctuation, int userID) {
-      Protocol protocol=new Protocol();
+        Protocol protocol=new Protocol();
         protocol.setResource("shoppingCart");
-        protocol.setAction("confirm");
+        protocol.setAction("getQualification");
         
         protocol.addParameter("reference", reference);
         protocol.addParameter("punctuation", Integer.toString(punctuation));
@@ -210,6 +210,52 @@ public class DeliverAccessImplSockets implements IDeliverAccess{
                 return lista;
             }
         }     
+    }
+
+    @Override
+    public boolean confirm(String reference, int punctuation, int userID) throws Exception {
+        boolean bandera=false;
+        String jsonResponse = null;
+        String requestJson = doConfirmRequestJson(reference,punctuation,userID);
+        try {
+            mySocket.connect();
+            jsonResponse = mySocket.sendRequest(requestJson);
+            mySocket.disconnect();
+
+        } catch (IOException ex) {
+            Logger.getLogger(DeliverAccessImplSockets.class.getName()).log(Level.SEVERE, "No hubo conexión con el servidor", ex);
+        }
+        if (jsonResponse == null) {
+            throw new Exception("No se pudo conectar con el servidor");
+        } else {
+
+            if (jsonResponse.contains("error")) {
+                //Devolvió algún error                
+                Logger.getLogger(DeliverAccessImplSockets.class.getName()).log(Level.INFO, jsonResponse);
+                throw new Exception(extractMessages(jsonResponse));
+            } else {
+                
+                Logger.getLogger(DeliverAccessImplSockets.class.getName()).log(Level.INFO, "Lo que va en el JSon: ({0})",jsonResponse);
+              bandera=true;
+
+            }
+        }
+        return bandera;
+    }
+
+    private String doConfirmRequestJson(String reference, int punctuation, int userID) {
+       Protocol protocol=new Protocol();
+        protocol.setResource("shoppingCart");
+        protocol.setAction("confirm");
+        
+        protocol.addParameter("reference", reference);
+        protocol.addParameter("punctuation", Integer.toString(punctuation));
+        protocol.addParameter("UserID", Integer.toString(userID));
+        
+        Gson gson = new Gson();
+        String requestJson = gson.toJson(protocol);
+
+        return requestJson;
     }
 
     

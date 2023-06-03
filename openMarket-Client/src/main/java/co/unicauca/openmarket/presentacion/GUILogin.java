@@ -7,6 +7,7 @@ package co.unicauca.openmarket.presentacion;
 
 import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
+import co.unicauca.openmarket.client.domain.service.DeliverService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.domain.service.UserService;
 import static co.unicauca.openmarket.client.infra.Messages.successMessage;
@@ -27,6 +28,7 @@ public class GUILogin extends javax.swing.JFrame {
     private  ProductService productService ;
     private  CategoryService categoryService ;
     private  ShoppingCar shoppingCart;
+    private  DeliverService deliverService;
     private int idUSer = 0;
     private String name="";
     
@@ -179,7 +181,7 @@ public class GUILogin extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE);
                 this.idUSer = user.getUserId();
                 this.name=user.getUsername();
-                Dashboard dashboard = new Dashboard(productService, categoryService, shoppingCart, this);
+                Dashboard dashboard = new Dashboard(productService, categoryService, shoppingCart, this,deliverService);
                 dashboard.setVisible(true);
                 this.frameDasboard.dispose();
                 this.dispose();
@@ -209,10 +211,11 @@ public class GUILogin extends javax.swing.JFrame {
         this.frameDasboard = dashboard;
     }
     
-    public void setService(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart){
+    public void setService(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart,DeliverService deliverService){
         this.productService = productService;
         this.categoryService = categoryService;
         this.shoppingCart = shoppingCart;
+        this.deliverService=deliverService;
     }
     
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed

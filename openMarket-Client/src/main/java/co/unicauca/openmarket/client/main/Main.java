@@ -7,11 +7,13 @@ package co.unicauca.openmarket.client.main;
 
 import co.unicauca.openmarket.client.access.Factory;
 import co.unicauca.openmarket.client.access.ICategoryAccess;
+import co.unicauca.openmarket.client.access.IDeliverAccess;
 import co.unicauca.openmarket.client.access.IProductAccess;
 import co.unicauca.openmarket.client.access.IShoppingCartAccess;
 import co.unicauca.openmarket.client.access.IUserAccess;
 import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
+import co.unicauca.openmarket.client.domain.service.DeliverService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.domain.service.UserService;
 import co.unicauca.openmarket.presentacion.Dashboard;
@@ -33,17 +35,19 @@ public class Main {
        ICategoryAccess repository2 =  Factory.getInstance().getCatRepository("default");
        IShoppingCartAccess repository3 = Factory.getInstance().getShoppingRepository("default");
        IUserAccess repository4 = Factory.getInstance().getUserRepository("default");
+       IDeliverAccess repository5=Factory.getInstance().getDeliverRepository("default");
         ProductService productService = new ProductService(repository);
         CategoryService categoryService=new CategoryService(repository2);
         ShoppingCar shoppingCart = new ShoppingCar(repository3);
         UserService userService=new UserService( repository4);
+        DeliverService deliverService=new DeliverService(repository5);
         FlatMaterialLighterIJTheme.setup();   
         
        
        GUILogin login = new GUILogin(userService);
-       Dashboard instance=new  Dashboard(productService,categoryService,shoppingCart,login);      
+       Dashboard instance=new  Dashboard(productService,categoryService,shoppingCart,login, deliverService);      
        login.setDasboard(instance);
-       login.setService(productService, categoryService, shoppingCart);
+       login.setService(productService, categoryService, shoppingCart,deliverService);
        instance.setVisible(true);
        
     }

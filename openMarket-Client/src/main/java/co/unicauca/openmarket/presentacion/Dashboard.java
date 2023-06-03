@@ -7,6 +7,7 @@ package co.unicauca.openmarket.presentacion;
 
 import co.unicauca.openmarket.client.domain.application.ShoppingCar;
 import co.unicauca.openmarket.client.domain.service.CategoryService;
+import co.unicauca.openmarket.client.domain.service.DeliverService;
 import co.unicauca.openmarket.client.domain.service.ProductService;
 import co.unicauca.openmarket.client.presentation.commands.OMInvoker;
 import java.awt.BorderLayout;
@@ -22,6 +23,7 @@ public class Dashboard extends javax.swing.JFrame {
 
      private final ProductService productService;
      private final CategoryService categoryService;
+     private final DeliverService deliverService;
     private final ShoppingCar shoppingCart;
     //private final UserService userService;
     private GUILogin instance;
@@ -29,13 +31,14 @@ public class Dashboard extends javax.swing.JFrame {
     private final OMInvoker ominvokerProducts;
     private  int idUser;
     
-    public Dashboard(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart,GUILogin login) {
+    public Dashboard(ProductService productService,CategoryService categoryService, ShoppingCar shoppingCart,GUILogin login,DeliverService deliverService) {
         initComponents();
         initStyles();
         setExtendedState(MAXIMIZED_BOTH);
         this.productService=productService;
         this.categoryService=categoryService;
         this.shoppingCart=shoppingCart;
+        this.deliverService=deliverService;
         //this.userService=userService;
         instance = login;       
         ominvokerCategorias = new OMInvoker();
@@ -329,7 +332,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void btnComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprasActionPerformed
-       ShowJPanel(new MisCompras() );
+       ShowJPanel(new MisCompras(deliverService,idUser) );
     }//GEN-LAST:event_btnComprasActionPerformed
 
 
