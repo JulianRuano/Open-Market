@@ -30,7 +30,11 @@ public class DeliverService {
         return repo.billList(userID);
     }
     
-    public synchronized boolean priceToPay(String idCompra,int userID){
+    public synchronized double balance(String idCompra,int userID){
         return repo.priceToPay(idCompra, userID);
+    }
+    
+    public synchronized boolean updateBalance(String idCompra,int userID){
+        return repo.UpdateBalance(idCompra, userID);
     }
 }
