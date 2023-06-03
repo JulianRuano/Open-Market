@@ -48,15 +48,13 @@ public class DeliverRepository implements IDeliverRepository{
             System.out.println(ex.getMessage());
         }
     }
+    
+    
 
     @Override
-    public double qualification(String reference, int puntuacion,int userID) {
-            double average = 0;
-            try {
-            
-
+    public boolean qualification(String reference, int puntuacion,int userID) {
+        try {        
             this.connect();
-
             String sql = "UPDATE receipt "
                     + "SET qualification=? "
                     + "WHERE receiptId = ?";
@@ -67,9 +65,21 @@ public class DeliverRepository implements IDeliverRepository{
 
                 pstmt.executeUpdate();
                 pstmt.close();
-            }
-            
-            sql = "SELECT AVG(qualification) AS promedio_qualification" +
+                this.disconnect();  
+            }                           
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(DeliverRepository.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.disconnect();
+        return false;      
+    }
+
+    
+    public double confirm(int userID){
+        double average = 0;
+        try {
+            String sql = "SELECT AVG(qualification) AS promedio_qualification" +
                    " FROM receipt" +
                    " WHERE userID = ?";
             try(PreparedStatement pstmt = conn.prepareStatement(sql)){
@@ -77,19 +87,18 @@ public class DeliverRepository implements IDeliverRepository{
                 
                 ResultSet res = pstmt.executeQuery();
                 if (res.next()) {
-                    average = res.getDouble("promedio_qualification");                  
+                    average = res.getDouble("promedio_qualification");    
                 }
                 pstmt.close();
-                this.disconnect();          
-            }
-            return average;
-
-        } catch (SQLException ex) {
+            }               
+        }
+        catch (SQLException ex) {
             Logger.getLogger(DeliverRepository.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.disconnect();
-        return average;
+        return average;  
     }
+
     
     @Override
     public List<Invoice> billList(int userID) {

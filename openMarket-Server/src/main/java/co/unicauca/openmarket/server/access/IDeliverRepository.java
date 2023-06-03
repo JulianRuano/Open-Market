@@ -10,7 +10,8 @@ import java.util.List;
  */
 public interface IDeliverRepository {
     
-    double qualification(String reference, int puntuacion,int userID); 
+    double qualification(int userID); 
+    boolean confirm(String reference, int puntuacion,int userID);
     List<Invoice> billList(int userID);
     boolean UpdateBalance(String reference,int userID);
     double balance(int userID);

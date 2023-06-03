@@ -135,6 +135,8 @@ public class OpenMarketHandler extends ServerHandler {
                         response = processBillList(protocolRequest);
                     case "get" -> // Devuelve el saldo actual
                         response = processBalance(protocolRequest);
+                    case "getQualification" -> // Devuelve el promedio de las calificaiones del usuario
+                        response = processqualification(protocolRequest);
                     default -> {
                         response = accessDenied();
                     }
@@ -309,14 +311,19 @@ public class OpenMarketHandler extends ServerHandler {
     
     
     private String processConfirmPurchase(Protocol protocolRequest) {
-        String idCompra = protocolRequest.getParameters().get(0).getValue();
+        String reference = protocolRequest.getParameters().get(0).getValue();
         int puntacion = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
-        int userID = Integer.parseInt(protocolRequest.getParameters().get(2).getValue());
+        int userID = Integer.parseInt(protocolRequest.getParameters().get(2).getValue());     
+        deliverRepository.balance(userID);     
+        boolean resp = deliverRepository.confirm(reference,puntacion,userID);       
+        return String.valueOf(resp);
+    }
+    
+    private String processqualification(Protocol protocolRequest){
+        int userID = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
+        double qual = deliverRepository.qualification(userID);
+        return String.valueOf(qual);
         
-        deliverRepository.balance(idCompra,userID);
-        
-        double qualification = deliverRepository.qualification(idCompra,puntacion,userID);       
-        return String.valueOf(qualification);
     }
           
     private String processBillList(Protocol protocolRequest) {
@@ -328,7 +335,7 @@ public class OpenMarketHandler extends ServerHandler {
         String reference =  protocolRequest.getParameters().get(0).getValue();
         int userID = Integer.parseInt(protocolRequest.getParameters().get(1).getValue());
         deliverRepository.updateBalance(reference, userID);
-        double balance = deliverRepository.balance(reference, userID);
+        double balance = deliverRepository.balance(userID);
         return String.valueOf(balance);
     }
     

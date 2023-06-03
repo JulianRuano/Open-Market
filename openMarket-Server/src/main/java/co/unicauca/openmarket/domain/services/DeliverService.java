@@ -22,16 +22,19 @@ public class DeliverService {
     
     }
     
-    public synchronized double qualification(String idCompra, int puntuacion,int userID){
-         return repo.qualification(idCompra, puntuacion, userID);
+    public synchronized boolean confirm(String idCompra, int puntuacion,int userID){
+         return repo.confirm(idCompra, puntuacion, userID);
+    }
+    public synchronized double qualification(int userID){
+        return repo.qualification(userID);
     }
     
     public synchronized List<Invoice> billList(int userID){
         return repo.billList(userID);
     }
     
-    public synchronized double balance(String idCompra,int userID){
-        return repo.priceToPay(idCompra, userID);
+    public synchronized double balance(int userID){
+        return repo.balance(userID);
     }
     
     public synchronized boolean updateBalance(String idCompra,int userID){
