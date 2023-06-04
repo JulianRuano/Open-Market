@@ -178,18 +178,19 @@ public class GUILogin extends javax.swing.JFrame {
                 this.frameDasboard.dispose();
                 this.dispose();
             }else{
+              
                     JOptionPane.showMessageDialog(null,
                     "el usuario o el usuario son incorrectos",
                     "Usuario o contraseña incorrecta",
                     JOptionPane.ERROR_MESSAGE);
             }
-       }catch(Exception e){
-            successMessage(e.getMessage(), "Atención");
-             JOptionPane.showMessageDialog(null,
-                    "ERROR, no se pudo conectar al servidor",
-                    "Erroral conectar al servidor",
-                    JOptionPane.ERROR_MESSAGE);
-        }   
+     
+        }catch(Exception e){
+             successMessage(e.getMessage(), "Atención");
+            
+        }  
+      this.txtContrasenia.setText("");
+        this.txtUsername.setText("");
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     public int idLogin(){
@@ -212,8 +213,7 @@ public class GUILogin extends javax.swing.JFrame {
     
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
         instance.setVisible(true);
-        this.txtContrasenia.setText("");
-        this.txtUsername.setText("");
+         
     }//GEN-LAST:event_btnRegistrarseActionPerformed
 
     

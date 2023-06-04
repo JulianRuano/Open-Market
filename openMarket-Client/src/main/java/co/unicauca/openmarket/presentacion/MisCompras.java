@@ -195,8 +195,8 @@ public class MisCompras extends javax.swing.JPanel {
             }
         } catch (NullPointerException ex) {
             JOptionPane.showMessageDialog(null,
-                    "Error al traer los datos",
-                    "Error Datos No Encontrados",
+                    "Error",
+                    "Error,Debes Iniciar sesion o verifica tus productos",
                     JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             successMessage(e.getMessage(), "Atención");
