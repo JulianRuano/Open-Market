@@ -54,6 +54,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         }
     }
+    
     private void initStyles(){
       //.putClientProperty("JButton.buttonType", "roundRect");
       //para el diseño del titulo y el color de la letra
@@ -334,7 +335,11 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void btnComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprasActionPerformed
-       ShowJPanel(new MisCompras(deliverService,idUser) );
+      
+        
+        MisCompras instance=new MisCompras(deliverService,idUser);
+        ShowJPanel(instance);
+        this.deliverService.addObservador(instance);
     }//GEN-LAST:event_btnComprasActionPerformed
 
 

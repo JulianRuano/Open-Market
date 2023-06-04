@@ -4,12 +4,13 @@ package co.unicauca.openmarket.client.domain.service;
 import co.unicauca.openmarket.client.access.IDeliverAccess;
 import co.unicauca.openmarket.commons.application.Invoice;
 import java.util.List;
+import reloj.frameworkobsobs.Observado;
 
 /**
  *
  * @author brayan
  */
-public class DeliverService {
+public class DeliverService extends Observado {
     private IDeliverAccess repository;
     public DeliverService() {
     }
@@ -30,10 +31,13 @@ public class DeliverService {
         return repository.qualification(reference,punctuation, userID);
     }
     public boolean  confirmService(String reference,int punctuation, int userID)throws Exception{
+        boolean result=false;
         if(reference==null || (punctuation<1 && punctuation>5)||userID<=0){
-            return false;
+            return result;
         }
-        return repository.confirm(reference,punctuation, userID);
+        result= repository.confirm(reference,punctuation, userID);
+        this.notificar();
+        return result;
     }
     public List<Invoice> billListService(int userID)throws Exception{
         if(userID<=0){

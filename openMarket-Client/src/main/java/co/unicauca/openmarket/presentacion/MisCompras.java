@@ -10,12 +10,13 @@ import co.unicauca.openmarket.commons.application.Invoice;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import reloj.frameworkobsobs.Observador;
 
 /**
  *
  * @author fre90
  */
-public class MisCompras extends javax.swing.JPanel {
+public class MisCompras extends javax.swing.JPanel  implements Observador{
 
    DefaultTableModel mModeloTabla = new DefaultTableModel();
    private DeliverService deliverService;
@@ -187,6 +188,8 @@ public class MisCompras extends javax.swing.JPanel {
                     "Entrega Exitosa",
                     "Entrega",
                     JOptionPane.INFORMATION_MESSAGE);
+                    this.txtCodProduct.setText("");
+                    this.cbxCalification.setSelectedItem(1);
             }else{
                  JOptionPane.showMessageDialog(null,
                     "Error al realizar la Entrega",
@@ -219,4 +222,18 @@ public class MisCompras extends javax.swing.JPanel {
     private javax.swing.JTable tablaCompras;
     private javax.swing.JTextField txtCodProduct;
     // End of variables declaration//GEN-END:variables
+    
+    @Override
+    public void actualizar() {
+        
+        try {
+            
+            initializeTable() ;
+            fillTable(deliverService.billListService(userID)); 
+           
+        } catch (Exception ex) {
+            successMessage(ex.getMessage(), "Atención");
+        }
+
+    }
 }

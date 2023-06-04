@@ -260,6 +260,8 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         txtNameCategoria.setForeground(new java.awt.Color(0, 0, 0));
         pnlCrudCategoria.add(txtNameCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 230, 40));
 
+        tablaCategorias.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tablaCategorias.setForeground(new java.awt.Color(0, 0, 0));
         tablaCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -278,7 +280,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         lblBuscar.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         lblBuscar.setForeground(new java.awt.Color(0, 0, 0));
         lblBuscar.setText("Buscar por:");
-        pnlCrudCategoria.add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 66, -1, 20));
+        pnlCrudCategoria.add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, 20));
 
         txtBuscar.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
         txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
@@ -289,7 +291,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         rdBuscarId.setForeground(new java.awt.Color(0, 0, 0));
         rdBuscarId.setText("ID");
         rdBuscarId.setToolTipText("");
-        pnlCrudCategoria.add(rdBuscarId, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, -1, -1));
+        pnlCrudCategoria.add(rdBuscarId, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, -1, -1));
 
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
@@ -317,7 +319,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         rdBuscarNombre.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         rdBuscarNombre.setForeground(new java.awt.Color(0, 0, 0));
         rdBuscarNombre.setText("Nombre");
-        pnlCrudCategoria.add(rdBuscarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, -1, -1));
+        pnlCrudCategoria.add(rdBuscarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 50, -1, -1));
 
         add(pnlCrudCategoria, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
