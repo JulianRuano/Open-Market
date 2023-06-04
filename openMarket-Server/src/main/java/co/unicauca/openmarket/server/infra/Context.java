@@ -10,6 +10,7 @@ package co.unicauca.openmarket.server.infra;
  */
 public enum Context {
     PRODUCT,
+    PRODUCTFK,
     CATEGORY,
     SHOPPING,
     USER

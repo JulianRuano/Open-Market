@@ -36,7 +36,7 @@ public class ProductService extends Observado {
         this.repository = repository;
     }
 
-    public boolean saveProduct(int productId, String name, String description, double price, String address, int categoryId, int stock, byte[] image) throws Exception {
+    public int saveProduct(int productId, String name, String description, double price, String address, int categoryId, int stock, byte[] image) throws Exception {
 
         Product newProduct = new Product();
         newProduct.setProductId(productId);
@@ -50,16 +50,11 @@ public class ProductService extends Observado {
 
         //Validate product
         if (newProduct.getName().isBlank()) {
-            return false;
+            return 0;
         }
-        boolean result = false;
-
         this.idProduct = repository.save(newProduct);
-        if (idProduct > 0) {
-            result = true;
-        }
         this.notificar();
-        return result;
+        return idProduct;
     }
 
     public List<Product> findAllProducts() throws Exception {

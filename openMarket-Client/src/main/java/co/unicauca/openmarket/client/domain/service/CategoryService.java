@@ -26,23 +26,17 @@ public class CategoryService extends Observado{
     public CategoryService(ICategoryAccess repository){
         this.repository=repository;
     }
-    public boolean saveCategory (int id,String name)throws Exception{
+    public int saveCategory (int id,String name)throws Exception{
         Category newCategory=new Category();
         newCategory.setCategoryId(id);
         newCategory.setName(name);
         if(newCategory.getName().isBlank()){
-            return false;
+            return 0;
         }
-        boolean result= false;
         
-        this.idCategory = repository.save(newCategory);
-        
-        if (idCategory > 0 ){        
-            result= true;
-        }       
-        
+        this.idCategory = repository.save(newCategory);       
         this.notificar();
-        return result;
+        return idCategory;
     }
     
     public boolean editCategory(int categoryId,Category cat) {

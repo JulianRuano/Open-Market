@@ -36,7 +36,8 @@ public class OMDeleteProductCommand extends OMCommand{
     @Override
     public void unmake() {
         try {
-            result = pS.saveProduct(pP.getProductId(), pP.getName(), pP.getDescription(),pP.getPrice(),pP.getAddress(),pP.getCategoryId(),pP.getStock(),pP.getImage());
+            idProduct = pS.saveProduct(pP.getProductId(), pP.getName(), pP.getDescription(),pP.getPrice(),pP.getAddress(),pP.getCategoryId(),pP.getStock(),pP.getImage());
+            result = idProduct > 0;
         } catch (Exception ex) {
             Logger.getLogger(OMDeleteProductCommand.class.getName()).log(Level.SEVERE, null, ex);
         }

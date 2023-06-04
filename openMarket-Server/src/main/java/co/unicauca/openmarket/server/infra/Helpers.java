@@ -15,6 +15,8 @@ public class Helpers {
         switch (context) {
             case PRODUCT ->
                 message = "Error, un producto con ese id ya existe";
+            case PRODUCTFK ->
+                message = "Error, este producto no se puede eliminar ";
             case CATEGORY ->
                 message = "Error, una categoria con ese id ya existe";
             case SHOPPING ->
