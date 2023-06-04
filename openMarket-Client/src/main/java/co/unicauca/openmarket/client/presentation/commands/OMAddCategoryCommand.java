@@ -26,12 +26,9 @@ public class OMAddCategoryCommand extends OMCommand {
 
     @Override
     public void make() {
-        try { 
-            result = cS.saveCategory(cC.getCategoryId(), cC.getName());
-            if (result){
-                this.idCategory = cS.getIdCategory();
-            }
-            
+        try {            
+            this.idCategory = cS.saveCategory(cC.getCategoryId(), cC.getName());
+            result = idCategory > 0;            
         } catch (Exception ex) {
             Logger.getLogger(OMAddCategoryCommand.class.getName()).log(Level.SEVERE, null, ex);
         }

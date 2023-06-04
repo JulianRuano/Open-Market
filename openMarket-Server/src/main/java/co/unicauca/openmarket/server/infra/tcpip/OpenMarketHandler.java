@@ -383,9 +383,11 @@ public class OpenMarketHandler extends ServerHandler {
     private String processDeleteProduct(Protocol protocolRequest) {
         // Eliminar una categoria 
         int id = Integer.parseInt(protocolRequest.getParameters().get(0).getValue());
-        boolean response = productService.delete(id);
-        String respuesta = String.valueOf(response);
-        return respuesta;
+        boolean response = productService.delete(id);    
+        if(!response){
+            return helpers.generateBadRequestJson(Context.PRODUCTFK);
+        }
+        return String.valueOf(response);      
     }
 
     private String processListNameProduct(Protocol protocolRequest) {

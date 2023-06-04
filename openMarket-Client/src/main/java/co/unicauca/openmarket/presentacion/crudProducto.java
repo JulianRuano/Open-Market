@@ -977,6 +977,9 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
                     stateInitial();
                     cleanControls();
                 }
+                else{
+                    JOptionPane.showMessageDialog(null, "Error: no se puede eliminar el producto", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
         } catch (Exception ex) {
             successMessage(ex.getMessage(), "Atención");

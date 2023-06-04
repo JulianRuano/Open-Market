@@ -34,16 +34,14 @@ public class OMDeleteCategoryCommand extends OMCommand {
 
     @Override
     public void unmake() {
-        try {
-            result = cS.saveCategory(cC.getCategoryId(), cC.getName());
+        try {           
+            idCategory = cS.saveCategory(cC.getCategoryId(), cC.getName());
+            result = idCategory > 0;
+                      
         } catch (Exception ex) {
             Logger.getLogger(OMDeleteCategoryCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-
-    
-    
     public boolean result(){
         return result;
     } 
