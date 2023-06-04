@@ -69,15 +69,19 @@ public class GUILogin extends javax.swing.JFrame {
         pnlLogin.setBackground(new java.awt.Color(122, 154, 171));
 
         lblUsername.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblUsername.setForeground(new java.awt.Color(0, 0, 0));
         lblUsername.setText("Username");
 
         txtUsername.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtUsername.setForeground(new java.awt.Color(0, 0, 0));
 
         lblContrasenia.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblContrasenia.setForeground(new java.awt.Color(0, 0, 0));
         lblContrasenia.setText("Contraseña");
 
         btnIniciarSesion.setBackground(new java.awt.Color(102, 102, 255));
         btnIniciarSesion.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        btnIniciarSesion.setForeground(new java.awt.Color(0, 0, 0));
         btnIniciarSesion.setText("Iniciar sesion");
         btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,6 +91,7 @@ public class GUILogin extends javax.swing.JFrame {
 
         btnRegistrarse.setBackground(new java.awt.Color(102, 102, 255));
         btnRegistrarse.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        btnRegistrarse.setForeground(new java.awt.Color(0, 0, 0));
         btnRegistrarse.setText("Registrarse");
         btnRegistrarse.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -95,6 +100,8 @@ public class GUILogin extends javax.swing.JFrame {
         });
 
         lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user-solid-96.png"))); // NOI18N
+
+        txtContrasenia.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout pnlLoginLayout = new javax.swing.GroupLayout(pnlLogin);
         pnlLogin.setLayout(pnlLoginLayout);
@@ -160,7 +167,8 @@ public class GUILogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-      try{
+        
+        try{
             String username=this.txtUsername.getText();
             String contrasenia=this.txtContrasenia.getText();
             
@@ -177,19 +185,21 @@ public class GUILogin extends javax.swing.JFrame {
                 dashboard.setVisible(true);
                 this.frameDasboard.dispose();
                 this.dispose();
+                
             }else{
+              
                     JOptionPane.showMessageDialog(null,
                     "el usuario o el usuario son incorrectos",
                     "Usuario o contraseña incorrecta",
                     JOptionPane.ERROR_MESSAGE);
             }
-       }catch(Exception e){
-            successMessage(e.getMessage(), "Atención");
-             JOptionPane.showMessageDialog(null,
-                    "ERROR, no se pudo conectar al servidor",
-                    "Erroral conectar al servidor",
-                    JOptionPane.ERROR_MESSAGE);
-        }   
+     
+        }catch(Exception e){
+             successMessage(e.getMessage(), "Atención");
+            
+        }  
+      this.txtContrasenia.setText("");
+        this.txtUsername.setText("");
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     public int idLogin(){
@@ -212,8 +222,7 @@ public class GUILogin extends javax.swing.JFrame {
     
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
         instance.setVisible(true);
-        this.txtContrasenia.setText("");
-        this.txtUsername.setText("");
+         
     }//GEN-LAST:event_btnRegistrarseActionPerformed
 
     

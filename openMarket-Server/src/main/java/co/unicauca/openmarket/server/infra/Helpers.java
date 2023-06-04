@@ -38,7 +38,7 @@ public class Helpers {
             case SHOPPING ->
                  message = "Error, La tarjeta de credito no existe";
             case USER ->
-                 message = "Error, El usuario no existe";
+                 message = "Error,Usuario o contraseña es incorrectas";
             // Añade más casos aquí en el futuro
             default ->
                 throw new IllegalArgumentException("Contexto desconocido: " + context);

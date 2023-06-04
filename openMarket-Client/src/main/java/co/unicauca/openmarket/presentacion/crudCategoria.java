@@ -54,6 +54,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         this.btnListarTodo.putClientProperty("JButton.buttonType", "roundRect");
         this.btnBuscar.putClientProperty("JButton.buttonType", "roundRect");
         this.txtNameCategoria.putClientProperty ( "JComponent.roundRect", true );
+        this.txtCodCategoria.putClientProperty ( "JComponent.roundRect", true );
         this.txtBuscar.putClientProperty ( "JComponent.roundRect", true );
     }
     private void initializeTable() {
@@ -247,8 +248,13 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
 
         pnlCrudCategoria.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblCodCategoria.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblCodCategoria.setForeground(new java.awt.Color(0, 0, 0));
         lblCodCategoria.setText("Codigo Categoria");
         pnlCrudCategoria.add(lblCodCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, -1, -1));
+
+        txtCodCategoria.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtCodCategoria.setForeground(new java.awt.Color(0, 0, 0));
         pnlCrudCategoria.add(txtCodCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 230, 40));
 
         lblNameCategory.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
@@ -260,6 +266,8 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         txtNameCategoria.setForeground(new java.awt.Color(0, 0, 0));
         pnlCrudCategoria.add(txtNameCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, 230, 40));
 
+        tablaCategorias.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        tablaCategorias.setForeground(new java.awt.Color(0, 0, 0));
         tablaCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -278,7 +286,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         lblBuscar.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         lblBuscar.setForeground(new java.awt.Color(0, 0, 0));
         lblBuscar.setText("Buscar por:");
-        pnlCrudCategoria.add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 66, -1, 20));
+        pnlCrudCategoria.add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, 20));
 
         txtBuscar.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
         txtBuscar.setForeground(new java.awt.Color(0, 0, 0));
@@ -289,7 +297,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         rdBuscarId.setForeground(new java.awt.Color(0, 0, 0));
         rdBuscarId.setText("ID");
         rdBuscarId.setToolTipText("");
-        pnlCrudCategoria.add(rdBuscarId, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 60, -1, -1));
+        pnlCrudCategoria.add(rdBuscarId, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 50, -1, -1));
 
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
@@ -300,7 +308,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
                 btnBuscarActionPerformed(evt);
             }
         });
-        pnlCrudCategoria.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 50, -1, 30));
+        pnlCrudCategoria.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 40, 70, 40));
 
         btnListarTodo.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnListarTodo.setForeground(new java.awt.Color(0, 0, 0));
@@ -311,13 +319,13 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
                 btnListarTodoActionPerformed(evt);
             }
         });
-        pnlCrudCategoria.add(btnListarTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 50, 120, 30));
+        pnlCrudCategoria.add(btnListarTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 40, 120, 40));
 
         btngGrupo1.add(rdBuscarNombre);
         rdBuscarNombre.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         rdBuscarNombre.setForeground(new java.awt.Color(0, 0, 0));
         rdBuscarNombre.setText("Nombre");
-        pnlCrudCategoria.add(rdBuscarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, -1, -1));
+        pnlCrudCategoria.add(rdBuscarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 50, -1, -1));
 
         add(pnlCrudCategoria, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents

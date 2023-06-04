@@ -46,7 +46,6 @@ public class Tienda extends javax.swing.JPanel {
         mModeloTabla.addColumn("Direccion");
         mModeloTabla.addColumn("Categoria");        
         mModeloTabla.addColumn("Imagen");
-        mModeloTabla.addColumn("Calificacion");  
         this.idUser = idUser;
         presHelpers = new PresentacionHelpers();
         presHelpers.loadCategories(cbxCategories, categoryService);

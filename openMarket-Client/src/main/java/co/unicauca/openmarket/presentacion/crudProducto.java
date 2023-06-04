@@ -60,7 +60,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
 
     public crudProducto(ProductService productService, OMInvoker ominvoker, CategoryService categoryService) {
         initComponents();
-         
+        
         this.productService = productService;
         this.categoryService = categoryService;
         this.ominvoker = ominvoker;
@@ -95,7 +95,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         this.btnExaminar.putClientProperty("JButton.buttonType", "roundRect");
         this.btnBuscar.putClientProperty("JButton.buttonType", "roundRect");
         this.btnListar.putClientProperty("JButton.buttonType", "roundRect");
-        UIManager.put( "TextComponent.arc", 999 );
+        this.txtCodigoProducto.putClientProperty ( "JComponent.roundRect", true );
         this.txtNombre.putClientProperty ( "JComponent.roundRect", true );
         this.txtDescripcion.putClientProperty ( "JComponent.roundRect", true );
         this.txtPrecio.putClientProperty ( "JComponent.roundRect", true );
@@ -395,21 +395,21 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         pnlSeccionBotonesLayout.setHorizontalGroup(
             pnlSeccionBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSeccionBotonesLayout.createSequentialGroup()
-                .addGap(46, 46, 46)
-                .addComponent(btnDeshacer, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(70, 70, 70)
+                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(11, 11, 11)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnRehacer, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDeshacer, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(315, Short.MAX_VALUE))
+                .addContainerGap(420, Short.MAX_VALUE))
         );
         pnlSeccionBotonesLayout.setVerticalGroup(
             pnlSeccionBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -534,8 +534,12 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         );
 
         lblCodigoProducto.setBackground(new java.awt.Color(0, 0, 0));
-        lblCodigoProducto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblCodigoProducto.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblCodigoProducto.setForeground(new java.awt.Color(0, 0, 0));
         lblCodigoProducto.setText("Codigo Producto");
+
+        txtCodigoProducto.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtCodigoProducto.setForeground(new java.awt.Color(0, 0, 0));
 
         lblNombre.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(0, 0, 0));
@@ -563,7 +567,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         lblStock.setText("Stock");
 
         txtStock.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        txtStock.setForeground(new java.awt.Color(0, 0, 0));
 
         lblDireccion.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         lblDireccion.setForeground(new java.awt.Color(0, 0, 0));
