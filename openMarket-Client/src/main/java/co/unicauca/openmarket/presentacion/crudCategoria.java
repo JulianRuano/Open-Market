@@ -54,6 +54,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
         this.btnListarTodo.putClientProperty("JButton.buttonType", "roundRect");
         this.btnBuscar.putClientProperty("JButton.buttonType", "roundRect");
         this.txtNameCategoria.putClientProperty ( "JComponent.roundRect", true );
+        this.txtCodCategoria.putClientProperty ( "JComponent.roundRect", true );
         this.txtBuscar.putClientProperty ( "JComponent.roundRect", true );
     }
     private void initializeTable() {
@@ -247,8 +248,13 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
 
         pnlCrudCategoria.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblCodCategoria.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblCodCategoria.setForeground(new java.awt.Color(0, 0, 0));
         lblCodCategoria.setText("Codigo Categoria");
         pnlCrudCategoria.add(lblCodCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, -1, -1));
+
+        txtCodCategoria.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtCodCategoria.setForeground(new java.awt.Color(0, 0, 0));
         pnlCrudCategoria.add(txtCodCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 230, 40));
 
         lblNameCategory.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
@@ -302,7 +308,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
                 btnBuscarActionPerformed(evt);
             }
         });
-        pnlCrudCategoria.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 50, -1, 30));
+        pnlCrudCategoria.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 40, 70, 40));
 
         btnListarTodo.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnListarTodo.setForeground(new java.awt.Color(0, 0, 0));
@@ -313,7 +319,7 @@ public class crudCategoria extends javax.swing.JPanel implements Observador {
                 btnListarTodoActionPerformed(evt);
             }
         });
-        pnlCrudCategoria.add(btnListarTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 50, 120, 30));
+        pnlCrudCategoria.add(btnListarTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 40, 120, 40));
 
         btngGrupo1.add(rdBuscarNombre);
         rdBuscarNombre.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N

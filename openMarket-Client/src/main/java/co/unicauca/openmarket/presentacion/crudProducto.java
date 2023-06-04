@@ -60,7 +60,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
 
     public crudProducto(ProductService productService, OMInvoker ominvoker, CategoryService categoryService) {
         initComponents();
-         
+        
         this.productService = productService;
         this.categoryService = categoryService;
         this.ominvoker = ominvoker;
@@ -95,7 +95,7 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         this.btnExaminar.putClientProperty("JButton.buttonType", "roundRect");
         this.btnBuscar.putClientProperty("JButton.buttonType", "roundRect");
         this.btnListar.putClientProperty("JButton.buttonType", "roundRect");
-        UIManager.put( "TextComponent.arc", 999 );
+        this.txtCodigoProducto.putClientProperty ( "JComponent.roundRect", true );
         this.txtNombre.putClientProperty ( "JComponent.roundRect", true );
         this.txtDescripcion.putClientProperty ( "JComponent.roundRect", true );
         this.txtPrecio.putClientProperty ( "JComponent.roundRect", true );
@@ -534,8 +534,12 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         );
 
         lblCodigoProducto.setBackground(new java.awt.Color(0, 0, 0));
-        lblCodigoProducto.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        lblCodigoProducto.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
+        lblCodigoProducto.setForeground(new java.awt.Color(0, 0, 0));
         lblCodigoProducto.setText("Codigo Producto");
+
+        txtCodigoProducto.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
+        txtCodigoProducto.setForeground(new java.awt.Color(0, 0, 0));
 
         lblNombre.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(0, 0, 0));
@@ -563,7 +567,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         lblStock.setText("Stock");
 
         txtStock.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        txtStock.setForeground(new java.awt.Color(0, 0, 0));
 
         lblDireccion.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
         lblDireccion.setForeground(new java.awt.Color(0, 0, 0));
