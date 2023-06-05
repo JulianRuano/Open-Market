@@ -46,8 +46,8 @@ public class PaymentRepository implements IPaymentRepository{
     public boolean save(String receiptId, String details, int userID) {
         try {
             this.connect();
-            String sql = "INSERT INTO receipt (receiptId,details,userID,state) " +
-                         "VALUES (?,?,?,'Pendiente')";
+            String sql = "INSERT INTO receipt (receiptId,details,userID,state,qualification) " +
+                         "VALUES (?,?,?,'Pendiente',1)";
                   
             PreparedStatement  pstmt = conn.prepareCall(sql);
             pstmt.setString(1, receiptId);
@@ -111,7 +111,7 @@ public class PaymentRepository implements IPaymentRepository{
        try {
             this.connect();
             String sql = "INSERT INTO tiene (receiptId, productId)" +
-                            "VALUES (?, ?,?)" ;
+                            "VALUES (?, ?)" ;
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, receiptId);
             pstmt.setInt(2, productId);
@@ -124,7 +124,4 @@ public class PaymentRepository implements IPaymentRepository{
         }   
     return false;
     }
-
-    
-
 }

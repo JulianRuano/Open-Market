@@ -101,7 +101,6 @@ public class Dashboard extends javax.swing.JFrame {
         pnlBarraLateral.setBackground(new java.awt.Color(63, 132, 171));
 
         btnCategoria.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
-        btnCategoria.setForeground(new java.awt.Color(0, 0, 0));
         btnCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/book-content-solid-48.png"))); // NOI18N
         btnCategoria.setText("Categoria");
         btnCategoria.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -116,7 +115,6 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         btnProducto.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
-        btnProducto.setForeground(new java.awt.Color(0, 0, 0));
         btnProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/product_delivery_icon_152013.png"))); // NOI18N
         btnProducto.setText("Producto");
         btnProducto.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -131,7 +129,6 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         btnComprar.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
-        btnComprar.setForeground(new java.awt.Color(0, 0, 0));
         btnComprar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/tienda.png"))); // NOI18N
         btnComprar.setText("Tienda");
         btnComprar.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -146,7 +143,6 @@ public class Dashboard extends javax.swing.JFrame {
         });
 
         btnUsuarios.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
-        btnUsuarios.setForeground(new java.awt.Color(0, 0, 0));
         btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/user-solid-48.png"))); // NOI18N
         btnUsuarios.setText("Usuarios");
         btnUsuarios.setBorder(null);
@@ -156,7 +152,6 @@ public class Dashboard extends javax.swing.JFrame {
         btnUsuarios.setIconTextGap(10);
 
         btnCompras.setFont(new java.awt.Font("Dialog", 0, 22)); // NOI18N
-        btnCompras.setForeground(new java.awt.Color(0, 0, 0));
         btnCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/shopping-cart_icon-icons.com_72552.png"))); // NOI18N
         btnCompras.setText("Mis Compras");
         btnCompras.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 10, 1, 1, new java.awt.Color(0, 0, 0)));
@@ -186,11 +181,11 @@ public class Dashboard extends javax.swing.JFrame {
             .addComponent(btnCompras, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlBarraLateralLayout.createSequentialGroup()
-                .addGap(94, 94, 94)
+                .addGap(71, 71, 71)
                 .addComponent(lblIconFacebook)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblIconWhatssap)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(23, 23, 23)
                 .addComponent(lblIconTwitter)
                 .addContainerGap(80, Short.MAX_VALUE))
         );
@@ -207,7 +202,7 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(btnCompras, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
                 .addGroup(pnlBarraLateralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblIconFacebook, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblIconWhatssap, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -220,7 +215,6 @@ public class Dashboard extends javax.swing.JFrame {
         lblTituloHeader.setText("Open Market");
 
         btnIniciarSesion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnIniciarSesion.setForeground(new java.awt.Color(0, 0, 0));
         btnIniciarSesion.setText("Iniciar Sesion");
         btnIniciarSesion.setCursor(new java.awt.Cursor(java.awt.Cursor.MOVE_CURSOR));
         btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
@@ -270,7 +264,7 @@ public class Dashboard extends javax.swing.JFrame {
         );
         pnlContenidoIzquierdoLayout.setVerticalGroup(
             pnlContenidoIzquierdoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 689, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout backgroundLayout = new javax.swing.GroupLayout(background);
@@ -286,14 +280,14 @@ public class Dashboard extends javax.swing.JFrame {
                     .addGroup(backgroundLayout.createSequentialGroup()
                         .addGap(299, 299, 299)
                         .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 14, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         backgroundLayout.setVerticalGroup(
             backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(backgroundLayout.createSequentialGroup()
                 .addComponent(pnlHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(pnlContenidoIzquierdo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlContenidoIzquierdo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(pnlBarraLateral, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 

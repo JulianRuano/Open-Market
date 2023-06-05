@@ -40,10 +40,10 @@ public class Tienda extends javax.swing.JPanel {
         initComponents();
         this.productService = productService;
         this.categoryService = categoryService;
+        mModeloTabla.addColumn("ID");
         mModeloTabla.addColumn("Nombre");
         mModeloTabla.addColumn("Descripcion");
         mModeloTabla.addColumn("Precio");
-        mModeloTabla.addColumn("Direccion");
         mModeloTabla.addColumn("Categoria");        
         mModeloTabla.addColumn("Imagen");
         this.idUser = idUser;
@@ -93,7 +93,6 @@ public class Tienda extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
 
         tblProductos.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        tblProductos.setForeground(new java.awt.Color(0, 0, 0));
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -108,7 +107,6 @@ public class Tienda extends javax.swing.JPanel {
         jScrollPane1.setViewportView(tblProductos);
 
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("Aplicar filtros");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,32 +118,24 @@ public class Tienda extends javax.swing.JPanel {
         jLabel1.setText("Buscar Productos");
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nombre");
 
         txtNombre.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        txtNombre.setForeground(new java.awt.Color(0, 0, 0));
 
         cbxCategories.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        cbxCategories.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Categoria");
 
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Precio mínimo");
 
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Precio máximo");
 
         txtMaxPrice.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        txtMaxPrice.setForeground(new java.awt.Color(0, 0, 0));
 
         txtMinPrice.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        txtMinPrice.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -206,10 +196,8 @@ public class Tienda extends javax.swing.JPanel {
         );
 
         txtCodProduct.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        txtCodProduct.setForeground(new java.awt.Color(0, 0, 0));
 
         btnComprar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnComprar.setForeground(new java.awt.Color(0, 0, 0));
         btnComprar.setText("Comprar");
         btnComprar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,7 +206,6 @@ public class Tienda extends javax.swing.JPanel {
         });
 
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Ingrese el id del producto a comprar: ");
 
         javax.swing.GroupLayout pnlTiendaLayout = new javax.swing.GroupLayout(pnlTienda);
@@ -231,30 +218,30 @@ public class Tienda extends javax.swing.JPanel {
                         .addGap(143, 143, 143)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlTiendaLayout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addGroup(pnlTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlTiendaLayout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtCodProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 695, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(240, Short.MAX_VALUE))
+                        .addGap(91, 91, 91)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtCodProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlTiendaLayout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(314, Short.MAX_VALUE))
         );
         pnlTiendaLayout.setVerticalGroup(
             pnlTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTiendaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
                 .addGroup(pnlTiendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
+                    .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCodProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 96, Short.MAX_VALUE))
+                    .addComponent(jLabel6))
+                .addGap(0, 75, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -304,17 +291,22 @@ public class Tienda extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
-        try{
+        if(idUser > 0){
+            try{
             int idProducto=Integer.parseInt(this.txtCodProduct.getText());          
             compra.obtenerProducto(productService.findProductById(idProducto),idUser);
             compra.setVisible(true);
-        }catch(Exception e){
-            successMessage(e.getMessage(), "Atención"); 
-            JOptionPane.showMessageDialog(null,
-              "Seleccione por el dato que quiere buscar",
-              "Error al introducir el dato",
-              JOptionPane.ERROR_MESSAGE);
+            }catch(Exception e){
+                successMessage(e.getMessage(), "Atención"); 
+                JOptionPane.showMessageDialog(null,
+                  "Seleccione por el dato que quiere buscar",
+                  "Error al introducir el dato",
+                  JOptionPane.ERROR_MESSAGE);
+            }
         }
+        else{
+            successMessage("Debe Iniciar sesión para poder realizar una compra.", "Atención"); 
+        }      
     }//GEN-LAST:event_btnComprarActionPerformed
     private void fillTable(List<Product> listProducts) {
         tblProductos.setDefaultRenderer(Object.class, new RenderImagen());
@@ -324,10 +316,10 @@ public class Tienda extends javax.swing.JPanel {
 
         Object rowData[] = new Object[6];//No columnas
         for (int i = 0; i < listProducts.size(); i++) {
-            rowData[0] = listProducts.get(i).getName();
-            rowData[1] = listProducts.get(i).getDescription();
-            rowData[2] = listProducts.get(i).getPrice();
-            rowData[3] = listProducts.get(i).getAddress();
+            rowData[0] = listProducts.get(i).getProductId();
+            rowData[1] = listProducts.get(i).getName();
+            rowData[2] = listProducts.get(i).getDescription();
+            rowData[3] = listProducts.get(i).getPrice();
             try {
                 String catName=categoryService.findCategoryById(listProducts.get(i).getCategoryId()).getName();
                         rowData[4] = catName;
@@ -342,7 +334,7 @@ public class Tienda extends javax.swing.JPanel {
                 BufferedImage bufferedImage = null;
                 InputStream inputStream = new ByteArrayInputStream(imagen);
                 bufferedImage = ImageIO.read(inputStream);
-                ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(80, 80, 0));
+                ImageIcon mIcono = new ImageIcon(bufferedImage.getScaledInstance(100, 100, 0));
                 rowData[5] = new JLabel(mIcono);
             } catch (Exception e) {
                 rowData[5] = new JLabel("No imagen");
@@ -351,10 +343,10 @@ public class Tienda extends javax.swing.JPanel {
             model.addRow(rowData);
         }
 
-        tblProductos.setRowHeight(80);
-        tblProductos.getColumnModel().getColumn(0).setPreferredWidth(80);
-        tblProductos.getColumnModel().getColumn(1).setPreferredWidth(80);
-        tblProductos.getColumnModel().getColumn(2).setPreferredWidth(80);
+        tblProductos.setRowHeight(100);
+        tblProductos.getColumnModel().getColumn(0).setPreferredWidth(100);
+        tblProductos.getColumnModel().getColumn(1).setPreferredWidth(100);
+        tblProductos.getColumnModel().getColumn(2).setPreferredWidth(100);
     }
 
 

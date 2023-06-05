@@ -326,7 +326,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         jPanel1 = new javax.swing.JPanel();
 
         btnNuevo.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnNuevo.setForeground(new java.awt.Color(0, 0, 0));
         btnNuevo.setText("Nuevo");
         btnNuevo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -336,7 +335,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         });
 
         btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnEditar.setForeground(new java.awt.Color(0, 0, 0));
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -345,7 +343,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         });
 
         btnEliminar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -354,7 +351,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         });
 
         btnDeshacer.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnDeshacer.setForeground(new java.awt.Color(0, 0, 0));
         btnDeshacer.setText("Deshacer");
         btnDeshacer.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDeshacer.addActionListener(new java.awt.event.ActionListener() {
@@ -364,7 +360,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         });
 
         btnRehacer.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnRehacer.setForeground(new java.awt.Color(0, 0, 0));
         btnRehacer.setText("Rehacer");
         btnRehacer.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -373,7 +368,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         });
 
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnGuardar.setForeground(new java.awt.Color(0, 0, 0));
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -382,7 +376,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         });
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnCancelar.setForeground(new java.awt.Color(0, 0, 0));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -427,7 +420,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         );
 
         tblProductos.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        tblProductos.setForeground(new java.awt.Color(0, 0, 0));
         tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -444,17 +436,14 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
 
         buttonGroup1.add(rdIdProducto);
         rdIdProducto.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        rdIdProducto.setForeground(new java.awt.Color(0, 0, 0));
         rdIdProducto.setText("Codigo producto");
 
         buttonGroup1.add(rdIdCategoria);
         rdIdCategoria.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        rdIdCategoria.setForeground(new java.awt.Color(0, 0, 0));
         rdIdCategoria.setText("Codigo Categoria");
 
         buttonGroup1.add(rdNombreProducto);
         rdNombreProducto.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        rdNombreProducto.setForeground(new java.awt.Color(0, 0, 0));
         rdNombreProducto.setSelected(true);
         rdNombreProducto.setText("Nombre Producto");
         rdNombreProducto.addActionListener(new java.awt.event.ActionListener() {
@@ -464,10 +453,8 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         });
 
         txtBuscarProducto.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        txtBuscarProducto.setForeground(new java.awt.Color(0, 0, 0));
 
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("Buscar");
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -476,7 +463,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         });
 
         btnListar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnListar.setForeground(new java.awt.Color(0, 0, 0));
         btnListar.setText("Listar Todo");
         btnListar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -528,59 +514,46 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
         );
 
         lblCodigoProducto.setBackground(new java.awt.Color(0, 0, 0));
         lblCodigoProducto.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        lblCodigoProducto.setForeground(new java.awt.Color(0, 0, 0));
         lblCodigoProducto.setText("Codigo Producto");
 
         txtCodigoProducto.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        txtCodigoProducto.setForeground(new java.awt.Color(0, 0, 0));
 
         lblNombre.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        lblNombre.setForeground(new java.awt.Color(0, 0, 0));
         lblNombre.setText("Nombre");
 
         txtNombre.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        txtNombre.setForeground(new java.awt.Color(0, 0, 0));
 
         lblDescripcion.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        lblDescripcion.setForeground(new java.awt.Color(0, 0, 0));
         lblDescripcion.setText("Descripcion");
 
         txtDescripcion.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        txtDescripcion.setForeground(new java.awt.Color(0, 0, 0));
 
         lblPrecio.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        lblPrecio.setForeground(new java.awt.Color(0, 0, 0));
         lblPrecio.setText("Precio");
 
         txtPrecio.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        txtPrecio.setForeground(new java.awt.Color(0, 0, 0));
 
         lblStock.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        lblStock.setForeground(new java.awt.Color(0, 0, 0));
         lblStock.setText("Stock");
 
         txtStock.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
 
         lblDireccion.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        lblDireccion.setForeground(new java.awt.Color(0, 0, 0));
         lblDireccion.setText("Direccion");
 
         txtDireccion.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        txtDireccion.setForeground(new java.awt.Color(0, 0, 0));
 
         lblCodigoCategoria.setFont(new java.awt.Font("Dialog", 0, 16)); // NOI18N
-        lblCodigoCategoria.setForeground(new java.awt.Color(0, 0, 0));
         lblCodigoCategoria.setText("Categoria");
 
         cbxCodigoCategoria.setFont(new java.awt.Font("Dialog", 0, 15)); // NOI18N
-        cbxCodigoCategoria.setForeground(new java.awt.Color(0, 0, 0));
         cbxCodigoCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxCodigoCategoriaActionPerformed(evt);
@@ -590,7 +563,6 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         lblExaminar2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         btnExaminar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnExaminar.setForeground(new java.awt.Color(0, 0, 0));
         btnExaminar.setText("Examinar");
         btnExaminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnExaminar.addActionListener(new java.awt.event.ActionListener() {
@@ -621,8 +593,8 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
                         .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(panel2Layout.createSequentialGroup()
                                 .addGap(49, 49, 49)
-                                .addComponent(lblExaminar2, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44)
+                                .addComponent(lblExaminar2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)
                                 .addComponent(btnExaminar))
                             .addComponent(lblCodigoProducto)
                             .addComponent(lblNombre)
@@ -687,11 +659,12 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
                 .addComponent(cbxCodigoCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblExaminar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panel2Layout.createSequentialGroup()
                         .addComponent(btnExaminar)
-                        .addGap(49, 49, 49)))
-                .addGap(21, 21, 21)
+                        .addGap(86, 86, 86))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel2Layout.createSequentialGroup()
+                        .addComponent(lblExaminar2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
         );
@@ -701,22 +674,24 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         pnlCrudpProductoLayout.setHorizontalGroup(
             pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
-                .addComponent(pnlSeccionBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
                 .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlSeccionBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlCrudpProductoLayout.setVerticalGroup(
             pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCrudpProductoLayout.createSequentialGroup()
                 .addGroup(pnlCrudpProductoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, 541, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pnlSeccionBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(159, 159, 159))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlSeccionBotones, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -727,115 +702,9 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(pnlCrudpProducto, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(pnlCrudpProducto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        stateNew();
-        this.txtNombre.requestFocus();
-        addOption = 1;
-    }//GEN-LAST:event_btnNuevoActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        stateInitial();
-        cleanControls();
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        switch (addOption) {
-            case 1:
-                //Agregar
-                if(!validarCampos()){
-                    return;
-                }   addProduct();
-                break;
-            case 2:
-                //Editar
-                if(!validarCampos()){
-                    return;
-                }   editProduct();
-                break;
-            default:
-                //Eliminar
-                if (!validarId(txtCodigoProducto)) {
-                    return;
-                }   deleteProduct();
-                break;
-        }
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        addOption = 2;
-        stateEdit();
-        txtCodigoProducto.requestFocus();
-    }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        addOption = 3;
-        stateDelete();
-        txtCodigoProducto.requestFocus();
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacerActionPerformed
-        ominvoker.unexecute();
-        if (!ominvoker.hasMoreCommands()) {
-            this.btnDeshacer.setVisible(false);
-        }
-        this.btnRehacer.setVisible(true);
-    }//GEN-LAST:event_btnDeshacerActionPerformed
-
-    private void btnRehacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacerActionPerformed
-        ominvoker.reExecuted();
-        if (!ominvoker.hasMoreCommandsRedo()) {
-            this.btnRehacer.setVisible(false);
-        }
-        this.btnDeshacer.setVisible(true);
-    }//GEN-LAST:event_btnRehacerActionPerformed
-
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        try {
-
-            Limpiar();
-            if (this.rdIdProducto.isSelected() == true) {
-
-                fillTableId(productService.findProductById(Integer.parseInt(this.txtBuscarProducto.getText())));
-            } else if (this.rdIdCategoria.isSelected() == true) {
-                fillTable(productService.findProductsByCategory(Integer.parseInt(this.txtBuscarProducto.getText())));
-            } else {
-                fillTable(productService.findProductsByName(this.txtBuscarProducto.getText()));
-            }
-        } catch (NullPointerException ex) {
-            JOptionPane.showMessageDialog(null,
-                    "Envia la informacion correspondiente",
-                    "Error tipo de dato",
-                    JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            successMessage(e.getMessage(), "Atención");
-            JOptionPane.showMessageDialog(null,
-                    "Seleccione por el dato que quiere buscar",
-                    "Error al introducir el dato",
-                    JOptionPane.ERROR_MESSAGE);
-
-        }
-    }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-
-        try {
-            Limpiar();
-            fillTable(productService.findAllProducts());
-        } catch (Exception ex) {
-            successMessage(ex.getMessage(), "Atención");
-        }
-    }//GEN-LAST:event_btnListarActionPerformed
-
-    private void rdNombreProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdNombreProductoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_rdNombreProductoActionPerformed
 
     private void btnExaminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExaminarActionPerformed
         JFileChooser fileChooser = new JFileChooser();
@@ -859,6 +728,110 @@ public class crudProducto extends javax.swing.JPanel implements Observador {
     private void cbxCodigoCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCodigoCategoriaActionPerformed
 
     }//GEN-LAST:event_cbxCodigoCategoriaActionPerformed
+
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+
+        try {
+            Limpiar();
+            fillTable(productService.findAllProducts());
+        } catch (Exception ex) {
+            successMessage(ex.getMessage(), "Atención");
+        }
+    }//GEN-LAST:event_btnListarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try {
+
+            Limpiar();
+            if (this.rdIdProducto.isSelected() == true) {
+
+                fillTableId(productService.findProductById(Integer.parseInt(this.txtBuscarProducto.getText())));
+            } else if (this.rdIdCategoria.isSelected() == true) {
+                fillTable(productService.findProductsByCategory(Integer.parseInt(this.txtBuscarProducto.getText())));
+            } else {
+                fillTable(productService.findProductsByName(this.txtBuscarProducto.getText()));
+            }
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(null,
+                "Envia la informacion correspondiente",
+                "Error tipo de dato",
+                JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            successMessage(e.getMessage(), "Atención");
+            JOptionPane.showMessageDialog(null,
+                "Seleccione por el dato que quiere buscar",
+                "Error al introducir el dato",
+                JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void rdNombreProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdNombreProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rdNombreProductoActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        stateInitial();
+        cleanControls();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        switch (addOption) {
+            case 1:
+            //Agregar
+            if(!validarCampos()){
+                return;
+            }   addProduct();
+            break;
+            case 2:
+            //Editar
+            if(!validarCampos()){
+                return;
+            }   editProduct();
+            break;
+            default:
+            //Eliminar
+            if (!validarId(txtCodigoProducto)) {
+                return;
+            }   deleteProduct();
+            break;
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnRehacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRehacerActionPerformed
+        ominvoker.reExecuted();
+        if (!ominvoker.hasMoreCommandsRedo()) {
+            this.btnRehacer.setVisible(false);
+        }
+        this.btnDeshacer.setVisible(true);
+    }//GEN-LAST:event_btnRehacerActionPerformed
+
+    private void btnDeshacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeshacerActionPerformed
+        ominvoker.unexecute();
+        if (!ominvoker.hasMoreCommands()) {
+            this.btnDeshacer.setVisible(false);
+        }
+        this.btnRehacer.setVisible(true);
+    }//GEN-LAST:event_btnDeshacerActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        addOption = 3;
+        stateDelete();
+        txtCodigoProducto.requestFocus();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        addOption = 2;
+        stateEdit();
+        txtCodigoProducto.requestFocus();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        stateNew();
+        this.txtNombre.requestFocus();
+        addOption = 1;
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

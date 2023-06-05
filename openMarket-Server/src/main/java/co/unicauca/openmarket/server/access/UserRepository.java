@@ -79,7 +79,7 @@ public class UserRepository implements IUserRepository{
                 return false;
             }
             this.connect();
-            String sql="INSERT INTO user(name,lastName,rol,email,userName,password)VALUES(?,?,?,?,?,?)";
+            String sql="INSERT INTO user(name,lastName,rol,email,userName,password,money)VALUES(?,?,?,?,?,?,0)";
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1,user.getFirstName());
             pstmt.setString(2,user.getLastName());

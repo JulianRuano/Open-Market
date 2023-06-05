@@ -36,7 +36,9 @@ public class OMAddCategoryCommand extends OMCommand {
 
     @Override
     public void unmake() {
+        
         result = cS.deleteCategory(idCategory);
+        
     }
         
     public boolean result(){

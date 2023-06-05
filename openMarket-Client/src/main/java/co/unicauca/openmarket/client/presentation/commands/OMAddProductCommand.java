@@ -34,7 +34,7 @@ public class OMAddProductCommand extends OMCommand{
     @Override
     public void unmake() {
         try {
-            result = pS.deleteProduct(pP.getProductId());
+            result = pS.deleteProduct(idProduct);
         } catch (Exception ex) {
             Logger.getLogger(OMAddProductCommand.class.getName()).log(Level.SEVERE, null, ex);
         }
