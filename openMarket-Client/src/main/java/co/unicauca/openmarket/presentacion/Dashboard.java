@@ -49,9 +49,9 @@ public class Dashboard extends javax.swing.JFrame {
         this.lblUsername.setText(login.UserName());
         this.idUser = login.idLogin();
         if (idUser != 0){
+            this.btnIniciarSesion.setVisible(false);
             this.btnProducto.setVisible(true);
             this.btnCategoria.setVisible(true);
-
         }
     }
     
