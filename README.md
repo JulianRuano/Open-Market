@@ -6,7 +6,7 @@ La empresa Colombo-Argentina Digital Asociados SA, está interesada en lanzar al
 👉 [Documentación](Documentation/) 
 
 Equipo de trabajo
-- Brayan Majin Gaviria 
-- Freider Escobar Cueltan
-- Jorge Andres Ayerbe Caicedo
-- Julian Ruano Majin
+- Brayan Majin Gaviria.
+- Freider Escobar Cueltan.
+- Jorge Andres Ayerbe Caicedo.
+- Julian Ruano Majin.
